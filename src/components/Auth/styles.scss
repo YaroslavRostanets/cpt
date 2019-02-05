@@ -1,0 +1,26 @@
+#auth {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #4b4b4b;
+	.auth-window {
+		background: #FFFFFF;
+		width: 425px;
+		border-radius: 4px;
+		box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.15);
+	}
+	.title {
+		font-size: 16px;
+		border-bottom: 1px solid #DFDFE0;
+		font-weight: 600;
+		padding: 12px 13px 6px 13px;
+	}
+	.body {
+		padding: 18px 20px 30px 15px;
+	}
+	.btn.primary-btn {
+		margin-top: 40px;
+		min-width: 150px;
+	}
+}

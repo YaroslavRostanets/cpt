@@ -1,0 +1,21 @@
+.form-group {
+	margin-bottom: 21px;
+	label {
+		display: block;
+		font-size: 14px;
+		color: #4b4b4b;
+		margin-bottom: 4px;
+	}
+	input[type="text"],
+	input[type="email"],
+	input[type="password"] {
+		display: block;
+		width: 100%;
+		height: 31px;
+		border: 1px solid #DFDFE0;
+		font-family: 'Open Sans', sans-serif;
+		border-radius: 2px;
+		color: #797979;
+		padding: 0 9px;
+	}
+}
