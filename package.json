@@ -2,7 +2,7 @@
   "name": "cappacity-planning",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://yaroslavrostanets.github.io",
+  "homepage": "https://yaroslavrostanets.github.io/cpt",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.14",
     "@fortawesome/free-regular-svg-icons": "^5.7.1",
