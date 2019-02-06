@@ -1,3 +1,47 @@
 #header {
 	background: #FFFFFF;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 15px 30px;
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.55);
+	.app-name {
+		font-size: 25px;
+		color: #bebebe;
+		margin-right: 45px;
+		font-weight: 300;
+	}
+	.left-part {
+		display: flex;
+		align-items: center;
+		.btn {
+			padding-left: 14px;
+			svg {
+				margin-right: 6px;
+			}
+		}
+	}
+	.right-part {
+		display: flex;
+		text-align: right;
+	}
+	.logout {
+		color: #636363;
+		font-size: 16px;
+		padding: 0 5px;
+		margin: 0 -5px 0 35px;
+		border-radius: 2px;
+		transition: all 0.1s ease-out;
+		&:hover {
+			background: #DADADA;
+		}
+	}
+	.name {
+		font-size: 14px;
+		color: #4b4b4b;
+	}
+	.role {
+		font-size: 12px;
+		color: #bebebe;
+	}
 }
