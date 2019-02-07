@@ -1,9 +1,5 @@
 #planning-tool {
 	height: 100vh;
-	.content {
-		padding: 35px 30px 25px 30px;
-		height: calc( 100vh - 67px);
-	}
 }
 #content-tool {
 	background: #FFFFFF;
@@ -90,6 +86,12 @@
 			border-top-right-radius: 2px;
 			border-bottom-right-radius: 2px;
 		}
+		.fa-calendar {
+			position: relative;
+    		top: -1px;
+    		left: -1px;
+    		font-size: 11px;
+		}
 	}
 	.updated {
 		font-size: 12px;
@@ -131,4 +133,55 @@
 		border-bottom-color: #DEDEDE;
 	}
 
+}
+#table-settings-dialog {
+	.title {
+		color: #4b4b4b;
+    	font-size: 16px;
+    	font-family: 'Open Sans', sans-serif;
+	}
+	.title-wrap {
+		padding: 0;		
+		border-bottom: 1px solid #DFDFDF;
+		padding-left: 17px;
+		h2 {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-top: 2px;
+		}
+	}
+	.MuiDialog-paperWidthSm-12 {
+		width: 480px;
+	}
+	.MuiIconButton-root-93 {
+		padding: 8px;
+	}
+	.MuiDialogContent-root-108 {
+		padding: 15px 17px 17px;
+	}
+	.dialog-content {
+
+	}
+	.cols {
+		display: flex;
+	}
+	.col {
+		padding-right: 26px;
+		&:last-child {
+			margin-left: auto;
+			margin-right: 0;
+		}
+	}
+	.text {
+		font-size: 14px;
+		color: #4b4b4b;
+		font-weight: 300;
+		margin-bottom: 13px;
+	}
+	.col-titile {
+		color: #4b4b4b;
+		font-size: 16px;
+		margin-bottom: 4px;
+	}
 }

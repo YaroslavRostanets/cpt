@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import Auth from './components/Auth';
 import PlanningTool from './components/PlanningTool';
+import Settings from './components/Settings';
 import './App.scss';
-import './assets/fontawesome/scss/font-awesome.scss';
+import 'font-awesome/css/font-awesome.min.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +22,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={PlanningTool} />
           <Route path="/auth" component={Auth} />
+          <Route path="/settings" component={Settings} />
         </div>
       </Router>
     );

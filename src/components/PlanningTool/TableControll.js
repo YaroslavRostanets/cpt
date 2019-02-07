@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { ButtonBase, Dialog, DialogTitle, DialogContent, 
 	Typography, DialogActions, Button, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import enGB from 'date-fns/locale/en-GB';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
+import CheckboxGroup from '../ui/CheckboxGroup';
+
 import './styles.scss';
+
+registerLocale('en-GB', enGB);
 
 class TableControll extends Component {
 
@@ -17,15 +22,27 @@ class TableControll extends Component {
       		openDialog: false
     	};
     	this.handleChange = this.handleChange.bind(this);
+    	this.handleDialogOpen = this.handleDialogOpen.bind(this);
+    	this.handleDialogClose = this.handleDialogClose.bind(this);
 	}
 
 	handleChange(date) {
 		this.setState({
-		     startDate: date
+		    startDate: date
 		});
   	}
 
+	handleDialogOpen() {
+		this.setState({
+	    	openDialog: true
+	    });
+	};
 
+	handleDialogClose() {
+		this.setState({
+	    	openDialog: false
+	    });
+	};
 
 
 	render() {
@@ -44,12 +61,13 @@ class TableControll extends Component {
 						<b>25/08/2018 by John Smith</b>
 					</div>
 					<div className="date-picker-wrap">
-						<DatePicker 
+						<DatePicker
+							locale="en-GB"
 							selected={this.state.startDate}
         					onChange={this.handleChange}
 						/>
 						<ButtonBase className="calendar">
-							<FontAwesomeIcon icon={["far", "calendar"]} />
+							<i className="fa fa-calendar" aria-hidden="true"></i>
 						</ButtonBase>
 					</div>
 					{/*<Select
@@ -62,7 +80,7 @@ class TableControll extends Component {
   					/>*/}
 				</div>
 				<div className="right-part">
-					<ButtonBase className="btn btn-default">
+					<ButtonBase onClick={this.handleDialogOpen} className="btn btn-default">
 						<i className="fa fa-table" aria-hidden="true"></i>
 							Table settings
 					</ButtonBase>
@@ -74,20 +92,65 @@ class TableControll extends Component {
 					</ButtonBase>
 				</div>
 				<Dialog
-		          onClose={this.handleClose}
-		          aria-labelledby="customized-dialog-title"
-		          open={this.state.openDialog}
+					id="table-settings-dialog"
+		          	onClose={this.handleDialogClose}
+		          	aria-labelledby="customized-dialog-title"
+		          	open={this.state.openDialog}
         		>
-		          <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
+		          <DialogTitle className="title-wrap">
 		          	<div className="title">
 		          		Table settings
 		          	</div>
-		          	<IconButton aria-label="Close">
+		          	<IconButton onClick={this.handleDialogClose} aria-label="Close">
           				<CloseIcon />
         			</IconButton>
 		          </DialogTitle>
-		          <DialogContent>
-		            
+		          <DialogContent className="dialog-content">
+		        	<div className="text">
+		        		Choose columns you want to hide
+		        	</div>
+		        	<div className="cols">
+		        		<div className="col">
+		        			<div className="col-titile">
+		        				General
+		        			</div>
+		        			<div className="list">
+		        				<CheckboxGroup 
+		        					label="Cost Center"
+		        					checked={true}
+		        					 />
+		        				<CheckboxGroup 
+		        					label="Job#"
+		        					checked={true}
+		        					 />
+		        				<CheckboxGroup label="Description" />
+		        				<CheckboxGroup 
+		        					label="Date In" 
+									checked={true}
+		        					/>
+		        			</div>
+		        		</div>
+		        		<div className="col">
+		        			<div className="col-titile">
+		        				Planned
+		        			</div>
+		        			<div className="list">
+		        				<CheckboxGroup label="Date Due" />
+		        				<CheckboxGroup label="Partial Due" />
+		        				<CheckboxGroup label="Days Available" />
+		        				<CheckboxGroup label="Hrs. Planned" />
+		        			</div>
+		        		</div>
+		        		<div className="col">
+		        			<div className="col-titile">
+		        				Required
+		        			</div>
+		        			<div className="list">
+		        				<CheckboxGroup label="Date Due" />
+		        				<CheckboxGroup label="Partial Due" />
+		        			</div>
+		        		</div>
+		        	</div>
 		          </DialogContent>
         		</Dialog>
 			</div>

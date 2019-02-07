@@ -1,0 +1,139 @@
+#global-settings {
+	
+}
+#settings-ctrl {
+	background: #FFFFFF;
+	height: 100%;
+	padding-top: 45px;
+	padding-left: 62px;
+	padding-right: 62px;
+	padding-bottom: 40px;
+	overflow: auto;
+	.flex {
+		display: flex;
+	}
+	.std-block {
+		border: 1px solid #D0D0D0;
+		border-radius: 3px;	
+		.title {
+			color: #4b4b4b;
+			font-size: 16px;
+			font-weight: 600;
+			margin-bottom: 20px;
+		}
+		input {
+			display: block;
+			width: 60px;
+			border: 1px solid #D0D0D0;
+			border-radius: 2px;
+			height: 30px;
+			color: #4b4b4b;
+			font-size: 16px;
+			padding-left: 10px;
+		}
+	}
+	.required-days {
+		width: 360px;
+		padding-top: 17px;
+		padding-right: 30px;
+		padding-left: 45px;
+		padding-bottom: 30px;
+		table {
+			width: 100%;
+			margin-bottom: 10px;
+		}
+		td {
+			padding: 0;
+			border: 8px solid transparent;
+			width: 25%;
+			&:first-child {
+				border-left: 0;
+			}
+			&:last-child {
+				border-right: 0;
+			}
+		}
+		th {
+			text-align: left;
+			font-size: 16px;
+			color: #4b4b4b;
+			font-weight: 600;
+		}
+	}
+	.remove {
+		padding: 3px;
+		background: #3AAADE;
+		color: #FFFFFF;
+		margin: 0 0 0 auto;
+		display: block;
+		svg {
+			font-size: 20px;
+		}
+	}
+	.btns-wrap {
+		display: flex;
+		.btn {
+			font-size: 16px;
+			padding: 0;
+			width: 105px;
+			margin-right: 12px;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+	.colors-table {
+		margin-right: 23px;
+		&:last-child{
+			margin-right: 0;
+		}
+		th {
+			text-align: left;
+			font-size: 16px;
+    		color: #4b4b4b;
+    		font-weight: 600;
+			&:first-child {
+				display: none;
+			}
+		}
+		td {
+			&:first-child {
+				display: none;
+			}
+			padding: 0;
+			border: 4px solid transparent;
+			&:first-child {
+				border-left: 0;
+			}
+			&:last-child {
+				border-right: 0;
+			}
+		}
+		&:first-child {
+			td:first-child {
+				display: table-cell;
+			}
+			th:first-child {
+				display: table-cell;
+			}
+		}
+	}
+	.standarts-colors {
+		flex-grow: 1;
+		margin-left: 40px;
+		padding-top: 17px;
+		padding-left: 25px;
+		padding-right: 25px;
+		padding-bottom: 25px;
+		.tables {
+			display: flex;
+			margin-bottom: 25px;
+		}
+		.btn {
+			font-size: 16px;
+			padding: 0;
+			width: 105px;
+		}
+	}
+
+}

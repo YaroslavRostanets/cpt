@@ -10,6 +10,10 @@ body {
   padding: 0;
   background: #F3F3F4;
 }
+.content {
+	padding: 35px 30px 25px 30px;
+	height: calc( 100vh - 67px);
+}
 .btn.primary-btn {
 	color: #FFFFFF;
 	background: #3AAADE;
@@ -45,5 +49,24 @@ body {
 	transition: all 0.1s ease-out;
 	&:hover {
 		background: #DADADA;
+	}
+}
+
+.btn.outlined-primary-btn {
+	font-size: 14px;
+	color: #2daae1;
+	border-radius: 2px;
+	border: 2px solid #3AAADE;
+	font-family: 'Open Sans', sans-serif;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-left: 20px;
+	padding-right: 20px;
+	transition: all 0.1s ease-out;
+	&:hover {
+		/* color: #FFFFFF;
+		background: #3AAADE; */
 	}
 }

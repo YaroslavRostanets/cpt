@@ -1,0 +1,33 @@
+body {
+	.color-item {
+		position: relative;
+	}
+	.color {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: block;
+	}
+	.color-selected {
+		overflow: hidden;
+		width: 60px;
+		border: 1px solid #D0D0D0;
+		height: 30px;
+		border-radius: 2px;
+		svg {
+			background: #FFFFFF;
+			border-left: 1px solid #D0D0D0;
+			top: 0;
+    		bottom: 0;
+    		height: 100%;
+		}
+	}
+	.color-selected-in {
+		width: 100%;
+		& > div {
+			background: none;
+		}
+	}
+}
