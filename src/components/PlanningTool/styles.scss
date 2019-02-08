@@ -132,7 +132,51 @@
 	.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
 		border-bottom-color: #DEDEDE;
 	}
-
+	.multi-select {
+		input {
+			height: 25px !important;
+    		line-height: 24px;
+    		border: 1px solid #CFCFCF;
+    		padding: 5px;
+    		border: 1px solid rgb(222, 226, 228);
+		}
+	}
+	.dropdown-heading-value {
+		min-width: 70px;
+		font-size: 12px;
+		line-height: 20px !important;
+		max-width: none;
+		width: auto;
+		position: relative !important;
+		padding-left: 5px !important;
+    	padding-right: 0px !important;
+	}
+	.dropdown-heading {
+		height: 20px !important;
+		width: auto;
+		display: flex !important;
+		align-items: center !important;
+		border-radius: 2px !important;
+		border: 1px solid #C8C7C8 !important;
+	}
+	.select-item {
+		padding: 0 4px !important;
+		font-size: 12px;
+	}
+	.item-renderer {
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+	.dropdown-heading-dropdown-arrow {
+		padding-right: 0 !important;
+		background: #43AADB !important;
+		width: 20px !important;
+		span {
+			border-width: 5px 5px 2.5px !important;
+			border-color: rgb(255, 255, 255) transparent transparent !important;
+		}
+	}
 }
 #table-settings-dialog {
 	.title {

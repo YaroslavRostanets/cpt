@@ -8,6 +8,7 @@ import enGB from 'date-fns/locale/en-GB';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
 import CheckboxGroup from '../ui/CheckboxGroup';
+import MultiSelect from '@khanacademy/react-multi-select';
 
 import './styles.scss';
 
@@ -19,7 +20,8 @@ class TableControll extends Component {
 		super(props);
 		this.state = {
       		startDate: new Date(),
-      		openDialog: false
+      		openDialog: false,
+      		selected: []
     	};
     	this.handleChange = this.handleChange.bind(this);
     	this.handleDialogOpen = this.handleDialogOpen.bind(this);
@@ -48,9 +50,9 @@ class TableControll extends Component {
 	render() {
 
 		const sortTypes = [
-			{ value: '1', label: 'ABC123' },
-			{ value: '2', label: 'CBA321' },
-			{ value: '3', label: 'CBA123' },
+			{label: "ABC123", value: 1},
+    		{label: "CBA321", value: 2},
+    		{label: "TATA2323", value: 3},
 		]
 
 		return(
@@ -70,14 +72,14 @@ class TableControll extends Component {
 							<i className="fa fa-calendar" aria-hidden="true"></i>
 						</ButtonBase>
 					</div>
-					{/*<Select
-					    defaultValue={[sortTypes[2]]}
-					    isMulti
-					    name="colors"
-					    options={sortTypes}
-					    className="basic-multi-select"
-					    classNamePrefix="select"
-  					/>*/}
+					<MultiSelect
+		                options={sortTypes}
+		                selected={this.state.selected}
+		                onSelectedChanged={(selected) => {
+		                	console.log(selected);
+		                	this.setState({selected: selected})
+		                } }
+            		/>
 				</div>
 				<div className="right-part">
 					<ButtonBase onClick={this.handleDialogOpen} className="btn btn-default">
