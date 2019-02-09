@@ -2,14 +2,19 @@ import React from 'react';
 import './styles.scss';
 
 export const FormGroup = (props) => {
-	const label = props.label || '';
 	const type = props.type || '';
+	const name = props.name || '';
+	const label = props.label || '';
 	const defaultValue = props.defaultValue || '';
 
 	return (
 		<div className="form-group">
-			<label>{props.label}</label>
-			<input type={props.type} defaultValue={defaultValue}/>
+			<label>{label}</label>
+			<input 
+				type={type}
+				name={name}
+				defaultValue={defaultValue} 
+				placeholder={label}/>
 			<div className=""></div>
 		</div>
 	)
