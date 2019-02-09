@@ -7,7 +7,11 @@ import './styles.scss';
 
 class Auth extends Component {
 
+	constructor(props) {
+		super(props);
 
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 
 	render() {
 
@@ -17,7 +21,7 @@ class Auth extends Component {
 					<div className="title">
 						Autorization to Capacity Planning Tool
 					</div>
-					<div className="body">
+					<form onSubmit={this.handleSubmit} className="body">
 						<FormGroup 
 							type="text"
 							label="Login"
@@ -26,13 +30,19 @@ class Auth extends Component {
 							type="password"
 							label="Password"
 							defaultValue="qwerty12345" />
-						<ButtonBase className="btn primary-btn">
+							<input type="submit" />
+						<ButtonBase type="submit" className="btn primary-btn">
 							Login
 						</ButtonBase>
-					</div>
+					</form>
 				</div>
 			</div>
 		)
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		this.props.history.push('/')
 	}
 }
 

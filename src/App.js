@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import Auth from './components/Auth';
-import PlanningTool from './components/PlanningTool';
-import Settings from './components/Settings';
+import Content from './components/Content';
 import './App.scss';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -20,9 +19,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={PlanningTool} />
           <Route path="/auth" component={Auth} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/" component={Content} />
         </div>
       </Router>
     );

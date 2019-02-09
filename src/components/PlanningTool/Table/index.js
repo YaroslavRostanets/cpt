@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import './styles.scss';
 
 class Table extends Component {
@@ -7,203 +8,150 @@ class Table extends Component {
 		const temp = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 		return(
-			<div id="planning-table">
+			<Scrollbars id="planning-table">
 				<table>
 				<tbody>
 				<tr>
 					<th>
-						<div className="head">
-							Cost Center
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Cost Center
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Job #
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Job #
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Customer
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Customer
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Description
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Description
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Date In
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Date In
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Date Due
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Date Due
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Partial Due
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Partial Due
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Days Available
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Days Available
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Hrs. Planed
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Hrs. Planed
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					<th>
-						<div className="head">
-							Required Days
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+						Required Days
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							Allocated Hours
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th style={{borderRight: '3px solid rgb(208, 208, 208)'}}>
+						Allocated Hours
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#FCC99A'}}>
-						<div className="head">
-							<div>Mon</div>
-						    <div>09 Oct</div>
-							<div>255,21</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#FCC99A', 
+					borderLeft: '3px solid rgb(208, 208, 208)'}}>
+						<div>Mon</div>
+						<div>09 Oct</div>
+						<div>255,21</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Tues</div>
-						    <div>10 Oct</div>
-							<div>30,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Tues</div>
+						<div>10 Oct</div>
+						<div>30,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Wed</div>
-						    <div>11 Oct</div>
-							<div>32,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Wed</div>
+						<div>11 Oct</div>
+						<div>32,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Thu</div>
-						    <div>12 Oct</div>
-							<div>30,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Thu</div>
+						<div>12 Oct</div>
+						<div>30,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#EB9DA6'}}>
-						<div className="head">
-							<div>Fri</div>
-						    <div>13 Oct</div>
-							<div>520,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#EB9DA6'}}>
+						<div>Fri</div>
+						<div>13 Oct</div>
+						<div>520,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							<div>Sun</div>
-						    <div>14 Oct</div>
-							<div></div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day">
+						<div>Sun</div>
+						<div>14 Oct</div>
+						<div></div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							<div>Sat</div>
-						    <div>15 Oct</div>
-							<div></div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day">
+						<div>Sat</div>
+						<div>15 Oct</div>
+						<div></div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Mon</div>
-						    <div>16 Oct</div>
-							<div>255,21</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Mon</div>
+						<div>16 Oct</div>
+						<div>255,21</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Tues</div>
-						    <div>17 Oct</div>
-							<div>30,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Tues</div>
+						<div>17 Oct</div>
+						<div>30,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Wed</div>
-						    <div>18 Oct</div>
-							<div>32,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Wed</div>
+						<div>18 Oct</div>
+						<div>32,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Thu</div>
-						    <div>19 Oct</div>
-							<div>30,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Thu</div>
+						<div>19 Oct</div>
+						<div>30,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{background: '#A5DBA8'}}>
-						<div className="head">
-							<div>Fri</div>
-						    <div>20 Oct</div>
-							<div>520,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day" style={{background: '#A5DBA8'}}>
+						<div>Fri</div>
+						<div>20 Oct</div>
+						<div>520,00</div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							<div>Sun</div>
-						    <div>21 Oct</div>
-							<div></div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day">
+						<div>Sun</div>
+						<div>21 Oct</div>
+						<div></div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							<div>Sat</div>
-						    <div>22 Oct</div>
-							<div></div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day">
+						<div>Sat</div>
+						<div>22 Oct</div>
+						<div></div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							<div>W/E</div>
-						    <div>23 Oct</div>
-							<div></div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day">
+						<div>W/E</div>
+						<div>23 Oct</div>
+						<div></div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
-						<div className="head">
-							<div>W/E</div>
-						    <div>24 Oct</div>
-							<div></div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</div>
+					<th className="day">
+						<div>W/E</div>
+						<div>24 Oct</div>
+						<div></div>
+						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 				</tr>
 				{ temp.map(function(item, index){
@@ -298,7 +246,7 @@ class Table extends Component {
 				}) }
 				</tbody>
 			</table>
-			</div>
+			</Scrollbars>
 			
 		)
 	}

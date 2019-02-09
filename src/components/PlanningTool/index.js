@@ -10,14 +10,9 @@ class PlanningTool extends Component {
 
 
 		return(
-			<div id="planning-tool">
-				<Header />
-				<div className="content">
-					<div id="content-tool">
-						<TableControll />
-						<Table />
-					</div>
-				</div>
+			<div id="content-tool">
+				<TableControll />
+				<Table />
 			</div>
 		)
 	}
