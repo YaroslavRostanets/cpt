@@ -67,8 +67,13 @@ class TableControll extends Component {
 							locale="en-GB"
 							selected={this.state.startDate}
         					onChange={this.handleChange}
+        					dateFormat="dd/MM/YY"
+        					ref={(r) => {
+    							this.component = r;
+  							}}
 						/>
-						<ButtonBase className="calendar">
+						<ButtonBase className="calendar" 
+							onClick={() => this.component.setOpen(true)}>
 							<i className="fa fa-calendar" aria-hidden="true"></i>
 						</ButtonBase>
 					</div>

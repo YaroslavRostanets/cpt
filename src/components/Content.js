@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import Header from './Header';
 import PlanningTool from './PlanningTool';
 import Settings from './Settings';
@@ -8,13 +9,24 @@ class Content extends Component {
 
 	render() {
 
+		const { history, user } = this.props;
+
 		return(
 			<div id="content">
-				<Header />
+				<Header history={history} user={user} />
 				<div className="content">
 					<Switch>
-          				<Route path="/settings" component={Settings} />
-          				<Route path="/" exect component={PlanningTool} />
+						<Route path="/settings" exact render={()=>{
+							if(user.role !== "admin"){
+								return <Redirect to="/" />
+							} else {
+								return <Settings />
+							}
+						}} />			
+          				<Route path="/" exact component={PlanningTool} />
+          				<Route path="*" render={()=>{
+          					return <Redirect to="/" />
+          				}} />
         			</Switch>
 				</div>
 			</div>

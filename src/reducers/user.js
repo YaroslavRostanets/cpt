@@ -4,7 +4,7 @@ import { LOGIN_REQUEST,
 } from '../actions/userActions';
 
 const initialState = {
-  	userData: null,
+  	userData: JSON.parse(localStorage.getItem('user')) || null,
   	fetching: false
 }
 

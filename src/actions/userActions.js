@@ -20,6 +20,7 @@ export function handleLogin(user, redirect) {
           type: LOGIN_SUCCESS,
           payload: response.user
         });
+        localStorage.setItem('user', JSON.stringify(response.user));
         redirect();
       } else {
         console.error(response.error.description);

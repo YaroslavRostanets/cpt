@@ -47,9 +47,8 @@ class Auth extends Component {
 	handleSubmit(e) {
 		const formData = new FormData(e.target);
    		const user = {};
-   		const redirect = this.props.history.push.bind(null, "/");
-   		console.log("REDIRECT: ", redirect);
    		e.preventDefault();
+   		const redirect = this.props.history.push.bind(null, "/");
 
    		for (let key of formData.keys()) {
    			user[key] = formData.get(key);
@@ -61,7 +60,6 @@ class Auth extends Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store) 
   return {
     fetching: store.user.fetching
   }

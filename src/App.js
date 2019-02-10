@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -18,24 +19,38 @@ const history = createBrowserHistory();
 
 class App extends Component {
   render() {
+
+    const { user } = this.props;
+
     return (
       <Router>
         <Route render={({location})=>(
-          <TransitionGroup>
-            <CSSTransition
-              key={location.key}
-              timeout={300}
-              classNames="fade">
-              <div>
-                <Route path="/auth" component={Auth} />
-                <Route path="/" component={Content} />
-              </div>
-            </CSSTransition>
-          </TransitionGroup>
+          <Switch>
+            <Route path="/auth" exact render={()=>{
+              if ( user ) {
+                return (<Redirect to="/"/>)
+              } else {
+                return (<Auth history={history} />)
+                  }
+              }} />
+              <Route path="/" render={()=>{
+                if ( user ) {
+                  return (<Content history={history} user={user} />)
+                } else {
+                  return (<Redirect to="/auth"/>)
+                }
+                }} />
+          </Switch>
         )} />
       </Router>
     );
   }
 }
 
-export default App;
+const mapStateToProps = store => {
+  return {
+    user: store.user.userData
+  }
+}
+
+export default connect(mapStateToProps)(App)
