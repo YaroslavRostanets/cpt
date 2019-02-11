@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { ButtonBase, IconButton, Button, Input, MenuItem, Select } from '@material-ui/core';
 import ColorSelect from '../ui/ColorSelect';
 
 class ColorsTable extends Component {

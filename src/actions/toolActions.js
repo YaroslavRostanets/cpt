@@ -1,0 +1,7 @@
+export const GET_PLANNING_HOURS_REQUEST = 'GET_PLANNING_HOURS_REQUEST';
+export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
+export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
+
+export function getPlanningHours () {
+	return {}
+}

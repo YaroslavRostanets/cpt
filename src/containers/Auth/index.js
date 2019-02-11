@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { handleLogin } from '../../actions/userActions'
+import { handleLogin } from '../../actions/userActions';
 import { FormGroup } from '../../components/ui/FormGroup';
 import { ButtonBase, CircularProgress } from '@material-ui/core';
 import './styles.scss';

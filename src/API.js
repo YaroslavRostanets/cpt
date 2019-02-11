@@ -1,5 +1,6 @@
 
 class Api {
+	api = 'http://94.45.133.173:8000/';
 	
 	signIn(user) {
 		let promise = new Promise((resolve, reject)=>{
@@ -21,6 +22,23 @@ class Api {
 		}, 2000);
 		});
 		return promise;
+	}
+
+	getCoastCenters(resolve) {
+		let result = fetch(`${this.api}cost-centers`, {mode: 'cors'})
+      .then(response => response.json())
+      .then(data => {
+      	const multiSelectOptions = data.result.map(option => {
+      		option.value = option['cost_center_id'];
+      		return option;
+      	})
+      	resolve({
+      		coastCenters: multiSelectOptions
+      	})
+      })
+      .catch(error => console.error(error));
+
+
 	}
 
 }

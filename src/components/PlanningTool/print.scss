@@ -1,0 +1,118 @@
+@media print {
+	body {
+		-webkit-print-color-adjust: exact;
+		color-adjust: exact;
+		background: #FFFFFF !important;
+	}
+	@page landscape {size: landscape;}
+	//@page { size: auto;  margin: 0mm; }
+	body {page:landscape;}
+	#header {
+		display: none;
+	}
+    .content {
+    	padding: 0 !important;
+    	height: auto !important;
+    }
+    #content-tool {
+    	padding: 0 !important;
+    	.top {
+    		display: none;
+    	}
+    }
+    #print-container {
+		display: block;
+    }
+    .printable-table {
+    	height: auto !important;
+    	border:solid #D0D0D0 !important;
+    	border-width:0px 0 0 0px !important;
+    	width: 27cm;
+    	border-collapse: collapse;
+    	th {
+    		position: static;
+    		border: 1px solid #D0D0D0 !important;
+    		border: solid #D0D0D0 !important;
+    		font-size: 8px !important;
+    		padding-left: 2px !important;
+    		padding-right: 2px !important;
+    		text-align: center !important;
+    		& > div {
+    			white-space: nowrap;
+    		}
+    	}
+    	td {
+    		border: 1pt solid #D0D0D0 !important;
+    		font-size: 8px !important;
+    		padding-left: 2px !important;
+    		padding-right: 2px !important;
+    	}
+    	&:before, &:after {
+    		display: none;
+    	}
+    	.fa-angle-down {
+    		display: none;
+    	}
+    	input {
+    		display: none !important;
+    	}
+    	.content {
+			height: 100%;
+			background-color: #FFFFFF !important;
+    	}
+    	#planning-table {
+    		display: none !important;
+    	}
+    }
+    #print-container {
+    	.js-table-legend {
+    		display: flex;
+    		margin-top: 25px;
+    	}
+    }
+    .js-table-legend {
+		background: #FFFFFF;
+		font-size: 12px;
+		.title {
+			white-space: nowrap;
+		}
+		.required-days {
+			td {
+				&:first-child {
+					background-color: #CFCFCF;
+				}
+			}
+		}
+		.tables {
+			display: flex;
+		}
+		.colors-table {
+			margin-right: 10px;
+			&:last-child {
+				margin-right: 0;
+			}
+			td {
+				&:first-child {
+					display: none;
+				}
+			}
+		}
+		table {
+			font-size: 12px;
+			border-collapse: separate;
+			th {
+				white-space: nowrap;
+				font-size: 12px;
+			}
+			td {
+				padding: 0 5px;
+				border: 1px solid #CFCFCF;
+				width: 40px;
+			} 
+		}
+		.required-days {
+			margin-right: 25px;
+		}
+	}
+    
+}

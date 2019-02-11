@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { ButtonBase, Dialog, DialogTitle, DialogContent, 
-	Typography, DialogActions, Button, IconButton } from '@material-ui/core';
+import TableSettingsDialog from './TableSettingsDialog';
+import { ButtonBase } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import enGB from 'date-fns/locale/en-GB';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
-import CheckboxGroup from '../ui/CheckboxGroup';
 import MultiSelect from '@khanacademy/react-multi-select';
-
-import './styles.scss';
+import { API } from '../../API';
 
 registerLocale('en-GB', enGB);
 
@@ -19,18 +17,20 @@ class TableControll extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-      		startDate: new Date(),
+      		date: new Date(),
       		openDialog: false,
-      		selected: []
+      		selected: [],
+      		coastCenters: []
     	};
     	this.handleChange = this.handleChange.bind(this);
     	this.handleDialogOpen = this.handleDialogOpen.bind(this);
     	this.handleDialogClose = this.handleDialogClose.bind(this);
+    	this.handlePrint = this.handlePrint.bind(this);
 	}
 
 	handleChange(date) {
 		this.setState({
-		    startDate: date
+		    date: date
 		});
   	}
 
@@ -46,6 +46,26 @@ class TableControll extends Component {
 	    });
 	};
 
+	handlePrint() {	
+		if ( !document.getElementById("print-container") ) {
+			let content = document.getElementById("content-tool");
+			let printContainer = document.createElement("div");
+			printContainer.setAttribute("id", "print-container");
+			content.appendChild( printContainer );
+		}
+		let printedTable = document.querySelector("#planning-table table").outerHTML;
+		let legend = document.querySelector('.js-table-legend').outerHTML;
+		document.getElementById("print-container").innerHTML = printedTable + legend;
+		let inputs = document.querySelectorAll("#print-container input");
+		inputs.forEach((item, index)=>{
+			let value = document.createElement("span");
+			value.innerText = item.value;
+			item.parentNode.insertBefore(value, item);
+		});
+
+		window.print();
+	}
+
 
 	render() {
 
@@ -54,6 +74,8 @@ class TableControll extends Component {
     		{label: "CBA321", value: 2},
     		{label: "TATA2323", value: 3},
 		]
+
+		const { openDialog, coastCenters } = this.state;
 
 		return(
 			<div className="top">
@@ -65,7 +87,7 @@ class TableControll extends Component {
 					<div className="date-picker-wrap">
 						<DatePicker
 							locale="en-GB"
-							selected={this.state.startDate}
+							selected={this.state.date}
         					onChange={this.handleChange}
         					dateFormat="dd/MM/YY"
         					ref={(r) => {
@@ -78,10 +100,9 @@ class TableControll extends Component {
 						</ButtonBase>
 					</div>
 					<MultiSelect
-		                options={sortTypes}
+		                options={coastCenters}
 		                selected={this.state.selected}
 		                onSelectedChanged={(selected) => {
-		                	console.log(selected);
 		                	this.setState({selected: selected})
 		                } }
             		/>
@@ -94,74 +115,17 @@ class TableControll extends Component {
 					<ButtonBase className="download">
 						<i className="fa fa-download" aria-hidden="true"></i>
 					</ButtonBase>
-					<ButtonBase className="print">
+					<ButtonBase className="print" onClick={this.handlePrint}>
 						<i className="fa fa-print" aria-hidden="true"></i>
 					</ButtonBase>
 				</div>
-				<Dialog
-					id="table-settings-dialog"
-		          	onClose={this.handleDialogClose}
-		          	aria-labelledby="customized-dialog-title"
-		          	open={this.state.openDialog}
-        		>
-		          <DialogTitle className="title-wrap">
-		          	<div className="title">
-		          		Table settings
-		          	</div>
-		          	<IconButton onClick={this.handleDialogClose} aria-label="Close">
-          				<CloseIcon />
-        			</IconButton>
-		          </DialogTitle>
-		          <DialogContent className="dialog-content">
-		        	<div className="text">
-		        		Choose columns you want to hide
-		        	</div>
-		        	<div className="cols">
-		        		<div className="col">
-		        			<div className="col-titile">
-		        				General
-		        			</div>
-		        			<div className="list">
-		        				<CheckboxGroup 
-		        					label="Cost Center"
-		        					checked={true}
-		        					 />
-		        				<CheckboxGroup 
-		        					label="Job#"
-		        					checked={true}
-		        					 />
-		        				<CheckboxGroup label="Description" />
-		        				<CheckboxGroup 
-		        					label="Date In" 
-									checked={true}
-		        					/>
-		        			</div>
-		        		</div>
-		        		<div className="col">
-		        			<div className="col-titile">
-		        				Planned
-		        			</div>
-		        			<div className="list">
-		        				<CheckboxGroup label="Date Due" />
-		        				<CheckboxGroup label="Partial Due" />
-		        				<CheckboxGroup label="Days Available" />
-		        				<CheckboxGroup label="Hrs. Planned" />
-		        			</div>
-		        		</div>
-		        		<div className="col">
-		        			<div className="col-titile">
-		        				Required
-		        			</div>
-		        			<div className="list">
-		        				<CheckboxGroup label="Date Due" />
-		        				<CheckboxGroup label="Partial Due" />
-		        			</div>
-		        		</div>
-		        	</div>
-		          </DialogContent>
-        		</Dialog>
+				<TableSettingsDialog open={openDialog} closeDialog={this.handleDialogClose} />
 			</div>
 		)
+	}
+
+	componentDidMount() {
+		API.getCoastCenters(this.setState.bind(this));
 	}
 
 

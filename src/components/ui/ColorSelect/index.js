@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ButtonBase, IconButton, Button, Input, MenuItem, Select } from '@material-ui/core';
+import { MenuItem, Select } from '@material-ui/core';
 import './styles.scss';
 
 class ColorSelect extends Component {

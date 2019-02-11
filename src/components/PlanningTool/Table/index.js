@@ -5,11 +5,11 @@ import './styles.scss';
 class Table extends Component {
 
 	render() {
-		const temp = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		const temp = [0,0];
 
 		return(
 			<Scrollbars id="planning-table">
-				<table>
+				<table className="printable-table">
 				<tbody>
 				<tr>
 					<th>
