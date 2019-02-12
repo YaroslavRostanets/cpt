@@ -13,7 +13,7 @@ class Table extends Component {
 			<Scrollbars id="planning-table">
 				<table className="printable-table">
 					<tbody>
-						<TableHead />
+						{(tableRows[0]) ? <TableHead row={tableRows[0]} /> : null }
 						{ tableRows.map((row, index)=>(
 							<TableRow key={index} row={row} />
 						))}

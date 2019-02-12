@@ -3,6 +3,24 @@ import React, { Component } from 'react';
 class TableHead extends Component {
 
 	render() {
+
+		const { row } = this.props;
+		const { planning_hours } = row;
+
+		const getDate = (timestamp) => ( new Date(timestamp).getDate() );
+		const getWeekDay = (timestamp) => {
+			let index = new Date(timestamp).getDay();
+			let days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+			return days[index];
+		};
+		const getMonth = (timestamp) => {
+			var index = new Date(timestamp).getMonth();
+			let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+			return months[index];
+		}
+
 		return(
 			<tr>
 					<th>
@@ -49,6 +67,16 @@ class TableHead extends Component {
 						Allocated Hours
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
+					{ 
+						planning_hours.map((item, index)=>(
+						<th key={index} className="day">
+							<div>{getWeekDay(item.date)}</div>
+							<div>{getDate(item.date)} {getMonth(item.date)}</div>
+							<div>30,00</div>
+							<i className="fa fa-angle-down" aria-hidden="true"></i>
+						</th>
+					)) }
+					{/*
 					<th className="day" style={{background: '#FCC99A', 
 					borderLeft: '3px solid rgb(208, 208, 208)'}}>
 						<div>Mon</div>
@@ -146,6 +174,7 @@ class TableHead extends Component {
 						<div></div>
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
+				*/}
 				</tr>
 		)
 	}

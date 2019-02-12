@@ -7,8 +7,12 @@ class TableRow extends Component {
 		const { row } = this.props;
 		const dateFormat = (timestamp) => {
 			let newDate = new Date(timestamp);
+			let dd = newDate.getDate() < 10 ? '0' + newDate.getDate() : newDate.getDate(); 
+			let mm = (newDate.getMonth() + 1 ) < 10 ? '0' + (newDate.getMonth() + 1 ) : (newDate.getMonth() + 1 ); 
+				//January is 0!
+			let yy = String(newDate.getFullYear()).substring(2);
 			
-			return `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getYear()}`;
+			return `${dd}/${mm}/${yy}`;
 		}
 
 		return(
@@ -29,7 +33,7 @@ class TableRow extends Component {
 					{ dateFormat(new Date(row.dateIn).getTime()) }
 				</td>
 				<td>
-					{row.dateDue}
+					{ dateFormat(new Date(row.dateDue).getTime()) }
 				</td>
 				<td>
 					{row.partialDue}
@@ -41,8 +45,12 @@ class TableRow extends Component {
 					{row.hoursPlanned}
 				</td>
 				<td>
-					
+					temporarily empty
 				</td>
+				<td>
+					5
+				</td>
+				{/*
 				<td style={{borderRight: '3px solid #D0D0D0'}}>
 					17.02
 				</td>
@@ -94,6 +102,7 @@ class TableRow extends Component {
 				<td>
 					<input type="text" defaultValue=""/>
 				</td>
+			*/}
 			</tr>
 		)
 	}
