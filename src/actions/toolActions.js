@@ -25,7 +25,9 @@ export function getPlanningHours (date, selected) {
     	)
         .then(response => response.json())
         .then(data => {
-        	const result = [data.result[10]];
+        	/*const result = [data.result[10]];*/
+        	const { result } = data;
+        	console.log(result);
 
         	const tableRowsArray = result.map((oneJobObject)=>{
 
@@ -42,16 +44,17 @@ export function getPlanningHours (date, selected) {
         				let startDateIn = new Date(oneJobObject.Date_In).setHours(0,0,0,0);
         				let startDateDue = new Date(oneJobObject.Date_Due).setHours(0,0,0,0);
 
-        				return (startDateDue - startDateIn + dayInMiliSec) / dayInMiliSec;
+        				return Math.round( (startDateDue - startDateIn + dayInMiliSec) / dayInMiliSec );
         			}(),
-        			'hoursPlanned': oneJobObject.Hrs_planned,
+        			'hoursPlanned': oneJobObject.Hrs_planned.toFixed(2),
         			'planning_hours': function() {
-        				console.log('1');
         				var planningHoursArray = [];
         				var weekCounter = 0;
-        				var dateStart = new Date();
+        				var dateStart = new Date(date);
+        					dateStart.setHours(0,0,0,0);
         				var i = 1;
-        				var currentDate = new Date();
+        				var currentDate = new Date(date);
+        					currentDate.setHours(0,0,0,0);
 
         				while(i < 20) {
         					planningHoursArray.push({
@@ -68,15 +71,49 @@ export function getPlanningHours (date, selected) {
         					//console.log('Now: ', dateStart);
         					i++;
         				}
+        				currentDate.setDate(currentDate.getDate()+1);
+        				planningHoursArray.push({
+        					date: currentDate.getTime(),
+        					weekly: true
+        				});
+        				currentDate.setDate(currentDate.getDate()+1);
+        				planningHoursArray.push({
+        					date: currentDate.getTime(),
+        					weekly: true
+        				});
+
+        				oneJobObject.planning_hours.forEach((item)=>{
+        					let setPanningHoursDate = new Date(item.date);
+        						setPanningHoursDate.setHours(0,0,0,0);
+        						console.log('test: ', setPanningHoursDate.getTime());
+        						let index = planningHoursArray.findIndex((el)=>{
+        							return el.date === setPanningHoursDate.getTime();
+        						});
+        						console.log('findIndex: ', index);
+        						planningHoursArray.splice(index, 1, item);
+        				});
+
+
+        				console.log(planningHoursArray);
+
         				return planningHoursArray;
         			}()
         		}
         		return oneRowObj;
         	});
         	console.log('TableRow: ', tableRowsArray);
+
+        	dispatch({
+          		type: GET_PLANNING_HOURS_SUCCESS,
+          		payload: tableRowsArray
+        	})
+
         })
       	.catch(error => console.error(
-
+      		dispatch({
+          		type: GET_PLANNING_HOURS_FAIL,
+          		payload: {}
+        	})
       	));
 
 	}
