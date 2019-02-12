@@ -22,16 +22,32 @@ class TableControll extends Component {
       		selected: [],
       		coastCenters: []
     	};
-    	this.handleChange = this.handleChange.bind(this);
+    	this.handleDateChange = this.handleDateChange.bind(this);
+    	this.handleCoastCentersChange = this.handleCoastCentersChange.bind(this);
+
     	this.handleDialogOpen = this.handleDialogOpen.bind(this);
     	this.handleDialogClose = this.handleDialogClose.bind(this);
     	this.handlePrint = this.handlePrint.bind(this);
 	}
 
-	handleChange(date) {
+	handleDateChange(date) {
 		this.setState({
 		    date: date
+		}, ()=>{
+			if(this.state.selected.length){
+				let { date, selected } = this.state;
+				this.props.getPlanningHoursAction(date, selected);
+			}
 		});
+  	}
+
+  	handleCoastCentersChange(selected) {
+  		this.setState({selected: selected},()=>{
+  			if(this.state.selected.length) {
+				let { date, selected } = this.state;
+  				this.props.getPlanningHoursAction(date, selected);
+  			}
+  		});
   	}
 
 	handleDialogOpen() {
@@ -69,12 +85,6 @@ class TableControll extends Component {
 
 	render() {
 
-		const sortTypes = [
-			{label: "ABC123", value: 1},
-    		{label: "CBA321", value: 2},
-    		{label: "TATA2323", value: 3},
-		]
-
 		const { openDialog, coastCenters } = this.state;
 
 		return(
@@ -88,7 +98,7 @@ class TableControll extends Component {
 						<DatePicker
 							locale="en-GB"
 							selected={this.state.date}
-        					onChange={this.handleChange}
+        					onChange={this.handleDateChange}
         					dateFormat="dd/MM/YY"
         					ref={(r) => {
     							this.component = r;
@@ -102,9 +112,7 @@ class TableControll extends Component {
 					<MultiSelect
 		                options={coastCenters}
 		                selected={this.state.selected}
-		                onSelectedChanged={(selected) => {
-		                	this.setState({selected: selected})
-		                } }
+		                onSelectedChanged={this.handleCoastCentersChange}
             		/>
 				</div>
 				<div className="right-part">

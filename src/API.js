@@ -29,7 +29,7 @@ class Api {
       .then(response => response.json())
       .then(data => {
       	const multiSelectOptions = data.result.map(option => {
-      		option.value = option['cost_center_id'];
+      		option.value = Number(option['cost_center_id']);
       		return option;
       	})
       	resolve({

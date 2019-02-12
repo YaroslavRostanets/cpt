@@ -24,15 +24,15 @@ class PlanningTool extends Component {
 }
 
 const mapStateToProps = store => {
-  return {
+  	return {
     
-  }
+  	}
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getPlanningHoursAction: () => dispatch(getPlanningHours())
-  }
+  	return {
+    	getPlanningHoursAction: (date, selected) => dispatch(getPlanningHours(date, selected))
+  	}
 }
 
 
