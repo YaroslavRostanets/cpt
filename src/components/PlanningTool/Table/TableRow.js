@@ -4,7 +4,9 @@ class TableRow extends Component {
 
 	render() {
 
-		const { row } = this.props;
+		const { row, hiddenCols } = this.props;
+		const { planning_hours } = row;
+
 		const dateFormat = (timestamp) => {
 			let newDate = new Date(timestamp);
 			let dd = newDate.getDate() < 10 ? '0' + newDate.getDate() : newDate.getDate(); 
@@ -17,92 +19,50 @@ class TableRow extends Component {
 
 		return(
 			<tr>
-				<td>
+				<td style={{display: hiddenCols['costCenter'] ? 'none' : 'table-cell'}}>
 					{row.costCenter}
 				</td>
-				<td>
+				<td style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell'}}>
 					{row.jobno}
 				</td>
-				<td>
+				<td style={{display: hiddenCols['customer'] ? 'none' : 'table-cell'}}>
 					{row.customer}
 				</td>
-				<td>
+				<td style={{display: hiddenCols['description'] ? 'none' : 'table-cell'}}>
 					{row.description}
 				</td>
-				<td>
+				<td style={{display: hiddenCols['dateIn'] ? 'none' : 'table-cell'}}>
 					{ dateFormat(new Date(row.dateIn).getTime()) }
 				</td>
-				<td>
+				<td style={{display: hiddenCols['dateDue'] ? 'none' : 'table-cell'}}>
 					{ dateFormat(new Date(row.dateDue).getTime()) }
 				</td>
-				<td>
+				<td style={{display: hiddenCols['partialDue'] ? 'none' : 'table-cell'}}>
 					{row.partialDue}
 				</td>
-				<td>
+				<td style={{display: hiddenCols['daysAvailable'] ? 'none' : 'table-cell'}}>
 					{row.daysAvailable}
 				</td>
-				<td>
+				<td style={{display: hiddenCols['hrsPlaned'] ? 'none' : 'table-cell'}}>
 					{row.hoursPlanned}
 				</td>
-				<td>
-					temporarily empty
+				<td style={{display: hiddenCols['requiredDays'] ? 'none' : 'table-cell' }}>
+					0
 				</td>
-				<td>
+				<td style={{borderRight: '3px solid rgb(208, 208, 208)', 
+					display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>
 					5
 				</td>
-				{/*
-				<td style={{borderRight: '3px solid #D0D0D0'}}>
-					17.02
-				</td>
-				<td style={{borderLeft: '3px solid #D0D0D0'}}>
-					<input type="text" defaultValue="17.2"/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-				<td>
-					<input type="text" defaultValue=""/>
-				</td>
-			*/}
+				{ 
+					planning_hours.map((item, index)=>(
+						<td key={index}>
+							<input type="text" 
+								pattern="[0-9]*" 
+								defaultValue={ item.hours ? item.hours : ""}
+								 />
+						</td>
+					)) 
+				}
 			</tr>
 		)
 	}

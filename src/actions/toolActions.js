@@ -74,12 +74,12 @@ export function getPlanningHours (date, selected) {
         				currentDate.setDate(currentDate.getDate()+1);
         				planningHoursArray.push({
         					date: currentDate.getTime(),
-        					weekly: true
+        					is_weekly: true
         				});
         				currentDate.setDate(currentDate.getDate()+1);
         				planningHoursArray.push({
         					date: currentDate.getTime(),
-        					weekly: true
+        					is_weekly: true
         				});
 
         				oneJobObject.planning_hours.forEach((item)=>{

@@ -14,18 +14,29 @@ class CheckboxGroup extends Component {
 		}
 	}
 
+	handleChange() {
+
+	}
+
 	render() {
 		const label = this.props.label || "";
+		const { checked, prop } = this.props; 
+		const { colDisplayChange } = this.props;
 		
 		return(
 			<label className="checkbox-group">
 				<Checkbox
 	          		nativeControlId='my-checkbox'
-	          		checked={this.state.checked}
-	          		indeterminate={this.state.indeterminate}
+	          		checked={checked}
+	   
 	          		onChange={(e) => this.setState({
 			            checked: e.target.checked,
-			            indeterminate: e.target.indeterminate})
+			            indeterminate: e.target.indeterminate},
+			            	()=>{
+			            	colDisplayChange({
+			            		[prop]: this.state.checked
+			            	})}
+			            )
 	          		}
 	        	/>
 	        	<div className="label-text">

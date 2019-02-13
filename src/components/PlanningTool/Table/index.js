@@ -7,15 +7,18 @@ import './styles.scss';
 class Table extends Component {
 
 	render() {
-		const { tableRows } = this.props;
+		const { tableRows, hiddenCols } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
 				<table className="printable-table">
 					<tbody>
-						{(tableRows[0]) ? <TableHead row={tableRows[0]} /> : null }
+						{(tableRows[0]) ? <TableHead 
+							rows={tableRows} 
+							row={tableRows[0]} 
+							hiddenCols={hiddenCols} /> : null }
 						{ tableRows.map((row, index)=>(
-							<TableRow key={index} row={row} />
+							<TableRow key={index} row={row} hiddenCols={hiddenCols} />
 						))}
 						
 					</tbody>

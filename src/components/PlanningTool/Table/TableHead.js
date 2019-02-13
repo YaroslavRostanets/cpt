@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 class TableHead extends Component {
 
 	render() {
-
-		const { row } = this.props;
+		const { rows, row, hiddenCols } = this.props;
 		const { planning_hours } = row;
 
 		const getDate = (timestamp) => ( new Date(timestamp).getDate() );
@@ -21,160 +20,79 @@ class TableHead extends Component {
 			return months[index];
 		}
 
+		const getSumByDay = (index) => {
+			var sum = 0;
+			
+			rows.forEach((row)=>{
+				sum += row.planning_hours[index].hours ? row.planning_hours[index].hours : 0;
+			});
+
+			return sum;
+		}
+
 		return(
 			<tr>
-					<th>
+					<th style={{display: hiddenCols['costCenter'] ? 'none' : 'table-cell' }}>
 						Cost Center
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell' }}>
 						Job #
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['customer'] ? 'none' : 'table-cell' }}>
 						Customer
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['description'] ? 'none' : 'table-cell' }}>
 						Description
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['dateIn'] ? 'none' : 'table-cell' }}>
 						Date In
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['dateDue'] ? 'none' : 'table-cell' }}>
 						Date Due
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['partialDue'] ? 'none' : 'table-cell' }}>
 						Partial Due
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['daysAvailable'] ? 'none' : 'table-cell' }}>
 						Days Available
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['hrsPlaned'] ? 'none' : 'table-cell' }}>
 						Hrs. Planed
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th>
+					<th style={{display: hiddenCols['requiredDays'] ? 'none' : 'table-cell' }}>
 						Required Days
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
-					<th style={{borderRight: '3px solid rgb(208, 208, 208)'}}>
+					<th style={{borderRight: '3px solid rgb(208, 208, 208)', 
+						display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>
 						Allocated Hours
 						<i className="fa fa-angle-down" aria-hidden="true"></i>
 					</th>
 					{ 
 						planning_hours.map((item, index)=>(
-						<th key={index} className="day">
-							<div>{getWeekDay(item.date)}</div>
-							<div>{getDate(item.date)} {getMonth(item.date)}</div>
-							<div>30,00</div>
-							<i className="fa fa-angle-down" aria-hidden="true"></i>
-						</th>
+							item.is_weekly ?
+								<th key={index} className="day">
+									<div>W/E</div>
+									<div>{getDate(item.date)} {getMonth(item.date)}</div>
+								</th>
+								 : 
+								<th key={index} className="day">
+									<div>{getWeekDay(item.date)}</div>
+									<div>{getDate(item.date)} {getMonth(item.date)}</div>
+									<div>{getSumByDay(index)}</div>
+									<i className="fa fa-angle-down" aria-hidden="true"></i>
+								</th>
+						
 					)) }
-					{/*
-					<th className="day" style={{background: '#FCC99A', 
-					borderLeft: '3px solid rgb(208, 208, 208)'}}>
-						<div>Mon</div>
-						<div>09 Oct</div>
-						<div>255,21</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Tues</div>
-						<div>10 Oct</div>
-						<div>30,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Wed</div>
-						<div>11 Oct</div>
-						<div>32,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Thu</div>
-						<div>12 Oct</div>
-						<div>30,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#EB9DA6'}}>
-						<div>Fri</div>
-						<div>13 Oct</div>
-						<div>520,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day">
-						<div>Sun</div>
-						<div>14 Oct</div>
-						<div></div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day">
-						<div>Sat</div>
-						<div>15 Oct</div>
-						<div></div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Mon</div>
-						<div>16 Oct</div>
-						<div>255,21</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Tues</div>
-						<div>17 Oct</div>
-						<div>30,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Wed</div>
-						<div>18 Oct</div>
-						<div>32,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Thu</div>
-						<div>19 Oct</div>
-						<div>30,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day" style={{background: '#A5DBA8'}}>
-						<div>Fri</div>
-						<div>20 Oct</div>
-						<div>520,00</div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day">
-						<div>Sun</div>
-						<div>21 Oct</div>
-						<div></div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day">
-						<div>Sat</div>
-						<div>22 Oct</div>
-						<div></div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day">
-						<div>W/E</div>
-						<div>23 Oct</div>
-						<div></div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-					<th className="day">
-						<div>W/E</div>
-						<div>24 Oct</div>
-						<div></div>
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					</th>
-				*/}
 				</tr>
 		)
 	}

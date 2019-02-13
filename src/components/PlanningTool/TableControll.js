@@ -86,6 +86,8 @@ class TableControll extends Component {
 	render() {
 
 		const { openDialog, coastCenters } = this.state;
+		const { hiddenCols } = this.props;
+		const { colDisplayChange } = this.props;
 
 		return(
 			<div className="top">
@@ -127,7 +129,13 @@ class TableControll extends Component {
 						<i className="fa fa-print" aria-hidden="true"></i>
 					</ButtonBase>
 				</div>
-				<TableSettingsDialog open={openDialog} closeDialog={this.handleDialogClose} />
+				<TableSettingsDialog 
+					open={openDialog} 
+					closeDialog={this.handleDialogClose} 
+					hiddenCols={hiddenCols}
+					colDisplayChange={colDisplayChange}
+
+					/>
 			</div>
 		)
 	}
