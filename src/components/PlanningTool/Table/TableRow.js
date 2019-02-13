@@ -3,6 +3,11 @@ import CustomInput from './CustomInput';
 
 class TableRow extends Component {
 
+	constructor(props) {
+		super(props)
+
+	}
+
 	render() {
 
 		const { row, hiddenCols, filterOptions } = this.props;
@@ -16,6 +21,16 @@ class TableRow extends Component {
 			let yy = String(newDate.getFullYear()).substring(2);
 			
 			return `${dd}/${mm}/${yy}`;
+		}
+
+		const getAllocatedHours = ()=>{
+			let result = planning_hours.reduce((sum, item)=>{
+				console.log('item: ', item);
+				console.log('sum: ', sum);
+				return item.hours ? sum + item.hours : sum
+			}, 0);
+
+			return result;
 		}
 
 		return(
@@ -52,7 +67,7 @@ class TableRow extends Component {
 				</td>
 				<td style={{borderRight: '3px solid rgb(208, 208, 208)', 
 					display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>
-					5
+					{getAllocatedHours(planning_hours)}
 				</td>
 				{ 
 					planning_hours.map((item, index)=>(
