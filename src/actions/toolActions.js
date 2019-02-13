@@ -2,6 +2,10 @@ export const GET_PLANNING_HOURS_REQUEST = 'GET_PLANNING_HOURS_REQUEST';
 export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
 
+export function saveTableCell (obj) {
+
+}
+
 export function getPlanningHours (date, selected) {
 	console.log('getting_planning_hours...');
 	console.log('date', Math.round(date.getTime() / 1000) );
@@ -9,7 +13,8 @@ export function getPlanningHours (date, selected) {
 
 	return dispatch => {
 		dispatch({
-      		type: GET_PLANNING_HOURS_REQUEST
+      		type: GET_PLANNING_HOURS_REQUEST,
+            payload: {date, selected} 
     	});
 		console.log('cost_centers :', selected);
 		console.log('date :', date);
@@ -27,7 +32,7 @@ export function getPlanningHours (date, selected) {
         .then(data => {
         	/*const result = [data.result[10]];*/
         	const { result } = data;
-        	console.log(result);
+        	console.log('DATA: ', data);
 
         	const tableRowsArray = result.map((oneJobObject)=>{
 
@@ -40,11 +45,13 @@ export function getPlanningHours (date, selected) {
         			'dateDue': oneJobObject.Date_Due,
         			'partialDue': oneJobObject.Partial_Due,
         			'daysAvailable': function() {
-        				let dayInMiliSec = 24 * 60 * 60;
-        				let startDateIn = new Date(oneJobObject.Date_In).setHours(0,0,0,0);
-        				let startDateDue = new Date(oneJobObject.Date_Due).setHours(0,0,0,0);
+        				let dayInMiliSec = 24 * 60 * 60 * 1000;
+        				let startDateIn = new Date(oneJobObject.Date_In);
+                            startDateIn.setHours(0,0,0,0);
+        				let startDateDue = new Date(oneJobObject.Date_Due);
+                            startDateDue.setHours(0,0,0,0);
 
-        				return Math.round( (startDateDue - startDateIn + dayInMiliSec) / dayInMiliSec );
+        				return Math.round( (startDateDue.getTime() - startDateIn.getTime() + dayInMiliSec) / dayInMiliSec );
         			}(),
         			'hoursPlanned': oneJobObject.Hrs_planned.toFixed(2),
         			'planning_hours': function() {
@@ -58,7 +65,9 @@ export function getPlanningHours (date, selected) {
 
         				while(i < 20) {
         					planningHoursArray.push({
-        						date: currentDate.getTime()
+        						date: currentDate.getTime(),
+                                internal_task_id: oneJobObject.jobno,
+                                is_weekly: false
         					});
         					if(currentDate.getDay() === 0) {
         						weekCounter = weekCounter + 1;
@@ -74,11 +83,13 @@ export function getPlanningHours (date, selected) {
         				currentDate.setDate(currentDate.getDate()+1);
         				planningHoursArray.push({
         					date: currentDate.getTime(),
+                            internal_task_id: oneJobObject.jobno,
         					is_weekly: true
         				});
         				currentDate.setDate(currentDate.getDate()+1);
         				planningHoursArray.push({
         					date: currentDate.getTime(),
+                            internal_task_id: oneJobObject.jobno,
         					is_weekly: true
         				});
 
@@ -109,12 +120,15 @@ export function getPlanningHours (date, selected) {
         	})
 
         })
-      	.catch(error => console.error(
-      		dispatch({
-          		type: GET_PLANNING_HOURS_FAIL,
-          		payload: {}
-        	})
-      	));
+      	.catch(error => {
+            throw error;
+            dispatch({
+                type: GET_PLANNING_HOURS_FAIL,
+                payload: {}
+            })
+        }
+            
+      	);
 
 	}
 	

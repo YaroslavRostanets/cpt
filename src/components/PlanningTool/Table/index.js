@@ -7,7 +7,7 @@ import './styles.scss';
 class Table extends Component {
 
 	render() {
-		const { tableRows, hiddenCols } = this.props;
+		const { tableRows, hiddenCols, filterOptions } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
@@ -18,7 +18,12 @@ class Table extends Component {
 							row={tableRows[0]} 
 							hiddenCols={hiddenCols} /> : null }
 						{ tableRows.map((row, index)=>(
-							<TableRow key={index} row={row} hiddenCols={hiddenCols} />
+							<TableRow 
+								key={index} 
+								row={row} 
+								hiddenCols={hiddenCols} 
+								filterOptions={filterOptions}
+								/>
 						))}
 						
 					</tbody>

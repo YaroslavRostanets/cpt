@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import CustomInput from './CustomInput';
 
 class TableRow extends Component {
 
 	render() {
 
-		const { row, hiddenCols } = this.props;
+		const { row, hiddenCols, filterOptions } = this.props;
 		const { planning_hours } = row;
 
 		const dateFormat = (timestamp) => {
@@ -56,10 +57,10 @@ class TableRow extends Component {
 				{ 
 					planning_hours.map((item, index)=>(
 						<td key={index}>
-							<input type="text" 
-								pattern="[0-9]*" 
-								defaultValue={ item.hours ? item.hours : ""}
-								 />
+							<CustomInput 
+								value={ item.hours ? item.hours : ""} 
+								data={item} 
+								filterOptions={filterOptions} />
 						</td>
 					)) 
 				}

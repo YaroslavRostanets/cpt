@@ -13,7 +13,7 @@ class PlanningTool extends Component {
 
 	render() {
 		const { getPlanningHoursAction, colDisplayChangeAction } = this.props;
-		const { fetching, tableRows, hiddenCols } = this.props;
+		const { fetching, tableRows, hiddenCols, filterOptions } = this.props;
 		return(
 			<div id="content-tool">
 				<TableControll 
@@ -25,6 +25,7 @@ class PlanningTool extends Component {
 					tableRows={tableRows} 
 					fetching={fetching} 
 					hiddenCols={hiddenCols}
+					filterOptions={filterOptions}
 					/>
 				<TableLegend />
 			</div>
@@ -36,6 +37,7 @@ const mapStateToProps = store => {
   	return {
     	fetching: store.tool.fetching,
     	tableRows: store.tool.tableRows,
+    	filterOptions: store.tool.filter,
     	hiddenCols: store.ui.hiddenCols
   	}
 }
