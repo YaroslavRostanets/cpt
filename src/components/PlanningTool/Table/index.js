@@ -8,6 +8,7 @@ class Table extends Component {
 
 	render() {
 		const { tableRows, hiddenCols, filterOptions } = this.props;
+		const { saveTableCellAction } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
@@ -23,6 +24,7 @@ class Table extends Component {
 								row={row} 
 								hiddenCols={hiddenCols} 
 								filterOptions={filterOptions}
+								saveTableCellAction={saveTableCellAction}
 								/>
 						))}
 						

@@ -5,7 +5,7 @@ class TableHead extends Component {
 	render() {
 		const { rows, row, hiddenCols } = this.props;
 		const { planning_hours } = row;
-
+		
 		const getDate = (timestamp) => ( new Date(timestamp).getDate() );
 		const getWeekDay = (timestamp) => {
 			let index = new Date(timestamp).getDay();

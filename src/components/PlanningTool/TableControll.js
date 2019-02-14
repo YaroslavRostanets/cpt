@@ -31,6 +31,7 @@ class TableControll extends Component {
 	}
 
 	handleDateChange(date) {
+		console.log('dateC: ', date.setHours(0,0,0,0));
 		this.setState({
 		    date: date
 		}, ()=>{

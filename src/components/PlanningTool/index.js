@@ -5,6 +5,7 @@ import TableControll from './TableControll';
 import Table from './Table';
 import { TableLegend } from './TableLegend';
 import { getPlanningHours } from '../../actions/toolActions';
+import { saveTableCell } from '../../actions/toolActions';
 import { colDisplayChange } from '../../actions/uiActions';
 import './styles.scss';
 import './print.scss';
@@ -12,7 +13,11 @@ import './print.scss';
 class PlanningTool extends Component {
 
 	render() {
-		const { getPlanningHoursAction, colDisplayChangeAction } = this.props;
+		const { 
+			getPlanningHoursAction, 
+			colDisplayChangeAction,
+			saveTableCellAction
+			 } = this.props;
 		const { fetching, tableRows, hiddenCols, filterOptions } = this.props;
 		return(
 			<div id="content-tool">
@@ -26,6 +31,7 @@ class PlanningTool extends Component {
 					fetching={fetching} 
 					hiddenCols={hiddenCols}
 					filterOptions={filterOptions}
+					saveTableCellAction={saveTableCellAction}
 					/>
 				<TableLegend />
 			</div>
@@ -45,6 +51,7 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   	return {
     	getPlanningHoursAction: (date, selected) => dispatch(getPlanningHours(date, selected)),
+    	saveTableCellAction: (savedObject, date) => dispatch(saveTableCell(savedObject, date)),
     	colDisplayChangeAction: col => dispatch(colDisplayChange(col))
   	}
 }

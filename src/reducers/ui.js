@@ -17,7 +17,6 @@ const initialState = {
 };
 
 export function uiReducer(state = initialState, action) {
-	console.log('action:__', action.type);
   	switch (action.type) {
     	case COL_CHANGE:
       		return { ...state, hiddenCols: {...state.hiddenCols, ...action.payload} }

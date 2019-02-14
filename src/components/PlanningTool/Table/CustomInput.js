@@ -12,13 +12,12 @@ class CustomInput extends Component {
 	}
 
 	handleChange(e) {
+		clearTimeout(this.timerId);
 		const { filterOptions, data } = this.props;
-		//console.log('value: ', e.currentTarget.value.replace(/[^.\d]+/g,''));
-		console.log('DATA:___', data);
+
 		this.setState({
 			value: e.currentTarget.value.replace(/[^.\d]+/g,'').replace( /^([^\.]*\.)|\./g, '$1' )
 		}, ()=>{
-			console.log(filterOptions);
 			let sendObj = {
 				"cost_centers": filterOptions.selected.map( item => String(item) ),
 				"date": new Date(filterOptions.date).getTime() / 1000,
@@ -32,28 +31,33 @@ class CustomInput extends Component {
 			if (data.id) {
 				sendObj.data.id = Number( data.id );
 			}
-			console.log(sendObj);
+			//console.log('savedData: ', sendObj);
 			this.timerId = setTimeout(()=>{
-				console.log('___SAVED___');
-				this.save(sendObj);
-			}, 5000);
+				this.props.saveTableCellAction(sendObj, filterOptions.date);
+			}, 2000);
 		});
 	}
 
 	render(){
 
-		const { value } = this.props; 
+		const { value, row } = this.props;
 
 		return (
 			<input type="text" 
-				pattern="[0-9]*" 
-				value={ this.state.value }
+				defaultValue={ this.state.value }
 				onChange={this.handleChange}
 			/>
 		)
 	}
 
-	save(sendObj) {
+	componentWillReceiveProps(nextProps) {
+/*		console.log("NEXT_PROPS", nextProps);
+		this.setState({
+			value: nextProps.value
+		})*/
+	}
+
+/*	save(sendObj) {
 		fetch("http://94.45.133.173:8000/planning-hours/edit/",{
 			method: 'post',
 			body : JSON.stringify(sendObj)
@@ -66,7 +70,8 @@ class CustomInput extends Component {
           
         }
       )
-	}
+	}*/
+
 }
 
 export default CustomInput

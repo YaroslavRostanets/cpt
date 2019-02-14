@@ -9,7 +9,6 @@ const initialState = {
 }
 
 export function userReducer(state = initialState, action) {
-  console.log('action:__', action.type);
   	switch (action.type) {
     	case LOGIN_REQUEST:
       		return { ...state, fetching: true }

@@ -35,6 +35,7 @@
 		padding-right: 30px;
 		padding-left: 45px;
 		padding-bottom: 30px;
+		position: relative;
 		table {
 			width: 100%;
 			margin-bottom: 10px;
@@ -56,6 +57,16 @@
 			color: #4b4b4b;
 			font-weight: 600;
 		}
+		.loader {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -20px;
+			margin-top: -20px;
+			svg {
+				color: #3AAADE;
+			}
+		}
 	}
 	.remove {
 		padding: 3px;
@@ -74,8 +85,15 @@
 			padding: 0;
 			width: 105px;
 			margin-right: 12px;
+			&.fetching {
+				
+			}
 			&:last-child {
 				margin-right: 0;
+			}
+			.loader {
+				margin-left: -10px;
+				margin-top: -10px;
 			}
 		}
 	}

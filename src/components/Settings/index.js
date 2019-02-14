@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonBase, IconButton, Button, Input, MenuItem } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import Header from '../Header';
-import ColorsTable from './ColorsTable';
+import Timeline from './Timeline';
+import Capacity from './Capacity';
 import './styles.scss';
 import Select from '@material-ui/core/Select';
+import { getTimeline, 
+		 setTimeline, 
+		 removeTimeline,
+		 getCapacity } from '../../actions/settingsActions';
 
 class Settings extends Component {
 	constructor(props) {
@@ -14,132 +19,52 @@ class Settings extends Component {
 
 	render() {
 
+		const { getTimelineAction, 
+				setTimelineAction, 
+				removeTimelineAction, 
+				getCapacityAction } = this.props;
+		const { timeline, 
+				timelineFetching, 
+				timelineBtnFetching,
+				capacity
+				 } = this.props;
+
 		return (
 			<div id="settings-ctrl">
 				<div className="flex">
-
-					<div className="required-days std-block">
-						<div className="title">
-							Required  Days
-						</div>
-							<table>
-								<tbody>
-									<tr>
-										<th>Hrs.</th>
-										<th></th>
-										<th>Days</th>
-										<th></th>
-									</tr>
-									<tr>
-										<td>
-											<input type="text" 
-												defaultValue="1"
-												disabled />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="20" />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="1" />
-										</td>
-										<td>
-											<IconButton className="remove">
-												<CloseIcon />
-											</IconButton>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="text" 
-												defaultValue="21"
-												disabled />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="50" />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="2" />
-										</td>
-										<td>
-											<IconButton className="remove">
-												<CloseIcon />
-											</IconButton>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="text" 
-												defaultValue="51"
-												disabled />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="200" />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="3" />
-										</td>
-											<td>
-												<IconButton className="remove">
-													<CloseIcon />
-												</IconButton>
-											</td>
-										</tr>
-										<tr>
-										<td>
-											<input type="text" 
-												defaultValue="201"
-												disabled />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="300" />
-										</td>
-										<td>
-											<input type="text" 
-												defaultValue="4" />
-										</td>
-										<td>
-											<IconButton className="remove">
-												<CloseIcon />
-											</IconButton>
-										</td>
-										</tr>
-									</tbody>
-								</table>
-								<div className="btns-wrap">
-									<ButtonBase className="btn primary-btn">
-										Save
-									</ButtonBase>
-									<ButtonBase className="btn outlined-primary-btn">
-        								Add fields
-      								</ButtonBase>
-								</div>
-							</div>
-
-							<div className="standarts-colors std-block">
-								<div className="title">
-									Colors for standarts
-								</div>
-								<div className="tables">
-									<ColorsTable title="Standard" />
-									<ColorsTable title="Over Time" />
-									<ColorsTable title="Over Capacity" />
-								</div>
-								<ButtonBase className="btn primary-btn">
-									Save
-								</ButtonBase>
-							</div>
-
+					<Timeline 
+						timeline={timeline}
+						timelineFetching={timelineFetching}
+						timelineBtnFetching={timelineBtnFetching}
+						getTimeline={getTimelineAction} 
+						setTimeline={setTimelineAction}
+						removeTimeline={removeTimelineAction}
+						/>
+					<Capacity 
+						capacity={capacity} 
+						getCapacity={getCapacityAction} />
 						</div>
 					</div>
 		)
 	}
 }
 
-export default Settings
+const mapStateToProps = store => {
+  return {
+    timeline: store.settings.timeline,
+    timelineFetching: store.settings.timelineFetching,
+    timelineBtnFetching: store.settings.timelineBtnFetching,
+    capacity: store.settings.capacity
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getTimelineAction: () => dispatch(getTimeline()),
+    setTimelineAction: (timeline, stateTimeline) => dispatch(setTimeline(timeline, stateTimeline)),
+    removeTimelineAction: id => dispatch(removeTimeline(id)) ,
+    getCapacityAction: () => dispatch(getCapacity()) 
+  }
+}
+
+export default connect(mapStateToProps,  mapDispatchToProps)(Settings)

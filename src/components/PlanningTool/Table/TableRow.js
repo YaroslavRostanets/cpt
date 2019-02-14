@@ -12,6 +12,7 @@ class TableRow extends Component {
 
 		const { row, hiddenCols, filterOptions } = this.props;
 		const { planning_hours } = row;
+		const { saveTableCellAction } = this.props;
 
 		const dateFormat = (timestamp) => {
 			let newDate = new Date(timestamp);
@@ -24,13 +25,15 @@ class TableRow extends Component {
 		}
 
 		const getAllocatedHours = ()=>{
-			let result = planning_hours.reduce((sum, item)=>{
-				console.log('item: ', item);
-				console.log('sum: ', sum);
-				return item.hours ? sum + item.hours : sum
-			}, 0);
+			var sum = 0;
 
-			return result;
+			planning_hours.forEach((item)=>{
+				if(item.hours) {
+					sum += Number(item.hours);
+				}
+			});
+
+			return  sum;
 		}
 
 		return(
@@ -73,15 +76,19 @@ class TableRow extends Component {
 					planning_hours.map((item, index)=>(
 						<td key={index}>
 							<CustomInput 
-								value={ item.hours ? item.hours : ""} 
+								value={ item.hours } 
 								data={item} 
-								filterOptions={filterOptions} />
+								filterOptions={filterOptions} 
+								row={row}
+								saveTableCellAction={saveTableCellAction}
+								/>
 						</td>
 					)) 
 				}
 			</tr>
 		)
 	}
+
 }
 
 export default TableRow
