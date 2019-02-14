@@ -32,7 +32,7 @@ export function getTimeline () {
 	        	console.error(error)
 	        }
 	      )
-        }, 1000);
+        }, 300);
 
     }
     
@@ -77,10 +77,10 @@ export function removeTimeline (id) {
 	        .then(result => result.json())
 	        .then((data) => {
 	        	console.log(data);
-	            /*dispatch({
+	            dispatch({
 	                type: REMOVE_TIMELINE,
 	                payload: data.result
-	            })*/
+	            })
 	        },
 	        (error) => {
 	          	console.error(error);

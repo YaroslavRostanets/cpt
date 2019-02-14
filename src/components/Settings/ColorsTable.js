@@ -9,7 +9,29 @@ class ColorsTable extends Component {
 	}
 
 	render() {
-		const { title } = this.props;
+		const { title, capacity } = this.props;
+
+		const getCapacityRow = (capacity, days) => {
+			let capacityRow = capacity.find((item)=>( item.days === days ));
+
+			if (capacityRow) {
+				return (
+					<tr>
+						<td>M-F</td>
+						<td>
+							<input type="text" defaultValue={capacityRow.hours_start} />
+						</td>
+						<td>
+							<input type="text" defaultValue={capacityRow.hours_end} />
+						</td>
+						<td>
+							<ColorSelect />
+						</td>
+					</tr>
+				)
+			}
+			return null;
+		}
 
 		return(
 			<table className="colors-table">
@@ -20,42 +42,9 @@ class ColorsTable extends Component {
 							{title}
 						</th>
 					</tr>
-					<tr>
-						<td>M-F</td>
-						<td>
-							<input type="text" defaultValue="1" />
-						</td>
-						<td>
-							<input type="text" defaultValue="200" />
-						</td>
-						<td>
-							<ColorSelect />
-						</td>
-					</tr>
-					<tr>
-						<td>Sat</td>
-						<td>
-							<input type="text" defaultValue="0" />
-						</td>
-						<td>
-							<input type="text" defaultValue="0" />
-						</td>
-						<td>
-							<ColorSelect />
-						</td>
-					</tr>
-					<tr>
-						<td>Sun</td>
-						<td>
-							<input type="text" defaultValue="0" />
-						</td>
-						<td>
-							<input type="text" defaultValue="0" />
-						</td>
-						<td>
-							<ColorSelect />
-						</td>
-					</tr>
+					{ getCapacityRow(capacity, 'work') }
+					{ getCapacityRow(capacity, 'sat') }
+					{ getCapacityRow(capacity, 'sun') }
 				</tbody>
 			</table>
 		)
