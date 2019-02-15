@@ -19,25 +19,43 @@ class Timeline extends Component {
 		const { timeline } = this.state;
 		const last = timeline[timeline.length - 1];
 		//console.log('last: ', timeline);
-		this.setState({
-			timeline: [...this.state.timeline, 
-				{	hours_start: last.hours_end + 1, 
-					hours_end: last.hours_end + 8, 
-					days_value: last.days_value + 1}]
-		});
+		if( timeline.length ){
+			this.setState({
+				timeline: [...this.state.timeline, 
+					{	hours_start: last.hours_end === '' ? '' : last.hours_end + 1, 
+						hours_end: '', 
+						days_value: ''}]
+			});
+		} else {
+			this.setState({
+				timeline: [...this.state.timeline, 
+					{	hours_start: 1, 
+						hours_end: 2, 
+						days_value: 1}]
+			});
+		}
+		
 	}
 
 	handlerSave() {
+		let savedTimeline = this.state.timeline.filter(
+			(item)=>{ return item.hours_start && item.hours_end && item.days_value});
 		let data = {
-			'data': this.state.timeline
+			'data': savedTimeline
 		}
 		this.props.setTimeline(data);
 	}
 
 	handlerChange (index, fieldName, event) {
+		console.log('index: ', index);
+		console.log('fieldName: ', fieldName);
+		console.log('timeline: ', this.state.timeline);
 		const value = event.target.value.replace(/\D/,'');
 		const newTimeline = [...this.state.timeline];
 			newTimeline[index][fieldName] = Number(value);
+			if(newTimeline[index+1] && fieldName === 'hours_end'){
+				newTimeline[index+1]['hours_start'] = Number(value) + 1;
+			}
 
 		this.setState({
 			timeline: newTimeline

@@ -26,6 +26,7 @@ class Settings extends Component {
 				removeTimelineAction, 
 				getCapacityAction,
 				setCapacityAction } = this.props;
+				
 		const { timeline, 
 				timelineFetching, 
 				timelineBtnFetching,

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
 import MultiSelect from '@khanacademy/react-multi-select';
 import { API } from '../../API';
+import { tableToExcel, printTable } from '../../functions';
 
 registerLocale('en-GB', enGB);
 
@@ -28,6 +29,7 @@ class TableControll extends Component {
     	this.handleDialogOpen = this.handleDialogOpen.bind(this);
     	this.handleDialogClose = this.handleDialogClose.bind(this);
     	this.handlePrint = this.handlePrint.bind(this);
+    	this.handleExel = this.handleExel.bind(this);
 	}
 
 	handleDateChange(date) {
@@ -63,26 +65,13 @@ class TableControll extends Component {
 	    });
 	};
 
-	handlePrint() {	
-		if ( !document.getElementById("print-container") ) {
-			let content = document.getElementById("content-tool");
-			let printContainer = document.createElement("div");
-			printContainer.setAttribute("id", "print-container");
-			content.appendChild( printContainer );
-		}
-		let printedTable = document.querySelector("#planning-table table").outerHTML;
-		let legend = document.querySelector('.js-table-legend').outerHTML;
-		document.getElementById("print-container").innerHTML = printedTable + legend;
-		let inputs = document.querySelectorAll("#print-container input");
-		inputs.forEach((item, index)=>{
-			let value = document.createElement("span");
-			value.innerText = item.value;
-			item.parentNode.insertBefore(value, item);
-		});
-
-		window.print();
+	handlePrint() {
+		printTable();
 	}
 
+	handleExel() {
+		tableToExcel('#planning-table .printable-table','Capacity Planning Tool', 'CPT.xls');
+	}
 
 	render() {
 
@@ -123,10 +112,12 @@ class TableControll extends Component {
 						<i className="fa fa-table" aria-hidden="true"></i>
 							Table settings
 					</ButtonBase>
-					<ButtonBase className="download">
+					<ButtonBase 
+						onClick={this.handleExel} 
+						className="download">
 						<i className="fa fa-download" aria-hidden="true"></i>
 					</ButtonBase>
-					<ButtonBase className="print" onClick={this.handlePrint}>
+					<ButtonBase onClick={this.handlePrint} className="print">
 						<i className="fa fa-print" aria-hidden="true"></i>
 					</ButtonBase>
 				</div>

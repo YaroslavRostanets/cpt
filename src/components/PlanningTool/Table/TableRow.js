@@ -11,6 +11,7 @@ class TableRow extends Component {
 	render() {
 
 		const { row, hiddenCols, filterOptions } = this.props;
+
 		const { planning_hours } = row;
 		const { saveTableCellAction } = this.props;
 
@@ -26,8 +27,12 @@ class TableRow extends Component {
 
 		const getAllocatedHours = ()=>{
 			var sum = 0;
-
+			
 			planning_hours.forEach((item)=>{
+			/*------------------------------------*/
+			let propName = Object.keys(item).pop();
+				item = item[propName];
+			/*------------------------------------*/
 				if(item.hours) {
 					sum += Number(item.hours);
 				}
@@ -36,10 +41,20 @@ class TableRow extends Component {
 			return  sum;
 		}
 
+		const getDaysAvailable = (dateDue, dateIn) => {
+			let dayInMiliSec = 24 * 60 * 60 * 1000;
+			let dateD = new Date(dateDue);
+				dateD.setHours(0,0,0,0);
+			let dateI = new Date(dateIn);
+				dateI.setHours(0,0,0,0);
+
+			return Math.floor((dateD.getTime() - dateI.getTime()) / dayInMiliSec + 1);
+		}
+
 		return(
 			<tr>
 				<td style={{display: hiddenCols['costCenter'] ? 'none' : 'table-cell'}}>
-					{row.costCenter}
+					{row.cost_center_label}
 				</td>
 				<td style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell'}}>
 					{row.jobno}
@@ -51,16 +66,16 @@ class TableRow extends Component {
 					{row.description}
 				</td>
 				<td style={{display: hiddenCols['dateIn'] ? 'none' : 'table-cell'}}>
-					{ dateFormat(new Date(row.dateIn).getTime()) }
+					{ dateFormat(row.Date_In) }
 				</td>
 				<td style={{display: hiddenCols['dateDue'] ? 'none' : 'table-cell'}}>
-					{ dateFormat(new Date(row.dateDue).getTime()) }
+					{ dateFormat(row.Date_Due) }
 				</td>
 				<td style={{display: hiddenCols['partialDue'] ? 'none' : 'table-cell'}}>
-					{row.partialDue}
+					{ row.Partial_Due ? dateFormat( row.Partial_Due ) : null }
 				</td>
 				<td style={{display: hiddenCols['daysAvailable'] ? 'none' : 'table-cell'}}>
-					{row.daysAvailable}
+					{ getDaysAvailable(row.Date_Due, row.Date_In) }
 				</td>
 				<td style={{display: hiddenCols['hrsPlaned'] ? 'none' : 'table-cell'}}>
 					{row.hoursPlanned}
@@ -73,17 +88,23 @@ class TableRow extends Component {
 					{getAllocatedHours(planning_hours)}
 				</td>
 				{ 
-					planning_hours.map((item, index)=>(
-						<td key={index}>
-							<CustomInput 
-								value={ item.hours } 
-								data={item} 
-								filterOptions={filterOptions} 
-								row={row}
-								saveTableCellAction={saveTableCellAction}
-								/>
-						</td>
-					)) 
+					planning_hours.map((item, index)=>{
+						/*------------------------------------*/
+						let propName = Object.keys(item).pop();
+							item = item[propName];
+						/*------------------------------------*/
+						return (
+							<td key={index}>
+								<CustomInput 
+									value={ item.hours } 
+									data={item} 
+									filterOptions={filterOptions} 
+									row={row}
+									saveTableCellAction={saveTableCellAction}
+									/>
+							</td>
+						)
+					}) 
 				}
 			</tr>
 		)

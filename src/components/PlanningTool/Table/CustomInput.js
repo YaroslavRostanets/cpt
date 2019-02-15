@@ -5,7 +5,7 @@ class CustomInput extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			value: this.props.value
+			data: this.props.data
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -13,29 +13,26 @@ class CustomInput extends Component {
 
 	handleChange(e) {
 		clearTimeout(this.timerId);
-		const { filterOptions, data } = this.props;
+		const { filterOptions } = this.props;
+		const value = e.currentTarget.value.replace(/[^.\d]+/g,'').replace( /^([^\.]*\.)|\./g, '$1' );
 
 		this.setState({
-			value: e.currentTarget.value.replace(/[^.\d]+/g,'').replace( /^([^\.]*\.)|\./g, '$1' )
-		}, ()=>{
-			let sendObj = {
-				"cost_centers": filterOptions.selected.map( item => String(item) ),
-				"date": new Date(filterOptions.date).getTime() / 1000,
-				"data": {
-					"date": ( new Date(data.date).getTime() / 1000 ),
-					"internal_task_id": data.internal_task_id,
-					"is_weekly": data.is_weekly,
-					"hours": ( Math.round(this.state.value * 100) / 100 )
+			data: {...this.state.data, hours: Number( value )}
+		}, () => {
+			this.timerId = setTimeout(() => {
+
+				let saveCell = {
+					'cost_centers': [filterOptions.selected],
+					'date': (new Date(filterOptions.date).getTime() / 1000),
+					'data': this.state.data
 				}
-			}
-			if (data.id) {
-				sendObj.data.id = Number( data.id );
-			}
-			//console.log('savedData: ', sendObj);
-			this.timerId = setTimeout(()=>{
-				this.props.saveTableCellAction(sendObj, filterOptions.date);
-			}, 2000);
+
+				this.props.saveTableCellAction(saveCell);
+
+			}, 1000);
+
 		});
+
 	}
 
 	render(){
@@ -44,17 +41,16 @@ class CustomInput extends Component {
 
 		return (
 			<input type="text" 
-				defaultValue={ this.state.value }
+				value={ this.state.data.hours ? this.state.data.hours : '' }
 				onChange={this.handleChange}
 			/>
 		)
 	}
 
 	componentWillReceiveProps(nextProps) {
-/*		console.log("NEXT_PROPS", nextProps);
 		this.setState({
 			value: nextProps.value
-		})*/
+		})
 	}
 
 /*	save(sendObj) {

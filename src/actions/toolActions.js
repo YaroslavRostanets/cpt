@@ -3,24 +3,22 @@ export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
 export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
 
-export function saveTableCell (obj, date) {
+export function saveTableCell (obj) {
 
-/*    return dispatch => {
+    return dispatch => {
         
+        console.log('obj: ', obj);
+
         fetch("http://94.45.133.173:8000/planning-hours/edit/",{
             method: 'post',
             body : JSON.stringify(obj)
         })
         .then(res => res.json())
         .then((data) => {
-
-            const { result } = data;
-            const tableRowsArray = convertToReact(result, date);
-            console.log(result);
-
+            console.log('save: ', data.result);
             dispatch({
                 type: SAVE_TABLE_CELL,
-                payload: tableRowsArray
+                payload: data.result
             })
         },
         (error) => {
@@ -28,12 +26,12 @@ export function saveTableCell (obj, date) {
         }
       )
 
-    }*/
+    }
     
 }
 
 export function getPlanningHours (date, selected) {
-/*	console.log('getting_planning_hours...');
+	console.log('getting_planning_hours...');
 	console.log('date', Math.round(date.getTime() / 1000) );
 	console.log('selected', selected);
 
@@ -54,14 +52,10 @@ export function getPlanningHours (date, selected) {
     	)
         .then(response => response.json())
         .then(data => {
-        	
-        	const { result } = data;
-
-            const tableRowsArray = convertToReact(result, date);
 
         	dispatch({
           		type: GET_PLANNING_HOURS_SUCCESS,
-          		payload: tableRowsArray
+          		payload: data.result
         	})
 
         })
@@ -75,7 +69,7 @@ export function getPlanningHours (date, selected) {
             
       	);
 
-	}*/
+	}
 	
 }
 
