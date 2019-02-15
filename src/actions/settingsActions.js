@@ -9,6 +9,9 @@ export const REMOVE_TIMELINE = 'REMOVE_TIMELINE';
 export const GET_CAPACITY_REQUEST = 'GET_CAPACITY_REQUEST';
 export const GET_CAPACITY_SUCCESS = 'GET_CAPACITY_SUCCESS';
 
+export const SET_CAPACITY_REQUEST = 'SET_CAPACITY_REQUEST';
+export const SET_CAPACITY_SUCCESS = 'SET_CAPACITY_SUCCESS';
+
 
 export function getTimeline () {
 
@@ -32,7 +35,7 @@ export function getTimeline () {
 	        	console.error(error)
 	        }
 	      )
-        }, 300);
+        }, 200);
 
     }
     
@@ -106,6 +109,36 @@ export function getCapacity() {
 	        	console.log('capacity: ', data);
 	            dispatch({
 	                type: GET_CAPACITY_SUCCESS,
+	                payload: data.result
+	            })
+	        },
+	        (error) => {
+	          	console.error(error);
+	        }
+	      )
+        }, 200);
+    }
+}
+
+export function setCapacity(capacity) {
+		console.log('saveCap: ', capacity);
+		return dispatch => {
+			dispatch({
+	            type: SET_CAPACITY_REQUEST
+	        })
+        
+        setTimeout(()=>{
+	       	fetch("http://94.45.133.173:8000/capacity/",{
+	            method: 'post',
+	            body: JSON.stringify({
+	            	data: capacity
+	            })
+	        })
+	        .then(result => result.json())
+	        .then((data) => {
+	        	console.log('capacity: ', data);
+	            dispatch({
+	                type: SET_CAPACITY_SUCCESS,
 	                payload: data.result
 	            })
 	        },

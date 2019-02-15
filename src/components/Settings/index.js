@@ -9,7 +9,9 @@ import Select from '@material-ui/core/Select';
 import { getTimeline, 
 		 setTimeline, 
 		 removeTimeline,
-		 getCapacity } from '../../actions/settingsActions';
+		 getCapacity,
+		 setCapacity
+		  } from '../../actions/settingsActions';
 
 class Settings extends Component {
 	constructor(props) {
@@ -22,11 +24,14 @@ class Settings extends Component {
 		const { getTimelineAction, 
 				setTimelineAction, 
 				removeTimelineAction, 
-				getCapacityAction } = this.props;
+				getCapacityAction,
+				setCapacityAction } = this.props;
 		const { timeline, 
 				timelineFetching, 
 				timelineBtnFetching,
-				capacity
+				capacity,
+				capacityFetching,
+				capacityBtnFetching
 				 } = this.props;
 
 		return (
@@ -41,8 +46,12 @@ class Settings extends Component {
 						removeTimeline={removeTimelineAction}
 						/>
 					<Capacity 
-						capacity={capacity} 
-						getCapacity={getCapacityAction} />
+						capacity={capacity}
+						capacityFetching={capacityFetching}
+						capacityBtnFetching={capacityBtnFetching}
+						getCapacity={getCapacityAction} 
+						setCapacity={setCapacityAction}
+						/>
 						</div>
 					</div>
 		)
@@ -54,7 +63,9 @@ const mapStateToProps = store => {
     timeline: store.settings.timeline,
     timelineFetching: store.settings.timelineFetching,
     timelineBtnFetching: store.settings.timelineBtnFetching,
-    capacity: store.settings.capacity
+    capacity: store.settings.capacity,
+    capacityFetching: store.settings.capacityFetching,
+    capacityBtnFetching: store.settings.capacityBtnFetching
   }
 }
 
@@ -62,8 +73,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getTimelineAction: () => dispatch(getTimeline()),
     setTimelineAction: (timeline, stateTimeline) => dispatch(setTimeline(timeline, stateTimeline)),
-    removeTimelineAction: id => dispatch(removeTimeline(id)) ,
-    getCapacityAction: () => dispatch(getCapacity()) 
+    removeTimelineAction: id => dispatch(removeTimeline(id)),
+    getCapacityAction: () => dispatch(getCapacity()),
+    setCapacityAction: (capacity) => dispatch(setCapacity(capacity))
   }
 }
 

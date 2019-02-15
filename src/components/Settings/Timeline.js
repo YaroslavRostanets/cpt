@@ -83,7 +83,7 @@ class Timeline extends Component {
 								return (
 									<tr key={index}>
 										<td>
-											<input type="text" 
+											<input type="text" disabled
 												onChange={this.handlerChange.bind(this, index, 'hours_start')}
 												value={item.hours_start} />
 										</td>

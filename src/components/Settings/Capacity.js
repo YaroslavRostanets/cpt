@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ButtonBase } from '@material-ui/core';
+import { ButtonBase, CircularProgress } from '@material-ui/core';
 import ColorsTable from './ColorsTable';
 
 class Capacity extends Component {
@@ -10,25 +10,67 @@ class Capacity extends Component {
 		this.working = [];
 		this.overTime = [];
 		this.overCapacity = [];
-		console.log('props:_', this.props);
 		
+		this.forSave = [];
+
+		this.saveHandler = this.saveHandler.bind(this);
+		this.pushToSave = this.pushToSave.bind(this);
+	}
+
+	pushToSave(oneRow) {
+		let index = this.forSave.findIndex((item) => ( item.id === oneRow.id ));
+
+		if(~index) {
+			this.forSave.splice(index, 1, oneRow);
+		} else {
+			this.forSave.push(oneRow);
+		}
+
+		console.log('Result: ', this.forSave);
+	}
+
+	saveHandler() {
+		this.props.setCapacity(this.forSave);
 	}
 
 	render() {
-		console.log('render___');
+
+		const { capacityFetching, capacityBtnFetching } = this.props;
+
 		return(
 			<div className="standarts-colors std-block">
 				<div className="title">
 					Colors for standarts
 				</div>
-				<div className="tables">
-					<ColorsTable capacity={this.working} title="Standard" />
-					<ColorsTable capacity={this.overTime} title="Over Time" />
-					<ColorsTable capacity={this.overCapacity} title="Over Capacity" />
-				</div>
-				<ButtonBase className="btn primary-btn">
-					Save
-				</ButtonBase>
+				{ capacityFetching ? 
+					<CircularProgress  className="loader" size={40} /> 
+					:
+					<div>
+						<div className="tables">
+							<ColorsTable 
+								capacity={this.working} 
+								title="Standard" 
+								pushToSave={this.pushToSave}
+								/>
+							<ColorsTable 
+								capacity={this.overTime} 
+								title="Over Time" 
+								pushToSave={this.pushToSave}
+								/>
+							<ColorsTable 
+								capacity={this.overCapacity} 
+								title="Over Capacity" 
+								pushToSave={this.pushToSave}
+								/>
+						</div>
+						<ButtonBase onClick={this.saveHandler} 
+							className={capacityBtnFetching ? "btn primary-btn fetching" : "btn primary-btn" }>
+							{capacityBtnFetching ? <CircularProgress className="loader" size={20} /> : null}
+							Save
+						</ButtonBase>
+					</div>
+				 }
+
 			</div>
 		)
 	}
@@ -41,6 +83,7 @@ class Capacity extends Component {
 		this.working = [];
 		this.overTime = [];
 		this.overCapacity = [];
+		this.forSave = [];
 		nextProps.capacity.forEach((item)=>{
 			console.log('item: ', item);
 			switch(item.working_type) {

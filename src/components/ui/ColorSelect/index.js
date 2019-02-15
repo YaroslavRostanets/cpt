@@ -5,43 +5,43 @@ import './styles.scss';
 class ColorSelect extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			selectedColor: '#B34EE9'
-		}
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleChange(e) {
-		console.log(e.target.value);
-		this.setState({
-			selectedColor: e.target.value
-		});
+		this.props.handlerColorChange(e.target.value);
 	}
 
 	render () {
-		const { selectedColor } = this.state;
+		const { selectedColor } = this.props;
+		const { availableColors } = this.props;
+		const { handlerColorChange } = this.props;
 
 		return (
 			<div style={{backgroundColor: selectedColor}} 
 				className="color-selected">
 				<Select
-					value="#FFFFFF"
+					value={selectedColor}
 					className="color-selected-in"
-					onChange={this.handleChange}
+					onChange={this.handleChange.bind(this)}
 					>
-					<MenuItem value="#4BA0D5" className="color-item">
-						<div className="color" 
-								style={{backgroundColor: '#4BA0D5'}}></div>
-					</MenuItem>
-					<MenuItem value="#FF00AE" className="color-item">
-						<div className="color" 
-								style={{backgroundColor: '#FF00AE'}}></div>
-					</MenuItem>
-					<MenuItem value="#D0FF00" className="color-item">
-						<div className="color"
-								style={{backgroundColor: '#D0FF00'}}
-						></div>
-					</MenuItem>
+					{ availableColors.map((color)=>{
+					    return color === '-' ? 
+					    	<MenuItem key={color} value={'-'} className="color-item">
+								<div className="color"
+										style={{backgroundColor: '#FFFFFF'}}>
+										N/A
+								</div>
+							</MenuItem>
+					     :
+					     	<MenuItem key={color} value={color} className="color-item">
+								<div className="color" 
+									style={{backgroundColor: color}}></div>
+							</MenuItem>
+					
+
+					})}
+					
 				</Select>
 			</div>
 		)

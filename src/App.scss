@@ -9,10 +9,12 @@ body {
   margin: 0;
   padding: 0;
   background: #F3F3F4;
+  font-family: 'Open Sans', sans-serif;
 }
 .content {
 	padding: 35px 30px 25px 30px;
 	height: calc( 100vh - 67px);
+	min-height: 555px;
 }
 .btn.primary-btn {
 	color: #FFFFFF;
@@ -91,4 +93,14 @@ body {
 
 .link {
 	text-decoration: none;
+}
+input [type="text"], 
+input [type="password"],
+input [type="email"] {
+	font-family: 'Open Sans', sans-serif;
+	color: #4b4b4b;
+	&:disabled {
+		background: #F3F3F4;
+		color: #4b4b4b;
+	}
 }

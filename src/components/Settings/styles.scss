@@ -99,6 +99,7 @@
 	}
 	.colors-table {
 		margin-right: 23px;
+		position: relative;
 		&:last-child{
 			margin-right: 0;
 		}
@@ -140,6 +141,17 @@
 		padding-left: 25px;
 		padding-right: 25px;
 		padding-bottom: 25px;
+		position: relative;
+		.loader {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -20px;
+			margin-top: -20px;
+			svg {
+				color: #3AAADE;
+			}
+		}
 		.tables {
 			display: flex;
 			margin-bottom: 25px;
@@ -150,5 +162,8 @@
 			width: 105px;
 		}
 	}
-
+	input[type="next"] {
+		font-size: 16px;
+		color: #4b4b4b;
+	}
 }

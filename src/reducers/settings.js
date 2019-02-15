@@ -3,16 +3,21 @@ import {
   GET_TIMELINE_SUCCESS,
   SET_TIMELINE_REQUEST,
   SET_TIMELINE_SUCCESS,
+  REMOVE_TIMELINE,
+
   GET_CAPACITY_REQUEST,
   GET_CAPACITY_SUCCESS,
-  REMOVE_TIMELINE
+  SET_CAPACITY_REQUEST,
+  SET_CAPACITY_SUCCESS,
    } from '../actions/settingsActions';
 
 const initialState = {
     timeline: [],
     timelineFetching: false,
     timelineBtnFetching: false,
-    capacity: []
+    capacity: [],
+    capacityFetching: false,
+    capacityBtnFetching: false
 
 };
 
@@ -29,9 +34,13 @@ export function settingsReducer(state = initialState, action) {
       case REMOVE_TIMELINE:
           return { ...state, timeline: action.payload }
       case GET_CAPACITY_REQUEST:
-          return { ...state }
+          return { ...state, capacityFetching: true }
       case GET_CAPACITY_SUCCESS:
-          return { ...state, capacity: action.payload }
+          return { ...state, capacity: action.payload, capacityFetching: false }
+      case SET_CAPACITY_REQUEST: 
+          return { ...state, capacityBtnFetching: true }
+      case SET_CAPACITY_SUCCESS: 
+          return { ...state, capacity: action.payload, capacityBtnFetching: false }
     default:
       return state
   }
