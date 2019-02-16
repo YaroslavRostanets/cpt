@@ -14,13 +14,15 @@ class CustomInput extends Component {
 	handleChange(e) {
 		clearTimeout(this.timerId);
 		const { filterOptions } = this.props;
-		const value = e.currentTarget.value.replace(/[^.\d]+/g,'').replace( /^([^\.]*\.)|\./g, '$1' );
+
+		const value = e.currentTarget.value.replace(/[^\d\.]/g, "");
 
 		this.setState({
-			data: {...this.state.data, hours: Number( value )}
+			data: {...this.state.data, hours: value }
 		}, () => {
 			this.timerId = setTimeout(() => {
-				let dataCopy = {...this.state.data};
+				let dataCopy = {...this.state.data, 
+						hours: Math.round( parseFloat(this.state.data.hours) * 100 ) / 100};
 					if (dataCopy.id === 0) {
 						delete dataCopy.id
 					}
@@ -31,6 +33,7 @@ class CustomInput extends Component {
 					'data': dataCopy
 				}
 
+				//console.log('SO: ', saveCell);
 				this.props.saveTableCellAction(saveCell);
 
 			}, 1000);
@@ -53,24 +56,9 @@ class CustomInput extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			value: nextProps.value
+			data: nextProps.data
 		})
 	}
-
-/*	save(sendObj) {
-		fetch("http://94.45.133.173:8000/planning-hours/edit/",{
-			method: 'post',
-			body : JSON.stringify(sendObj)
-		})
-       .then(res => res.json())
-       .then((result) => {
-          console.log(result);
-        },
-        (error) => {
-          
-        }
-      )
-	}*/
 
 }
 
