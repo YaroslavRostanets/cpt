@@ -8,16 +8,15 @@ import './styles.scss';
 class Table extends Component {
 
 	render() {
-		const { tableRows, hiddenCols, filterOptions, fetching } = this.props;
-		const { saveTableCellAction } = this.props;
+		const { tableRows, hiddenCols, filterOptions, fetching, timeline, capacity } = this.props;
+		const { saveTableCellAction, getTimelineAction } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
 				{ fetching ? 
 					<div className="fetch-wrap">
-						<div className="cover">
-							<CircularProgress  className="loader" size={40} />
-						</div>
+						<CircularProgress  className="loader" size={40} />
+						<div className="cover"></div>
 					</div>
 					: 
 					null }
@@ -25,7 +24,8 @@ class Table extends Component {
 					<tbody>
 						{(tableRows[0]) ? <TableHead 
 							rows={tableRows} 
-							row={tableRows[0]} 
+							row={tableRows[0]}
+							capacity={capacity}
 							hiddenCols={hiddenCols} /> : null }
 						{ tableRows.map((row, index)=>(
 							<TableRow 
@@ -34,6 +34,7 @@ class Table extends Component {
 								hiddenCols={hiddenCols} 
 								filterOptions={filterOptions}
 								saveTableCellAction={saveTableCellAction}
+								timeline={timeline}
 								/>
 						))}
 						
@@ -42,6 +43,11 @@ class Table extends Component {
 			</Scrollbars>
 			
 		)
+	}
+
+	componentDidMount() {
+		this.props.getTimelineAction();
+		this.props.getCapacityAction();
 	}
 }
 

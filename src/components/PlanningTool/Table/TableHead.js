@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class TableHead extends Component {
 
 	render() {
-		const { rows, row, hiddenCols } = this.props;
+		const { rows, row, hiddenCols, capacity } = this.props;
 		const { planning_hours } = row;
 		
 		const getDate = (timestamp) => ( new Date(timestamp * 1000).getDate() );
@@ -30,6 +30,26 @@ class TableHead extends Component {
 				return sum + hours}, 0);
 
 			return (Math.round(result * 100) / 100 );
+		}
+
+		const getColumnColor = (sumByDay, item) => {
+			let dayOfWeek = new Date(item.date).getDay();
+				switch (dayOfWeek) {
+  					case 0:
+	  					dayOfWeek = 'sun';
+	  					break;
+				  	case 6:
+				  		dayOfWeek = 'sat';
+				    	break;
+			  		default:
+			    		dayOfWeek = 'work';
+			}
+			
+			let resultCap = capacity.find((cap)=>{
+				return (cap.days === dayOfWeek && sumByDay >= cap.hours_start && sumByDay <= cap.hours_end)
+			});
+
+			return resultCap ? resultCap.color_code : null;
 		}
 
 		return(
@@ -86,17 +106,24 @@ class TableHead extends Component {
 							let propName = Object.keys(item).pop();
 							item = item[propName];
 							/*-----------------------------------------*/
+							const sumByDay = getSumByDay(index);
+							const color = getColumnColor(sumByDay, item);
 							return (item.is_weekly ?
 								<th key={index} className="day">
 									<div>W/E</div>
 									<div>{getDate(item.date)} {getMonth(item.date)}</div>
 								</th>
 								 : 
-								<th key={index} className="day">
-									<div>{getWeekDay(item.date)}</div>
-									<div>{getDate(item.date)} {getMonth(item.date)}</div>
-									<div>{getSumByDay(index)}</div>
-									<i className="fa fa-angle-down" aria-hidden="true"></i>
+								<th 
+									key={index} 
+									className="day"
+									bgcolor={color}
+									style={{'backgroundColor': color}}
+									>
+										<div>{getWeekDay(item.date)}</div>
+										<div>{getDate(item.date)} {getMonth(item.date)}</div>
+										<div>{sumByDay}</div>
+										<i className="fa fa-angle-down" aria-hidden="true"></i>
 								</th>
 							)
 					}) }

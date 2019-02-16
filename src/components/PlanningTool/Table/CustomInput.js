@@ -20,11 +20,15 @@ class CustomInput extends Component {
 			data: {...this.state.data, hours: Number( value )}
 		}, () => {
 			this.timerId = setTimeout(() => {
+				let dataCopy = {...this.state.data};
+					if (dataCopy.id === 0) {
+						delete dataCopy.id
+					}
 
 				let saveCell = {
-					'cost_centers': [filterOptions.selected],
-					'date': (new Date(filterOptions.date).getTime() / 1000),
-					'data': this.state.data
+					'cost_centers': filterOptions.selected,
+					'date': Math.round(new Date(filterOptions.date).getTime() / 1000),
+					'data': dataCopy
 				}
 
 				this.props.saveTableCellAction(saveCell);

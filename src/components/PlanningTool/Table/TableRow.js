@@ -10,7 +10,7 @@ class TableRow extends Component {
 
 	render() {
 
-		const { row, hiddenCols, filterOptions } = this.props;
+		const { row, hiddenCols, filterOptions, timeline } = this.props;
 
 		const { planning_hours } = row;
 		const { saveTableCellAction } = this.props;
@@ -51,6 +51,13 @@ class TableRow extends Component {
 			return Math.floor((dateD.getTime() - dateI.getTime()) / dayInMiliSec + 1);
 		}
 
+		const getRequiredDays = (allocatedHours) => {
+			let item = timeline.find((item)=>{
+				return (allocatedHours >= item.hours_start && allocatedHours <= item.hours_end)
+			});
+			return item ? item.days_value : null;
+		}
+
 		return(
 			<tr>
 				<td style={{display: hiddenCols['costCenter'] ? 'none' : 'table-cell'}}>
@@ -81,7 +88,7 @@ class TableRow extends Component {
 					{row.hoursPlanned}
 				</td>
 				<td style={{display: hiddenCols['requiredDays'] ? 'none' : 'table-cell' }}>
-					0
+					{ getRequiredDays( getAllocatedHours(planning_hours) ) }
 				</td>
 				<td style={{borderRight: '3px solid rgb(208, 208, 208)', 
 					display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>

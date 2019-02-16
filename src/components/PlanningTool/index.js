@@ -4,9 +4,9 @@ import Header from '../Header';
 import TableControll from './TableControll';
 import Table from './Table';
 import { TableLegend } from './TableLegend';
-import { getPlanningHours } from '../../actions/toolActions';
-import { saveTableCell } from '../../actions/toolActions';
+import { getPlanningHours, saveTableCell } from '../../actions/toolActions';
 import { colDisplayChange } from '../../actions/uiActions';
+import { getTimeline, getCapacity } from '../../actions/settingsActions';
 import './styles.scss';
 import './print.scss';
 
@@ -16,9 +16,11 @@ class PlanningTool extends Component {
 		const { 
 			getPlanningHoursAction, 
 			colDisplayChangeAction,
-			saveTableCellAction
+			saveTableCellAction, 
+			getTimelineAction,
+			getCapacityAction
 			 } = this.props;
-		const { fetching, tableRows, hiddenCols, filterOptions } = this.props;
+		const { fetching, tableRows, hiddenCols, filterOptions, timeline, capacity } = this.props;
 		return(
 			<div id="content-tool">
 				<TableControll 
@@ -32,6 +34,10 @@ class PlanningTool extends Component {
 					hiddenCols={hiddenCols}
 					filterOptions={filterOptions}
 					saveTableCellAction={saveTableCellAction}
+					timeline={timeline}
+					getTimelineAction={getTimelineAction}
+					capacity={capacity}
+					getCapacityAction={getCapacityAction}
 					/>
 				<TableLegend />
 			</div>
@@ -44,7 +50,9 @@ const mapStateToProps = store => {
     	fetching: store.tool.fetching,
     	tableRows: store.tool.tableRows,
     	filterOptions: store.tool.filter,
-    	hiddenCols: store.ui.hiddenCols
+    	hiddenCols: store.ui.hiddenCols,
+    	timeline: store.settings.timeline,
+    	capacity: store.settings.capacity
   	}
 }
 
@@ -52,7 +60,9 @@ const mapDispatchToProps = dispatch => {
   	return {
     	getPlanningHoursAction: (date, selected) => dispatch(getPlanningHours(date, selected)),
     	saveTableCellAction: (savedObject, date) => dispatch(saveTableCell(savedObject, date)),
-    	colDisplayChangeAction: col => dispatch(colDisplayChange(col))
+    	colDisplayChangeAction: col => dispatch(colDisplayChange(col)),
+    	getTimelineAction: () => dispatch(getTimeline()),
+    	getCapacityAction: () => dispatch(getCapacity())
   	}
 }
 
