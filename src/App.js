@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import Auth from './containers/Auth';
 import Content from './components/Content';
@@ -13,6 +12,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
+import { handleLogout } from './actions/userActions';
+
 library.add(faCogs, faSignOutAlt, faCalendar);  
 
 const history = createBrowserHistory();
@@ -20,22 +21,26 @@ const history = createBrowserHistory();
 class App extends Component {
   render() {
 
-    const { user } = this.props;
+    const { user, isAuth } = this.props;
+    const { handleLogoutAction } = this.props;
 
     return (
       <Router>
         <Route render={({location})=>(
           <Switch>
             <Route path="/auth" exact render={()=>{
-              if ( user ) {
+              if ( isAuth ) {
                 return (<Redirect to="/"/>)
               } else {
                 return (<Auth history={history} />)
                   }
               }} />
               <Route path="/" render={()=>{
-                if ( user ) {
-                  return (<Content history={history} user={user} />)
+                if ( isAuth ) {
+                  return (<Content 
+                    handleLogoutAction={handleLogoutAction}
+                    history={history} 
+                    user={user} />)
                 } else {
                   return (<Redirect to="/auth"/>)
                 }
@@ -49,8 +54,15 @@ class App extends Component {
 
 const mapStateToProps = store => {
   return {
-    user: store.user.userData
+    user: store.user.user,
+    isAuth: store.user.isAuth
   }
 }
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = dispatch => {
+  return {
+    handleLogoutAction: (redirect) => dispatch(handleLogout(redirect))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

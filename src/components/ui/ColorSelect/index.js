@@ -15,7 +15,6 @@ class ColorSelect extends Component {
 	render () {
 		const { selectedColor } = this.props;
 		const { availableColors } = this.props;
-		const { handlerColorChange } = this.props;
 
 		return (
 			<div style={{backgroundColor: selectedColor}} 

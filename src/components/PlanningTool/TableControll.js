@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import TableSettingsDialog from './TableSettingsDialog';
 import { ButtonBase } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import enGB from 'date-fns/locale/en-GB';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Select from 'react-select';
 import MultiSelect from '@khanacademy/react-multi-select';
-import { API } from '../../API';
 import { tableToExcel, printTable } from '../../functions';
 
 registerLocale('en-GB', enGB);
@@ -68,11 +64,32 @@ class TableControll extends Component {
 	};
 
 	handlePrint() {
+		if (!this.props.tableRows.length) return false;
 		printTable();
 	}
 
 	handleExel() {
+		if (!this.props.tableRows.length) return false;
 		tableToExcel('#planning-table .printable-table','Capacity Planning Tool', 'CPT.xls');
+	}
+
+	getCoastCenters(resolve) {
+		fetch('http://94.45.133.173:8000/cost-centers/', {
+			method: 'get',
+			credentials: 'include'
+		})
+      .then(response => response.json())
+      .then(data => {
+      	const multiSelectOptions = data.result.map(option => {
+      		option.value = Number(option['cost_center_id']);
+      		return option;
+      	})
+      	resolve({
+      		coastCenters: multiSelectOptions
+      	})
+      })
+      .catch(error => console.error(error));
+
 	}
 
 	render() {
@@ -135,7 +152,7 @@ class TableControll extends Component {
 	}
 
 	componentDidMount() {
-		API.getCoastCenters(this.setState.bind(this));
+		this.getCoastCenters(this.setState.bind(this));
 	}
 
 

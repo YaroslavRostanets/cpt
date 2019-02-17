@@ -16,7 +16,7 @@ class Table extends Component {
 				capacity, 
 				sortedByField,
 				sortedByIndex } = this.props;
-		const { saveTableCellAction, getTimelineAction, sortedByFieldAction } = this.props;
+		const { saveTableCellAction, sortedByFieldAction } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">

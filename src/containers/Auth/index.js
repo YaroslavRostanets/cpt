@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { handleLogin } from '../../actions/userActions';
+import { handleLogin, getCurrentUser } from '../../actions/userActions';
 import { FormGroup } from '../../components/ui/FormGroup';
 import { ButtonBase, CircularProgress } from '@material-ui/core';
 import './styles.scss';
@@ -16,7 +16,7 @@ class Auth extends Component {
 	}
 
 	render() {
-		const { fetching } = this.props;
+		const { fetching, error } = this.props;
 
 		return(
               	<div id="auth">
@@ -27,12 +27,17 @@ class Auth extends Component {
 						<form onSubmit={this.handleSubmit} className="body">
 							<FormGroup 
 								type="text"
-								name="login"
-								label="Login" />
+								name="username"
+								label="Login" 
+								hasError={error}
+								/>
 							<FormGroup 
 								type="password"
 								name="password"
-								label="Password" />
+								label="Password"
+								hasError={error}
+								error={error}
+								 />
 							<ButtonBase type="submit" 
 								className={fetching ? "btn primary-btn fetching" : "btn primary-btn"}>
 								{fetching ? <CircularProgress className="loader" size={20} /> : null}
@@ -53,21 +58,24 @@ class Auth extends Component {
    		for (let key of formData.keys()) {
    			user[key] = formData.get(key);
    		}
-		this.props.handleLoginAction(user, redirect);
+   		if(user.username.length && user.password.length) {
+   			this.props.handleLoginAction(user, this.props.getCurrentUserAction, redirect);
+   		}
 		
-		//this.props.history.push('/');
 	}
 }
 
 const mapStateToProps = store => {
   return {
-    fetching: store.user.fetching
+    fetching: store.user.fetching,
+    error: store.user.error
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleLoginAction: (user, redirect) => dispatch(handleLogin(user, redirect))
+    handleLoginAction: (user, getCurrentUserFunc, redirect) => dispatch(handleLogin(user, getCurrentUserFunc, redirect)),
+    getCurrentUserAction: (redirect) => dispatch(getCurrentUser(redirect))
   }
 }
 

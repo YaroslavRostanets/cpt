@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from '../Header';
 import TableControll from './TableControll';
 import Table from './Table';
-import { TableLegend } from './TableLegend';
+import { TableLegend } from './TableLegend/index.js';
 import { getPlanningHours, 
 		saveTableCell, 
 		sortedByField } from '../../actions/toolActions';
@@ -38,6 +37,8 @@ class PlanningTool extends Component {
 					colDisplayChange={colDisplayChangeAction}
 					hiddenCols={hiddenCols}
 					timeline={timeline}
+					filterOptions={filterOptions}
+					tableRows={tableRows} 
 					 />
 				<Table 
 					tableRows={tableRows} 
@@ -53,7 +54,10 @@ class PlanningTool extends Component {
 					capacity={capacity}
 					getCapacityAction={getCapacityAction}
 					/>
-				<TableLegend />
+				<TableLegend
+					timeline={timeline}
+					capacity={capacity}
+				 />
 			</div>
 		)
 	}
@@ -81,7 +85,7 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   	return {
     	getPlanningHoursAction: (date, selected, timeline) => dispatch(getPlanningHours(date, selected, timeline)),
-    	saveTableCellAction: (savedObject, date) => dispatch(saveTableCell(savedObject, date)),
+    	saveTableCellAction: (savedObject, timeline) => dispatch(saveTableCell(savedObject, timeline)),
     	colDisplayChangeAction: col => dispatch(colDisplayChange(col)),
     	getTimelineAction: () => dispatch(getTimeline()),
     	getCapacityAction: () => dispatch(getCapacity()),

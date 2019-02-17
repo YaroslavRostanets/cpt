@@ -7,6 +7,11 @@ import './styles.scss';
 
 class Header extends Component {
 
+	handleLogout() {
+		const redirect = this.props.history.push.bind(null, "/auth");
+		this.props.handleLogoutAction(redirect);
+	}
+
 	render() {
 		const { pathname } = window.location;
 		const { user } = this.props;
@@ -31,14 +36,14 @@ class Header extends Component {
 					<div className="app-name">
 						Capacity Planning Tool
 					</div>
-					{ user.role === "admin" ? button : null }
+					{ user.is_admin ? button : null }
 				</div>
 				<div className="right-part">
 					<div className="user">
-						<div className="name">John Smith</div>
-						<div className="role">Administrator</div>
+						<div className="name">{user.username ? user.username : 'unnamed user'}</div>
+						<div className="role">{user.is_admin ? 'Administrator' : 'User'}</div>
 					</div>
-					<ButtonBase className="logout">
+					<ButtonBase onClick={this.handleLogout.bind(this)} className="logout">
 						<FontAwesomeIcon icon="sign-out-alt" />
 					</ButtonBase>
 				</div>

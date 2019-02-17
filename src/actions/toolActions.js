@@ -6,7 +6,7 @@ export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
 export const SORT_ROWS = 'SORT_ROWS';
 
 
-export function saveTableCell (obj) {
+export function saveTableCell (obj, timeline) {
 
     return dispatch => {
         
@@ -14,14 +14,17 @@ export function saveTableCell (obj) {
 
         fetch("http://94.45.133.173:8000/planning-hours/edit/",{
             method: 'post',
+            credentials: 'include',
             body : JSON.stringify(obj)
         })
         .then(res => res.json())
         .then((data) => {
-            console.log('save: ', data.result);
+            const correct = getOutFromObj([...data.result]);  
+            const extendetDataArray = addMissingProperties(correct, timeline);
+            
             dispatch({
                 type: SAVE_TABLE_CELL,
-                payload: data.result
+                payload: extendetDataArray
             })
         },
         (error) => {
@@ -46,7 +49,8 @@ export function getPlanningHours (date, selected, timeline) {
 
 		fetch(`http://94.45.133.173:8000/planning-hours/`, 
 			{
-				method: 'post', 
+				method: 'post',
+                credentials: 'include',
 				body: JSON.stringify({
 		      		cost_centers: selected,
 		      		date: Math.round(date.getTime() / 1000) //getting timestamp in unix format in seconds
@@ -57,10 +61,7 @@ export function getPlanningHours (date, selected, timeline) {
         .then(data => {
             
             const correct = getOutFromObj([...data.result]);  
-
             const extendetDataArray = addMissingProperties(correct, timeline);
-            console.log('timeline: ', timeline);
-            console.log('extendetDataArray: ', extendetDataArray);
 
         	dispatch({
           		type: GET_PLANNING_HOURS_SUCCESS,
@@ -69,7 +70,6 @@ export function getPlanningHours (date, selected, timeline) {
 
         })
       	.catch(error => {
-            throw error;
             dispatch({
                 type: GET_PLANNING_HOURS_FAIL,
                 payload: {}
@@ -84,7 +84,7 @@ export function getPlanningHours (date, selected, timeline) {
 
 
 export function sortedByField (fieldName, sortType, index) {
-    console.log('SORTED: ', fieldName);
+
     return {
             type: SORT_ROWS,
             payload: {

@@ -3,11 +3,6 @@ import CustomInput from './CustomInput';
 
 class TableRow extends Component {
 
-	constructor(props) {
-		super(props)
-
-	}
-
 	render() {
 
 		const { row, hiddenCols, filterOptions, timeline } = this.props;
@@ -23,39 +18,6 @@ class TableRow extends Component {
 			let yy = String(newDate.getFullYear()).substring(2);
 			
 			return `${dd}/${mm}/${yy}`;
-		}
-
-		const getAllocatedHours = ()=>{
-			var sum = 0;
-			
-			planning_hours.forEach((item)=>{
-			/*------------------------------------*/
-			/*let propName = Object.keys(item).pop();
-				item = item[propName];*/
-			/*------------------------------------*/
-				if(item.hours) {
-					sum += Number(item.hours);
-				}
-			});
-
-			return  Math.round(sum * 100) / 100;
-		}
-
-		const getDaysAvailable = (dateDue, dateIn) => {
-			let dayInMiliSec = 24 * 60 * 60 * 1000;
-			let dateD = new Date(dateDue);
-				dateD.setHours(0,0,0,0);
-			let dateI = new Date(dateIn);
-				dateI.setHours(0,0,0,0);
-
-			return Math.floor((dateD.getTime() - dateI.getTime()) / dayInMiliSec + 1);
-		}
-
-		const getRequiredDays = (allocatedHours) => {
-			let item = timeline.find((item)=>{
-				return (allocatedHours >= item.hours_start && allocatedHours <= item.hours_end)
-			});
-			return item ? item.days_value : null;
 		}
 
 		return(
@@ -105,7 +67,8 @@ class TableRow extends Component {
 								<CustomInput 
 									value={ item.hours } 
 									data={item} 
-									filterOptions={filterOptions} 
+									filterOptions={filterOptions}
+									timeline={timeline}
 									row={row}
 									saveTableCellAction={saveTableCellAction}
 									/>

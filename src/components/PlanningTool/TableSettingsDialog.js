@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import CheckboxGroup from '../ui/CheckboxGroup';
-import { ButtonBase, Dialog, DialogTitle, DialogContent, 
-	Typography, DialogActions, Button, IconButton } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, 
+	IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import DatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import enGB from 'date-fns/locale/en-GB';
 
 class TableSettingsDialog extends Component {
-
-	constructor(props){
-		super(props);
-	}
 
 	render() {
 		const { open, closeDialog, hiddenCols } = this.props;

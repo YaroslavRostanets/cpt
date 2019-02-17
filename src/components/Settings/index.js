@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ButtonBase, IconButton, Button, Input, MenuItem } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import Timeline from './Timeline';
 import Capacity from './Capacity';
 import './styles.scss';
-import Select from '@material-ui/core/Select';
 import { getTimeline, 
 		 setTimeline, 
 		 removeTimeline,
@@ -14,10 +11,6 @@ import { getTimeline,
 		  } from '../../actions/settingsActions';
 
 class Settings extends Component {
-	constructor(props) {
-		super(props);
-
-	}
 
 	render() {
 

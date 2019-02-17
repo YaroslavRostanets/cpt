@@ -1,5 +1,11 @@
 .form-group {
 	margin-bottom: 21px;
+	&.has-error {
+		input {
+			border-color: #DC4D41;
+		    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #DC4D41;
+		}
+	}
 	label {
 		display: block;
 		font-size: 14px;
@@ -17,5 +23,9 @@
 		border-radius: 2px;
 		color: #797979;
 		padding: 0 9px;
+	}
+	.error-text {
+		font-size: 13px;
+		color: #DC4D41;
 	}
 }

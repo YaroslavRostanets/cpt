@@ -1,11 +1,18 @@
 import { LOGIN_REQUEST,
 		 LOGIN_SUCCESS,
-		 LOGIN_FAIL
+		 LOGIN_FAIL,
+     GET_CURRENT_USER_SUCCESS,
+     USER_LOGOUT
 } from '../actions/userActions';
 
 const initialState = {
-  	userData: JSON.parse(localStorage.getItem('user')) || null,
-  	fetching: false
+    user: {
+      username: '',
+      is_admin: true
+    },
+    isAuth: true,
+  	fetching: false,
+    error: ''
 }
 
 export function userReducer(state = initialState, action) {
@@ -13,9 +20,13 @@ export function userReducer(state = initialState, action) {
     	case LOGIN_REQUEST:
       		return { ...state, fetching: true }
       	case LOGIN_SUCCESS:
-      		return { ...state, userData: action.payload ,fetching: false }
-      	case LOGIN_FAIL:
       		return { ...state ,fetching: false }
+      	case LOGIN_FAIL:
+      		return { ...state ,fetching: false, error: action.payload }
+        case GET_CURRENT_USER_SUCCESS:
+          return { ...state, fetching: false, user: action.payload, isAuth: true}
+        case USER_LOGOUT:
+          return { ...state, fetching: false, user: {}, isAuth: false}
     default:
       return state
   }

@@ -22,7 +22,7 @@ class CustomInput extends Component {
 		}, () => {
 			this.timerId = setTimeout(() => {
 				let dataCopy = {...this.state.data, 
-						hours: Math.round( parseFloat(this.state.data.hours) * 100 ) / 100};
+						hours: parseFloat(this.state.data.hours)};
 					if (dataCopy.id === 0) {
 						delete dataCopy.id
 					}
@@ -34,7 +34,7 @@ class CustomInput extends Component {
 				}
 
 				//console.log('SO: ', saveCell);
-				this.props.saveTableCellAction(saveCell);
+				this.props.saveTableCellAction(saveCell, this.props.timeline);
 
 			}, 1000);
 
@@ -43,8 +43,6 @@ class CustomInput extends Component {
 	}
 
 	render(){
-
-		const { value, row } = this.props;
 
 		return (
 			<input type="text" 
