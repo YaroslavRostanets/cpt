@@ -44,8 +44,8 @@ class TableSettingsDialog extends Component {
 		        			<div className="list">
 		        				<CheckboxGroup 
 		        					label="Cost Center"
-		        					checked={hiddenCols['costCenter']}
-		        					prop="costCenter"
+		        					checked={hiddenCols['cost_center_label']}
+		        					prop="cost_center_label"
 		        					colDisplayChange={colDisplayChange}
 		        					 />
 		        				<CheckboxGroup 
@@ -62,8 +62,8 @@ class TableSettingsDialog extends Component {
 		        					/>
 		        				<CheckboxGroup 
 		        					label="Date In" 
-									checked={hiddenCols['dateIn']}
-									prop="dateIn"
+									checked={hiddenCols['Date_In']}
+									prop="Date_In"
 									colDisplayChange={colDisplayChange}
 		        					/>
 		        			</div>
@@ -75,26 +75,26 @@ class TableSettingsDialog extends Component {
 		        			<div className="list">
 		        				<CheckboxGroup 
 		        					label="Date Due" 
-		        					checked={hiddenCols['dateDue']}
-		        					prop="dateDue"
+		        					checked={hiddenCols['Date_Due']}
+		        					prop="Date_Due"
 		        					colDisplayChange={colDisplayChange}
 		        					/>
 		        				<CheckboxGroup 
 		        					label="Partial Due" 
-		        					checked={hiddenCols['partialDue']}
-		        					prop="partialDue"
+		        					checked={hiddenCols['Partial_Due']}
+		        					prop="Partial_Due"
 		        					colDisplayChange={colDisplayChange}
 		        					/>
 		        				<CheckboxGroup 
 		        					label="Days Available"
-		        					checked={hiddenCols['daysAvailable']}
-		        					prop="daysAvailable"
+		        					checked={hiddenCols['Days_Available']}
+		        					prop="Days_Available"
 		        					colDisplayChange={colDisplayChange}
 		        				 />
 		        				<CheckboxGroup 
 		        					label="Hrs. Planned"
-									checked={hiddenCols['hrsPlaned']}
-									prop="hrsPlaned"
+									checked={hiddenCols['Hrs_planed']}
+									prop="Hrs_planed"
 									colDisplayChange={colDisplayChange}
 		        					 />
 		        			</div>
@@ -106,14 +106,14 @@ class TableSettingsDialog extends Component {
 		        			<div className="list">
 		        				<CheckboxGroup 
 		        					label="Required Days"
-		        					checked={hiddenCols['requiredDays']}
-		        					prop="requiredDays"
+		        					checked={hiddenCols['Required_Days']}
+		        					prop="Required_Days"
 		        					colDisplayChange={colDisplayChange}
 		        				 />
 		        				<CheckboxGroup 
 		        					label="Allocated Hours" 
-									checked={hiddenCols['allocatedHours']}
-									prop="allocatedHours"
+									checked={hiddenCols['Allocated_Hours']}
+									prop="Allocated_Hours"
 									colDisplayChange={colDisplayChange}
 		        					/>
 		        			</div>

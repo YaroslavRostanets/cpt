@@ -30,15 +30,15 @@ class TableRow extends Component {
 			
 			planning_hours.forEach((item)=>{
 			/*------------------------------------*/
-			let propName = Object.keys(item).pop();
-				item = item[propName];
+			/*let propName = Object.keys(item).pop();
+				item = item[propName];*/
 			/*------------------------------------*/
 				if(item.hours) {
 					sum += Number(item.hours);
 				}
 			});
 
-			return  sum;
+			return  Math.round(sum * 100) / 100;
 		}
 
 		const getDaysAvailable = (dateDue, dateIn) => {
@@ -60,7 +60,7 @@ class TableRow extends Component {
 
 		return(
 			<tr>
-				<td style={{display: hiddenCols['costCenter'] ? 'none' : 'table-cell'}}>
+				<td style={{display: hiddenCols['cost_center_label'] ? 'none' : 'table-cell'}}>
 					{row.cost_center_label}
 				</td>
 				<td style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell'}}>
@@ -72,33 +72,33 @@ class TableRow extends Component {
 				<td style={{display: hiddenCols['description'] ? 'none' : 'table-cell'}}>
 					{row.description}
 				</td>
-				<td style={{display: hiddenCols['dateIn'] ? 'none' : 'table-cell'}}>
+				<td style={{display: hiddenCols['Date_In'] ? 'none' : 'table-cell'}}>
 					{ dateFormat(row.Date_In) }
 				</td>
-				<td style={{display: hiddenCols['dateDue'] ? 'none' : 'table-cell'}}>
+				<td style={{display: hiddenCols['Date_Due'] ? 'none' : 'table-cell'}}>
 					{ dateFormat(row.Date_Due) }
 				</td>
-				<td style={{display: hiddenCols['partialDue'] ? 'none' : 'table-cell'}}>
+				<td style={{display: hiddenCols['Partial_Due'] ? 'none' : 'table-cell'}}>
 					{ row.Partial_Due ? dateFormat( row.Partial_Due ) : null }
 				</td>
-				<td style={{display: hiddenCols['daysAvailable'] ? 'none' : 'table-cell'}}>
-					{ getDaysAvailable(row.Date_Due, row.Date_In) }
+				<td style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
+					{ row.Days_Available }
 				</td>
-				<td style={{display: hiddenCols['hrsPlaned'] ? 'none' : 'table-cell'}}>
+				<td style={{display: hiddenCols['Hrs_planed'] ? 'none' : 'table-cell'}}>
 					{row.hoursPlanned}
 				</td>
-				<td style={{display: hiddenCols['requiredDays'] ? 'none' : 'table-cell' }}>
-					{ getRequiredDays( getAllocatedHours(planning_hours) ) }
+				<td style={{display: hiddenCols['Required_Days'] ? 'none' : 'table-cell' }}>
+					{ row.Required_Days }
 				</td>
 				<td style={{borderRight: '3px solid rgb(208, 208, 208)', 
 					display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>
-					{getAllocatedHours(planning_hours)}
+					{row.Allocated_Hours}
 				</td>
 				{ 
 					planning_hours.map((item, index)=>{
 						/*------------------------------------*/
-						let propName = Object.keys(item).pop();
-							item = item[propName];
+						/*let propName = Object.keys(item).pop();
+							item = item[propName];*/
 						/*------------------------------------*/
 						return (
 							<td key={index}>

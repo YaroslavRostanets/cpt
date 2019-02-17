@@ -4,7 +4,9 @@ import Header from '../Header';
 import TableControll from './TableControll';
 import Table from './Table';
 import { TableLegend } from './TableLegend';
-import { getPlanningHours, saveTableCell } from '../../actions/toolActions';
+import { getPlanningHours, 
+		saveTableCell, 
+		sortedByField } from '../../actions/toolActions';
 import { colDisplayChange } from '../../actions/uiActions';
 import { getTimeline, getCapacity } from '../../actions/settingsActions';
 import './styles.scss';
@@ -18,21 +20,33 @@ class PlanningTool extends Component {
 			colDisplayChangeAction,
 			saveTableCellAction, 
 			getTimelineAction,
-			getCapacityAction
+			getCapacityAction,
+			sortedByFieldAction
 			 } = this.props;
-		const { fetching, tableRows, hiddenCols, filterOptions, timeline, capacity } = this.props;
+		const { fetching, 
+				tableRows, 
+				hiddenCols, 
+				filterOptions, 
+				timeline, 
+				capacity, 
+				sortedByField, 
+				sortedByIndex } = this.props;
 		return(
 			<div id="content-tool">
 				<TableControll 
 					getPlanningHoursAction={getPlanningHoursAction}
 					colDisplayChange={colDisplayChangeAction}
 					hiddenCols={hiddenCols}
+					timeline={timeline}
 					 />
 				<Table 
 					tableRows={tableRows} 
-					fetching={fetching} 
+					fetching={fetching}
 					hiddenCols={hiddenCols}
 					filterOptions={filterOptions}
+					sortedByField={sortedByField}
+					sortedByIndex={sortedByIndex}
+					sortedByFieldAction={sortedByFieldAction}
 					saveTableCellAction={saveTableCellAction}
 					timeline={timeline}
 					getTimelineAction={getTimelineAction}
@@ -43,6 +57,12 @@ class PlanningTool extends Component {
 			</div>
 		)
 	}
+
+	componentDidMount() {
+		this.props.getTimelineAction();
+		this.props.getCapacityAction();
+	}
+
 }
 
 const mapStateToProps = store => {
@@ -50,6 +70,8 @@ const mapStateToProps = store => {
     	fetching: store.tool.fetching,
     	tableRows: store.tool.tableRows,
     	filterOptions: store.tool.filter,
+    	sortedByField: store.tool.sortedByField,
+    	sortedByIndex: store.tool.sortedByIndex,
     	hiddenCols: store.ui.hiddenCols,
     	timeline: store.settings.timeline,
     	capacity: store.settings.capacity
@@ -58,11 +80,12 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   	return {
-    	getPlanningHoursAction: (date, selected) => dispatch(getPlanningHours(date, selected)),
+    	getPlanningHoursAction: (date, selected, timeline) => dispatch(getPlanningHours(date, selected, timeline)),
     	saveTableCellAction: (savedObject, date) => dispatch(saveTableCell(savedObject, date)),
     	colDisplayChangeAction: col => dispatch(colDisplayChange(col)),
     	getTimelineAction: () => dispatch(getTimeline()),
-    	getCapacityAction: () => dispatch(getCapacity())
+    	getCapacityAction: () => dispatch(getCapacity()),
+    	sortedByFieldAction: (fieldName, sortType, index) => dispatch(sortedByField(fieldName, sortType, index))
   	}
 }
 

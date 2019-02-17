@@ -34,21 +34,23 @@ class TableControll extends Component {
 
 	handleDateChange(date) {
 		console.log('dateC: ', date.setHours(0,0,0,0));
+		const { timeline } = this.props;
 		this.setState({
 		    date: date
 		}, ()=>{
 			if(this.state.selected.length){
 				let { date, selected } = this.state;
-				this.props.getPlanningHoursAction(date, selected);
+				this.props.getPlanningHoursAction(date, selected, timeline);
 			}
 		});
   	}
 
   	handleCoastCentersChange(selected) {
+  		const { timeline } = this.props;
   		this.setState({selected: selected},()=>{
   			if(this.state.selected.length) {
 				let { date, selected } = this.state;
-  				this.props.getPlanningHoursAction(date, selected);
+  				this.props.getPlanningHoursAction(date, selected, timeline);
   			}
   		});
   	}

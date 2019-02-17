@@ -8,8 +8,15 @@ import './styles.scss';
 class Table extends Component {
 
 	render() {
-		const { tableRows, hiddenCols, filterOptions, fetching, timeline, capacity } = this.props;
-		const { saveTableCellAction, getTimelineAction } = this.props;
+		const { tableRows, 
+				hiddenCols, 
+				filterOptions, 
+				fetching, 
+				timeline, 
+				capacity, 
+				sortedByField,
+				sortedByIndex } = this.props;
+		const { saveTableCellAction, getTimelineAction, sortedByFieldAction } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
@@ -26,7 +33,10 @@ class Table extends Component {
 							rows={tableRows} 
 							row={tableRows[0]}
 							capacity={capacity}
-							hiddenCols={hiddenCols} /> : null }
+							hiddenCols={hiddenCols}
+							sortedByField={sortedByField}
+							sortedByIndex={sortedByIndex}
+							sortedByFieldAction={sortedByFieldAction} /> : null }
 						{ tableRows.map((row, index)=>(
 							<TableRow 
 								key={index} 
@@ -45,10 +55,6 @@ class Table extends Component {
 		)
 	}
 
-	componentDidMount() {
-		this.props.getTimelineAction();
-		this.props.getCapacityAction();
-	}
 }
 
 export default Table

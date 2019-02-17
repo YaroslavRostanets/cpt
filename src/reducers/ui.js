@@ -2,17 +2,17 @@ import { COL_CHANGE } from '../actions/uiActions';
 
 const initialState = {
     hiddenCols: {
-    	'costCenter': false,
+    	'cost_center_label': false,
     	'jobno': false,
     	'costorem': false,
     	'description': false,
-    	'dateIn': false,
-    	'dateDue': false,
-    	'partialDue': false,
-    	'daysAvailable': false,
-    	'hrsPlaned': false,
-    	'requiredDays': false,
-    	'allocatedHours': false
+    	'Date_In': false,
+    	'Date_Due': false,
+    	'Partial_Due': false,
+    	'Days_Available': false,
+    	'Hrs_planed': false,
+    	'Required_Days': false,
+    	'Allocated_Hours': false
     }
 };
 

@@ -3,6 +3,9 @@ export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
 export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
 
+export const SORT_ROWS = 'SORT_ROWS';
+
+
 export function saveTableCell (obj) {
 
     return dispatch => {
@@ -30,7 +33,7 @@ export function saveTableCell (obj) {
     
 }
 
-export function getPlanningHours (date, selected) {
+export function getPlanningHours (date, selected, timeline) {
 	console.log('getting_planning_hours...');
 	console.log('date', Math.round(date.getTime() / 1000) );
 	console.log('selected', selected);
@@ -52,10 +55,16 @@ export function getPlanningHours (date, selected) {
     	)
         .then(response => response.json())
         .then(data => {
+            
+            const correct = getOutFromObj([...data.result]);  
+
+            const extendetDataArray = addMissingProperties(correct, timeline);
+            console.log('timeline: ', timeline);
+            console.log('extendetDataArray: ', extendetDataArray);
 
         	dispatch({
           		type: GET_PLANNING_HOURS_SUCCESS,
-          		payload: data.result
+          		payload: extendetDataArray
         	})
 
         })
@@ -74,161 +83,80 @@ export function getPlanningHours (date, selected) {
 }
 
 
-function convertToReact (fromApiArr, date) {
-
-    const tableRowsArray = fromApiArr.map((oneJobObject)=>{
-
-                let oneRowObj = {
-                    'costCenter': oneJobObject.Cost_Center,
-                    'jobno': oneJobObject.jobno,
-                    'customer': oneJobObject.customer,
-                    'description': oneJobObject.description,
-                    'dateIn': oneJobObject.Date_In,
-                    'dateDue': oneJobObject.Date_Due,
-                    'partialDue': oneJobObject.Partial_Due,
-                    'daysAvailable': function() {
-                        let dayInMiliSec = 24 * 60 * 60 * 1000;
-                        let startDateIn = new Date(oneJobObject.Date_In);
-                            startDateIn.setHours(0,0,0,0);
-                        let startDateDue = new Date(oneJobObject.Date_Due);
-                            startDateDue.setHours(0,0,0,0);
-
-                        return Math.round( (startDateDue.getTime() - startDateIn.getTime() + dayInMiliSec) / dayInMiliSec );
-                    }(),
-                    'hoursPlanned': oneJobObject.Hrs_planned.toFixed(2),
-                    'planning_hours': function() {
-                        var planningHoursArray = [];
-                        var weekCounter = 0;
-                        var dateStart = new Date(date);
-                            dateStart.setHours(0,0,0,0);
-                        var i = 1;
-                        var currentDate = new Date(date);
-                            currentDate.setHours(0,0,0,0);
-
-                        while(i < 20) {
-                            planningHoursArray.push({
-                                date: currentDate.getTime(),
-                                internal_task_id: oneJobObject.id,
-                                is_weekly: false,
-
-                            });
-                            if(currentDate.getDay() === 0) {
-                                weekCounter = weekCounter + 1;
-                                if(weekCounter == 2) break;
-                            }
-                            
-                            currentDate.setDate(dateStart.getDate()+i);
-                            //console.log('Now: ', dateStart);
-                            i++;
-                        }
-                        currentDate.setDate(currentDate.getDate()+1);
-                        planningHoursArray.push({
-                            date: currentDate.getTime(),
-                            internal_task_id: oneJobObject.id,
-                            is_weekly: true
-                        });
-                        currentDate.setDate(currentDate.getDate()+1);
-                        planningHoursArray.push({
-                            date: currentDate.getTime(),
-                            internal_task_id: oneJobObject.id,
-                            is_weekly: true
-                        });
-
-                        oneJobObject.planning_hours.forEach((item)=>{
-                            let setPanningHoursDate = new Date(item.date);
-                                setPanningHoursDate.setHours(0,0,0,0);
-                                let index = planningHoursArray.findIndex((el)=>{
-                                    let d = new Date(el.date);
-                                    d.setHours(0,0,0,0);
-
-                                    return d.getTime() === setPanningHoursDate.getTime();
-                                });
-                                planningHoursArray.splice(index, 1, item);
-                        });
-
-                        return planningHoursArray;
-                    }()
-                }
-                return oneRowObj;
-            });
-
-    return tableRowsArray;
-
+export function sortedByField (fieldName, sortType, index) {
+    console.log('SORTED: ', fieldName);
+    return {
+            type: SORT_ROWS,
+            payload: {
+                'fieldName': fieldName,
+                'sortType': sortType,
+                'index': index
+            }
+    }
 }
 
 
-/*const tableRowsArray = result.map((oneJobObject)=>{
+function addMissingProperties (rowsArray, timeline) {
 
-                let oneRowObj = {
-                    'costCenter': oneJobObject.Cost_Center,
-                    'jobno': oneJobObject.jobno,
-                    'customer': oneJobObject.customer,
-                    'description': oneJobObject.description,
-                    'dateIn': oneJobObject.Date_In,
-                    'dateDue': oneJobObject.Date_Due,
-                    'partialDue': oneJobObject.Partial_Due,
-                    'daysAvailable': function() {
-                        let dayInMiliSec = 24 * 60 * 60 * 1000;
-                        let startDateIn = new Date(oneJobObject.Date_In);
-                            startDateIn.setHours(0,0,0,0);
-                        let startDateDue = new Date(oneJobObject.Date_Due);
-                            startDateDue.setHours(0,0,0,0);
+    const extendetRowsArray = rowsArray.map((row)=>{
 
-                        return Math.round( (startDateDue.getTime() - startDateIn.getTime() + dayInMiliSec) / dayInMiliSec );
-                    }(),
-                    'hoursPlanned': oneJobObject.Hrs_planned.toFixed(2),
-                    'planning_hours': function() {
-                        var planningHoursArray = [];
-                        var weekCounter = 0;
-                        var dateStart = new Date(date);
-                            dateStart.setHours(0,0,0,0);
-                        var i = 1;
-                        var currentDate = new Date(date);
-                            currentDate.setHours(0,0,0,0);
+            row.Days_Available = getDaysAvailable(row.Date_Due, row.Date_In);
+            row.Allocated_Hours = getAllocatedHours(row.planning_hours);
+            row.Required_Days = getRequiredDays(row.Allocated_Hours, timeline);
+        
+        return row;
+    });
 
-                        while(i < 20) {
-                            planningHoursArray.push({
-                                date: currentDate.getTime(),
-                                internal_task_id: oneJobObject.id,
-                                is_weekly: false,
+    function getRequiredDays(allocatedHours, timeline) {
+            console.log();
+            let item = timeline.find((item)=>{
+                return (allocatedHours >= item.hours_start && allocatedHours <= item.hours_end)
+            });
 
-                            });
-                            if(currentDate.getDay() === 0) {
-                                weekCounter = weekCounter + 1;
-                                if(weekCounter == 2) break;
-                            }
-                            
-                            currentDate.setDate(dateStart.getDate()+i);
-                            //console.log('Now: ', dateStart);
-                            i++;
-                        }
-                        currentDate.setDate(currentDate.getDate()+1);
-                        planningHoursArray.push({
-                            date: currentDate.getTime(),
-                            internal_task_id: oneJobObject.id,
-                            is_weekly: true
-                        });
-                        currentDate.setDate(currentDate.getDate()+1);
-                        planningHoursArray.push({
-                            date: currentDate.getTime(),
-                            internal_task_id: oneJobObject.id,
-                            is_weekly: true
-                        });
+            return item ? item.days_value : null;
+    }
 
-                        oneJobObject.planning_hours.forEach((item)=>{
-                            let setPanningHoursDate = new Date(item.date);
-                                setPanningHoursDate.setHours(0,0,0,0);
-                                let index = planningHoursArray.findIndex((el)=>{
-                                    let d = new Date(el.date);
-                                    d.setHours(0,0,0,0);
+    function getDaysAvailable(dateDue, dateIn) {
+            let dayInMiliSec = 24 * 60 * 60 * 1000;
+            let dateD = new Date(dateDue);
+                dateD.setHours(0,0,0,0);
+            let dateI = new Date(dateIn);
+                dateI.setHours(0,0,0,0);
 
-                                    return d.getTime() === setPanningHoursDate.getTime();
-                                });
-                                planningHoursArray.splice(index, 1, item);
-                        });
+            return Math.floor((dateD.getTime() - dateI.getTime()) / dayInMiliSec + 1);
+    }
 
-                        return planningHoursArray;
-                    }()
+    function getAllocatedHours(planning_hours) {
+            var sum = 0;
+            
+            planning_hours.forEach((item)=>{
+
+                if(item.hours) {
+                    sum += Number(item.hours);
                 }
-                return oneRowObj;
-            });*/
+            });
+
+            return Math.round(sum * 100) / 100;
+    }
+
+
+
+
+    return extendetRowsArray;
+
+}
+
+function getOutFromObj(rowsArray) {
+
+    const correct = rowsArray.map((item)=>{
+            //console.log('getOut: ', item);
+            item.planning_hours.forEach((ph, index)=>{
+                let propName = Object.keys(ph).pop();
+                    item.planning_hours[index] = ph[propName];
+            });
+
+            return item;
+    });
+
+    return correct;
+}

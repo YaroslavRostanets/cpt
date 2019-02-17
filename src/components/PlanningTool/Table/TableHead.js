@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import { ButtonBase } from '@material-ui/core';
+import TableHeadCell from './TableHeadCell';
 
 class TableHead extends Component {
 
+	sortHandler(fieldName, sortType, index) {
+		console.log('sortedBy: ', fieldName, index);
+		this.props.sortedByFieldAction(fieldName, sortType, index);
+	}
+
 	render() {
-		const { rows, row, hiddenCols, capacity } = this.props;
+		const { rows, row, hiddenCols, capacity, sortedByField, sortedByIndex } = this.props;
 		const { planning_hours } = row;
+		const { sortedByFieldAction } = this.props;
 		
 		const getDate = (timestamp) => ( new Date(timestamp * 1000).getDate() );
 		const getWeekDay = (timestamp) => {
@@ -24,8 +32,8 @@ class TableHead extends Component {
 
 			let result = rows.reduce((sum, current)=>{
 				/*-----------------------------------------*/
-				let propName = Object.keys(current.planning_hours[index]).pop();
-				let hours = current.planning_hours[index][propName].hours;
+				//let propName = Object.keys(current.planning_hours[index]).pop();
+				let hours = current.planning_hours[index].hours;
 				/*-----------------------------------------*/
 				return sum + hours}, 0);
 
@@ -54,57 +62,103 @@ class TableHead extends Component {
 
 		return(
 			<tr>
-				<th style={{display: hiddenCols['costCenter'] ? 'none' : 'table-cell' }}>
-					Cost Center
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell' }}>
-					Job #
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['customer'] ? 'none' : 'table-cell' }}>
-					Customer
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['description'] ? 'none' : 'table-cell' }}>
-					Description
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['dateIn'] ? 'none' : 'table-cell' }}>
-					Date In
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['dateDue'] ? 'none' : 'table-cell' }}>
-					Date Due
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['partialDue'] ? 'none' : 'table-cell' }}>
-					Partial Due
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['daysAvailable'] ? 'none' : 'table-cell' }}>
-					Days Available
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['hrsPlaned'] ? 'none' : 'table-cell' }}>
-					Hrs. Planed
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{display: hiddenCols['requiredDays'] ? 'none' : 'table-cell' }}>
-					Required Days
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
-				<th style={{borderRight: '3px solid rgb(208, 208, 208)', 
-					display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>
-					Allocated Hours
-					<i className="fa fa-angle-down" aria-hidden="true"></i>
-				</th>
+				<TableHeadCell 
+					title="Cost Center" 
+					fieldName="cost_center_label"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction}
+					sortType="string"
+					 />
+				<TableHeadCell 
+					title="Job #" 
+					fieldName="jobno"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="numeric"
+					/>
+				<TableHeadCell 
+					title="Customer" 
+					fieldName="customer"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="string"
+					/>
+				<TableHeadCell 
+					title="Description" 
+					fieldName="description"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="string"
+					/>
+				<TableHeadCell 
+					title="Date In" 
+					fieldName="Date_In"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction}
+					sortType="string"
+					 />
+				<TableHeadCell 
+					title="Date_Due" 
+					fieldName="Date_Due"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction}
+					sortType="string"
+					 />
+				<TableHeadCell 
+					title="Partial Due" 
+					fieldName="Partial_Due"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="string"
+					/>
+
+				<TableHeadCell 
+					title="Days Available" 
+					fieldName="Days_Available"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="numeric"
+					/>
+
+				<TableHeadCell 
+					title="Hrs. Planed" 
+					fieldName="Hrs_planed"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="numeric"
+					/>
+				<TableHeadCell 
+					title="Required Days" 
+					fieldName="Required_Days"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="numeric"
+					/>
+				<TableHeadCell 
+					title="Allocated Hours" 
+					fieldName="Allocated_Hours"
+					hiddenCols={hiddenCols}
+					sortedByField={sortedByField}
+					sortedByFieldAction={sortedByFieldAction} 
+					sortType="numeric"
+					/>
 					{ 
 						planning_hours.map((item, index)=>{
+
 							//console.log('item_is_an: ', typeof item );
 							/*-----------------------------------------*/
-							let propName = Object.keys(item).pop();
-							item = item[propName];
+							/*let propName = Object.keys(item).pop();
+							item = item[propName];*/
 							/*-----------------------------------------*/
 							const sumByDay = getSumByDay(index);
 							const color = getColumnColor(sumByDay, item);
@@ -112,6 +166,15 @@ class TableHead extends Component {
 								<th key={index} className="day">
 									<div>W/E</div>
 									<div>{getDate(item.date)} {getMonth(item.date)}</div>
+									<ButtonBase 
+										onClick={this.sortHandler.bind(this,'planning_hours', 'numeric', index)}
+										className="sort-btn">
+										{ sortedByIndex === index ?
+												<i className="fa fa-angle-up" aria-hidden="true"></i>
+											: 
+												<i className="fa fa-angle-down" aria-hidden="true"></i>
+										}
+									</ButtonBase>
 								</th>
 								 : 
 								<th 
@@ -119,11 +182,20 @@ class TableHead extends Component {
 									className="day"
 									bgcolor={color ? color : '#DFDFDF'}
 									style={{'backgroundColor': color}}
+
 									>
 										<div>{getWeekDay(item.date)}</div>
 										<div>{getDate(item.date)} {getMonth(item.date)}</div>
 										<div>{sumByDay}</div>
-										<i className="fa fa-angle-down" aria-hidden="true"></i>
+										<ButtonBase 
+											onClick={this.sortHandler.bind(this,'planning_hours', 'numeric', index)}
+											className="sort-btn">
+											{ sortedByIndex === index ?
+												<i className="fa fa-angle-up" aria-hidden="true"></i>
+											: 
+												<i className="fa fa-angle-down" aria-hidden="true"></i>
+											}
+										</ButtonBase>
 								</th>
 							)
 					}) }

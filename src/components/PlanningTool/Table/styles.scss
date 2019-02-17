@@ -52,11 +52,7 @@
 			background: #D0D0D0;
 			height: 4px;
 		}
-		.fa-angle-down {
-			position: absolute;
-			left: 50%;
-			transform: translateX(-50%);
-			bottom: 3px;
+		.fa {
 			font-size: 18px;
 			height: 16px;
 			width: 16px;
@@ -64,6 +60,13 @@
 		}
 		div {
 			white-space: nowrap;
+		}
+		.sort-btn {
+			position: absolute;
+			left: 50%;
+			bottom: 3px;
+			transform: translateX(-50%);
+			border-radius: 2px;
 		}
 	}
 	td {
