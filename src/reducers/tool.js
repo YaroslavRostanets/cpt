@@ -49,7 +49,7 @@ export function toolReducer(state = initialState, action) {
           return {...state, ...assignState, sortedByField: action.payload.fieldName }
 
           case SORT_ROWS_INDEX:
-            if(action.payload.index === state.sortedByIndex) {
+            if(action.payload.index === state.sortedByIndex && state.sortAscending) {
               var assignState = {
                 tableRows: sort( state.tableRows, action.payload.fieldName, action.payload.index).reverse(),
                 sortAscending: false

@@ -163,10 +163,10 @@ class TableHead extends Component {
 							const sumByDay = getSumByDay(index);
 							const color = getColumnColor(sumByDay, item);
 							return (item.is_weekly ?
-								<th key={index} className="day">
+								<th key={index} className="day" >
 									<div>W/E</div>
 									<div>{getDate(item.date)} {getMonth(item.date)}</div>
-									<div>{sumByDay}</div>
+									<div>{sumByDay.toFixed(2)}</div>
 									<ButtonBase 
 										onClick={this.sortHandler.bind(this,'planning_hours', index)}
 										className="sort-btn">
@@ -182,12 +182,11 @@ class TableHead extends Component {
 									key={index} 
 									className="day"
 									bgcolor={color ? color : '#DFDFDF'}
-									style={{'backgroundColor': color}}
-
+									style={{'backgroundColor': color, borderLeft: index === 0 ? '3px solid rgb(208, 208, 208)' : null}}
 									>
 										<div>{getWeekDay(item.date)}</div>
 										<div>{getDate(item.date)} {getMonth(item.date)}</div>
-										<div>{sumByDay}</div>
+										<div>{sumByDay.toFixed(2)}</div>
 										<ButtonBase 
 											onClick={this.sortHandler.bind(this,'planning_hours', index)}
 											className="sort-btn">

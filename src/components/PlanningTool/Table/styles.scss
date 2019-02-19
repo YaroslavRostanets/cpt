@@ -7,6 +7,9 @@
 		height: auto;
 	}
 	tr {
+		&:nth-child(2n+1) {
+			background-color: #FBFBFB;
+		}
 		&:first-child {
 			
 			top: 0;

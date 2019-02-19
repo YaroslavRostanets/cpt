@@ -21,7 +21,7 @@ class TableRow extends Component {
 		}
 
 		return(
-			<tr>
+			<tr datay={rowNo}>
 				<td style={{display: hiddenCols['cost_center_label'] ? 'none' : 'table-cell'}}>
 					{row.cost_center_label}
 				</td>
@@ -52,8 +52,7 @@ class TableRow extends Component {
 				<td style={{display: hiddenCols['Required_Days'] ? 'none' : 'table-cell' }}>
 					{ row.Required_Days }
 				</td>
-				<td style={{borderRight: '3px solid rgb(208, 208, 208)', 
-					display: hiddenCols['allocatedHours'] ? 'none' : 'table-cell' }}>
+				<td style={{display: hiddenCols['Allocated_Hours'] ? 'none' : 'table-cell' }}>
 					{row.Allocated_Hours}
 				</td>
 				{ 
@@ -63,7 +62,9 @@ class TableRow extends Component {
 							item = item[propName];*/
 						/*------------------------------------*/
 						return (
-							<td key={index}>
+							<td key={index}
+							datax = {index}
+							style={{borderLeft: index === 0 ? '3px solid rgb(208, 208, 208)' : null}} >
 								<CustomInput 
 									value={ item.hours } 
 									data={item} 
