@@ -4,7 +4,8 @@ import TableControll from './TableControll';
 import Table from './Table';
 import { TableLegend } from './TableLegend/index.js';
 import { getPlanningHours, 
-		saveTableCell, 
+		saveTableCell,
+		recalculationTable, 
 		sortedByField } from '../../actions/toolActions';
 import { colDisplayChange } from '../../actions/uiActions';
 import { getTimeline, getCapacity } from '../../actions/settingsActions';
@@ -20,7 +21,8 @@ class PlanningTool extends Component {
 			saveTableCellAction, 
 			getTimelineAction,
 			getCapacityAction,
-			sortedByFieldAction
+			sortedByFieldAction,
+			recalculationTableAction
 			 } = this.props;
 		const { fetching, 
 				tableRows, 
@@ -29,7 +31,8 @@ class PlanningTool extends Component {
 				timeline, 
 				capacity, 
 				sortedByField, 
-				sortedByIndex } = this.props;
+				sortedByIndex,
+				sortAscending } = this.props;
 		return(
 			<div id="content-tool">
 				<TableControll 
@@ -47,8 +50,10 @@ class PlanningTool extends Component {
 					filterOptions={filterOptions}
 					sortedByField={sortedByField}
 					sortedByIndex={sortedByIndex}
+					sortAscending={sortAscending}
 					sortedByFieldAction={sortedByFieldAction}
 					saveTableCellAction={saveTableCellAction}
+					recalculationTableAction={recalculationTableAction}
 					timeline={timeline}
 					getTimelineAction={getTimelineAction}
 					capacity={capacity}
@@ -76,6 +81,7 @@ const mapStateToProps = store => {
     	filterOptions: store.tool.filter,
     	sortedByField: store.tool.sortedByField,
     	sortedByIndex: store.tool.sortedByIndex,
+    	sortAscending: store.tool.sortAscending,
     	hiddenCols: store.ui.hiddenCols,
     	timeline: store.settings.timeline,
     	capacity: store.settings.capacity
@@ -85,11 +91,12 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   	return {
     	getPlanningHoursAction: (date, selected, timeline) => dispatch(getPlanningHours(date, selected, timeline)),
+    	recalculationTableAction: (rowNumber, planningHoursNumber, hours, timeline) => dispatch(recalculationTable(rowNumber, planningHoursNumber, hours, timeline)),
     	saveTableCellAction: (savedObject, timeline) => dispatch(saveTableCell(savedObject, timeline)),
     	colDisplayChangeAction: col => dispatch(colDisplayChange(col)),
     	getTimelineAction: () => dispatch(getTimeline()),
     	getCapacityAction: () => dispatch(getCapacity()),
-    	sortedByFieldAction: (fieldName, sortType, index) => dispatch(sortedByField(fieldName, sortType, index))
+    	sortedByFieldAction: (fieldName, index) => dispatch(sortedByField(fieldName, index))
   	}
 }
 

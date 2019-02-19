@@ -2,8 +2,10 @@ export const GET_PLANNING_HOURS_REQUEST = 'GET_PLANNING_HOURS_REQUEST';
 export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
 export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
+export const RECALCULATION_TABLE = 'RECALCULATION_TABLE';
 
 export const SORT_ROWS = 'SORT_ROWS';
+export const SORT_ROWS_INDEX = 'SORT_ROWS_INDEX';
 
 
 export function saveTableCell (obj, timeline) {
@@ -19,12 +21,12 @@ export function saveTableCell (obj, timeline) {
         })
         .then(res => res.json())
         .then((data) => {
-            const correct = getOutFromObj([...data.result]);  
-            const extendetDataArray = addMissingProperties(correct, timeline);
+/*            const correct = getOutFromObj([...data.result]);  
+            const extendetDataArray = addMissingProperties(correct, timeline);*/
             
             dispatch({
-                type: SAVE_TABLE_CELL,
-                payload: extendetDataArray
+                type: SAVE_TABLE_CELL
+                //payload: extendetDataArray
             })
         },
         (error) => {
@@ -33,13 +35,13 @@ export function saveTableCell (obj, timeline) {
       )
 
     }
-    
 }
 
 export function getPlanningHours (date, selected, timeline) {
 	console.log('getting_planning_hours...');
-	console.log('date', Math.round(date.getTime() / 1000) );
+	console.log('date ', date.getTimezoneOffset() );
 	console.log('selected', selected);
+    const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
 
 	return dispatch => {
 		dispatch({
@@ -53,7 +55,8 @@ export function getPlanningHours (date, selected, timeline) {
                 credentials: 'include',
 				body: JSON.stringify({
 		      		cost_centers: selected,
-		      		date: Math.round(date.getTime() / 1000) //getting timestamp in unix format in seconds
+		      		date: Math.round( (date.getTime() + timezoneOffset) / 1000) 
+                    //getting timestamp in unix format in seconds UTC
     			})
     		}
     	)
@@ -78,18 +81,28 @@ export function getPlanningHours (date, selected, timeline) {
             
       	);
 
-	}
-	
+	}	
+}
+
+export function recalculationTable (rowNumber, planningHoursNumber, hours, timeline) {
+    return {
+            type: RECALCULATION_TABLE,
+            payload: {
+                rowNumber: rowNumber,
+                planningHoursNumber: planningHoursNumber,
+                hours: hours,
+                timeline
+            }
+    }
 }
 
 
-export function sortedByField (fieldName, sortType, index) {
+export function sortedByField (fieldName, index) {
 
     return {
-            type: SORT_ROWS,
+            type: index === undefined ? SORT_ROWS : SORT_ROWS_INDEX,
             payload: {
                 'fieldName': fieldName,
-                'sortType': sortType,
                 'index': index
             }
     }
@@ -108,7 +121,6 @@ function addMissingProperties (rowsArray, timeline) {
     });
 
     function getRequiredDays(allocatedHours, timeline) {
-            console.log();
             let item = timeline.find((item)=>{
                 return (allocatedHours >= item.hours_start && allocatedHours <= item.hours_end)
             });

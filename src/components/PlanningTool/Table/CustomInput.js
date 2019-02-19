@@ -12,33 +12,44 @@ class CustomInput extends Component {
 	}
 
 	handleChange(e) {
+		console.log('handler');
 		clearTimeout(this.timerId);
-		const { filterOptions } = this.props;
+		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 
-		const value = e.currentTarget.value.replace(/[^\d\.]/g, "");
+		var value = e.currentTarget.value.replace(/[^\d\.]/g, "");
+			if( !isNaN(value.substr(-1)) ) {
+				value = parseFloat(value ? value : 0);
+				value = value.toFixed(2);
+			}
+		const parseValue = parseFloat(value ? value : 0);
+		
+			this.setState({
+				data: {...this.state.data, hours: value }
+			}, () => {
+				console.log('save?: ', !isNaN(value.substr(-1)) );
+				if ( !isNaN(value.substr(-1)) ) {
+					this.props.recalculationTableAction(rowNo, hoursNo, parseValue, timeline);
 
-		this.setState({
-			data: {...this.state.data, hours: value }
-		}, () => {
-			this.timerId = setTimeout(() => {
-				let dataCopy = {...this.state.data, 
-						hours: parseFloat(this.state.data.hours)};
-					if (dataCopy.id === 0) {
-						delete dataCopy.id
-					}
+					this.timerId = setTimeout(() => {
+						let dataCopy = {...this.state.data, 
+								hours: parseValue};
+							if (dataCopy.id === 0) {
+								delete dataCopy.id
+							}
 
-				let saveCell = {
-					'cost_centers': filterOptions.selected,
-					'date': Math.round(new Date(filterOptions.date).getTime() / 1000),
-					'data': dataCopy
+						let saveCell = {
+							'cost_centers': filterOptions.selected,
+							'date': Math.round(new Date(filterOptions.date).getTime() / 500),
+							'data': dataCopy
+						}
+
+						this.props.saveTableCellAction(saveCell, this.props.timeline);
+
+					}, 1000);
 				}
 
-				//console.log('SO: ', saveCell);
-				this.props.saveTableCellAction(saveCell, this.props.timeline);
-
-			}, 1000);
-
-		});
+			});
+		
 
 	}
 

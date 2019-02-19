@@ -5,10 +5,10 @@ class TableRow extends Component {
 
 	render() {
 
-		const { row, hiddenCols, filterOptions, timeline } = this.props;
+		const { row, rowNo, hiddenCols, filterOptions, timeline } = this.props;
 
 		const { planning_hours } = row;
-		const { saveTableCellAction } = this.props;
+		const { saveTableCellAction, recalculationTableAction } = this.props;
 
 		const dateFormat = (timestamp) => {
 			let newDate = new Date(timestamp);
@@ -70,7 +70,10 @@ class TableRow extends Component {
 									filterOptions={filterOptions}
 									timeline={timeline}
 									row={row}
+									hoursNo={index}
+									rowNo={rowNo}
 									saveTableCellAction={saveTableCellAction}
+									recalculationTableAction={recalculationTableAction}
 									/>
 							</td>
 						)

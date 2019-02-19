@@ -4,13 +4,12 @@ import TableHeadCell from './TableHeadCell';
 
 class TableHead extends Component {
 
-	sortHandler(fieldName, sortType, index) {
-		console.log('sortedBy: ', fieldName, index);
-		this.props.sortedByFieldAction(fieldName, sortType, index);
+	sortHandler(fieldName, index) {
+		this.props.sortedByFieldAction(fieldName, index);
 	}
 
 	render() {
-		const { rows, row, hiddenCols, capacity, sortedByField, sortedByIndex } = this.props;
+		const { rows, row, hiddenCols, capacity, sortedByField, sortedByIndex, sortAscending } = this.props;
 		const { planning_hours } = row;
 		const { sortedByFieldAction } = this.props;
 		
@@ -41,7 +40,7 @@ class TableHead extends Component {
 		}
 
 		const getColumnColor = (sumByDay, item) => {
-			let dayOfWeek = new Date(item.date).getDay();
+			let dayOfWeek = new Date(item.date * 1000).getDay();
 				switch (dayOfWeek) {
   					case 0:
 	  					dayOfWeek = 'sun';
@@ -51,8 +50,9 @@ class TableHead extends Component {
 				    	break;
 			  		default:
 			    		dayOfWeek = 'work';
+			    		break;
 			}
-			
+
 			let resultCap = capacity.find((cap)=>{
 				return (cap.days === dayOfWeek && sumByDay >= cap.hours_start && sumByDay <= cap.hours_end)
 			});
@@ -68,31 +68,31 @@ class TableHead extends Component {
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
 					sortedByFieldAction={sortedByFieldAction}
-					sortType="string"
+					sortAscending={sortAscending}
 					 />
 				<TableHeadCell 
 					title="Job #" 
 					fieldName="jobno"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="numeric"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending}
 					/>
 				<TableHeadCell 
 					title="Customer" 
 					fieldName="customer"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="string"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending} 
 					/>
 				<TableHeadCell 
 					title="Description" 
 					fieldName="description"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="string"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending}
 					/>
 				<TableHeadCell 
 					title="Date In" 
@@ -100,7 +100,7 @@ class TableHead extends Component {
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
 					sortedByFieldAction={sortedByFieldAction}
-					sortType="string"
+					sortAscending={sortAscending}
 					 />
 				<TableHeadCell 
 					title="Date_Due" 
@@ -108,15 +108,15 @@ class TableHead extends Component {
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
 					sortedByFieldAction={sortedByFieldAction}
-					sortType="string"
+					sortAscending={sortAscending}
 					 />
 				<TableHeadCell 
 					title="Partial Due" 
 					fieldName="Partial_Due"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="string"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending}
 					/>
 
 				<TableHeadCell 
@@ -124,8 +124,8 @@ class TableHead extends Component {
 					fieldName="Days_Available"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="numeric"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending}
 					/>
 
 				<TableHeadCell 
@@ -133,24 +133,24 @@ class TableHead extends Component {
 					fieldName="Hrs_planed"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="numeric"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending}
 					/>
 				<TableHeadCell 
 					title="Required Days" 
 					fieldName="Required_Days"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="numeric"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending}
 					/>
 				<TableHeadCell 
 					title="Allocated Hours" 
 					fieldName="Allocated_Hours"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
-					sortedByFieldAction={sortedByFieldAction} 
-					sortType="numeric"
+					sortedByFieldAction={sortedByFieldAction}
+					sortAscending={sortAscending} 
 					/>
 					{ 
 						planning_hours.map((item, index)=>{
@@ -166,10 +166,11 @@ class TableHead extends Component {
 								<th key={index} className="day">
 									<div>W/E</div>
 									<div>{getDate(item.date)} {getMonth(item.date)}</div>
+									<div>{sumByDay}</div>
 									<ButtonBase 
-										onClick={this.sortHandler.bind(this,'planning_hours', 'numeric', index)}
+										onClick={this.sortHandler.bind(this,'planning_hours', index)}
 										className="sort-btn">
-										{ sortedByIndex === index ?
+										{ sortedByIndex === index && sortAscending === true ?
 												<i className="fa fa-angle-up" aria-hidden="true"></i>
 											: 
 												<i className="fa fa-angle-down" aria-hidden="true"></i>
@@ -188,9 +189,9 @@ class TableHead extends Component {
 										<div>{getDate(item.date)} {getMonth(item.date)}</div>
 										<div>{sumByDay}</div>
 										<ButtonBase 
-											onClick={this.sortHandler.bind(this,'planning_hours', 'numeric', index)}
+											onClick={this.sortHandler.bind(this,'planning_hours', index)}
 											className="sort-btn">
-											{ sortedByIndex === index ?
+											{ sortedByIndex === index && sortAscending === true ?
 												<i className="fa fa-angle-up" aria-hidden="true"></i>
 											: 
 												<i className="fa fa-angle-down" aria-hidden="true"></i>

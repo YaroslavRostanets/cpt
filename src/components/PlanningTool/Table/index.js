@@ -15,8 +15,9 @@ class Table extends Component {
 				timeline, 
 				capacity, 
 				sortedByField,
-				sortedByIndex } = this.props;
-		const { saveTableCellAction, sortedByFieldAction } = this.props;
+				sortedByIndex,
+				sortAscending } = this.props;
+		const { saveTableCellAction, sortedByFieldAction, recalculationTableAction } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
@@ -36,14 +37,17 @@ class Table extends Component {
 							hiddenCols={hiddenCols}
 							sortedByField={sortedByField}
 							sortedByIndex={sortedByIndex}
+							sortAscending={sortAscending}
 							sortedByFieldAction={sortedByFieldAction} /> : null }
 						{ tableRows.map((row, index)=>(
 							<TableRow 
-								key={index} 
+								key={index}
+								rowNo={index}
 								row={row} 
 								hiddenCols={hiddenCols} 
 								filterOptions={filterOptions}
 								saveTableCellAction={saveTableCellAction}
+								recalculationTableAction={recalculationTableAction}
 								timeline={timeline}
 								/>
 						))}
