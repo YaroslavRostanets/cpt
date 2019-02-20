@@ -89,8 +89,20 @@ class CustomInput extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		//console.log('nextProps: ', nextProps);
+		//если парсенные значения совпадают - не перестраивать
+		if(nextProps.data.hours != parseFloat(this.state.data.hours)) {
+			this.setState({
+				data: nextProps.data,
+				initialHours: nextProps.data.hours
+			})
+		}
+		if(nextProps.data.internal_task_id !== this.state.data.internal_task_id) {
+			
+		}
 		/*this.setState({
-			data: nextProps.data
+			data: nextProps.data,
+			initialHours: nextProps.data.hours
 		})*/
 	}
 
