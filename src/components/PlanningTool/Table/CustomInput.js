@@ -31,34 +31,41 @@ class CustomInput extends Component {
 			this.setState({
 				data: {...this.state.data, hours: value }
 			}, () => {
-				const parseValue = parseFloat(value);
+				console.log('value: ', value);
+				const parseValue = (value === '') ? 0 : parseFloat(value);
+				console.log('parseValue: ', parseValue);
 				this.props.recalculationTableAction(rowNo, hoursNo, parseValue, timeline);
-				/*if ( !isNaN(value.substr(-1)) ) {
-					this.props.recalculationTableAction(rowNo, hoursNo, parseValue, timeline);
-
-					this.timerId = setTimeout(() => {
-						let dataCopy = {...this.state.data, 
-								hours: parseValue};
-							if (dataCopy.id === 0) {
-								delete dataCopy.id
-							}
-
-						let saveCell = {
-							'cost_centers': filterOptions.selected,
-							'date': Math.round(new Date(filterOptions.date).getTime() / 500),
-							'data': dataCopy
-						}
-
-						this.props.saveTableCellAction(saveCell, this.props.timeline);
-
-					}, 1000);
-				}*/
 
 			});
 	}
 
 	handleBlur(e) {
-		console.log('blur1', e);
+		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
+		console.log('lastCode', this.state.lastCode);
+		if(!this.state.lastCode) {
+			console.log('save');
+			let dataCopy = {...this.state.data, hours: this.state.data.hours ? this.state.data.hours : 0};
+								if (dataCopy.id === 0) {
+									delete dataCopy.id
+								}
+
+			let saveCell = {
+				'cost_centers': filterOptions.selected,
+				'date': Math.round(new Date(filterOptions.date).getTime() / 500),
+				'data': dataCopy
+						}
+
+			if( this.state.data.hours !== this.state.initialHours ) {
+				console.log('save: ', saveCell);
+				this.setState({
+					initialHours: this.state.data.hours
+				})
+				this.props.saveTableCellAction(saveCell, this.props.timeline);
+				}
+
+		} else {
+			console.log('not save');
+		}
 		this.setState({
 			data: {...this.state.data, hours: parseFloat(this.state.data.hours) }
 		})
@@ -88,7 +95,6 @@ class CustomInput extends Component {
 	}
 
 	componentDidMount() {
-		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 		const input = this.input.current;
 		const scanCodes = {
 			'enter': 13,
@@ -103,7 +109,15 @@ class CustomInput extends Component {
 		input.addEventListener("keydown", (e)=>{
 
 			if (e.keyCode === scanCodes.esc) {
-				input.blur();
+				this.setState({
+					lastCode: e.keyCode
+				}, ()=>{
+					input.blur();
+					this.setState({
+						lastCode: '',
+						data: {...this.state.data, hours: this.state.initialHours },
+					});
+				});
 				return false;
 			}
 			const row = input.getAttribute('datarow');
@@ -137,29 +151,12 @@ class CustomInput extends Component {
 			const next = document.querySelector(`[datarow="${nextCoords.row}"][datacol="${nextCoords.col}"]`);
 			if(next) {
 				this.setState({
-					data: {...this.state.data, hours: parseFloat(this.state.data.hours) }
+					data: {...this.state.data, hours: parseFloat(this.state.data.hours) },
+					lastCode: ''
 				}, ()=>{
-					this.props.recalculationTableAction(rowNo, hoursNo, this.state.data.hours, timeline);
-
-					let dataCopy = {...this.state.data, hours: this.state.data.hours};
-									if (dataCopy.id === 0) {
-										delete dataCopy.id
-									}
-
-					let saveCell = {
-							'cost_centers': filterOptions.selected,
-							'date': Math.round(new Date(filterOptions.date).getTime() / 500),
-							'data': dataCopy
-						}
-
-					if( this.state.data.hours !== this.state.initialHours ) {
-						console.log('save: ', saveCell);
-						this.props.saveTableCellAction(saveCell, this.props.timeline);
-					}
-					
-
+					next.focus();
 				});
-				next.focus();
+				
 			}
 		});
 	}
