@@ -91,14 +91,19 @@ class CustomInput extends Component {
 	componentWillReceiveProps(nextProps) {
 		//console.log('nextProps: ', nextProps);
 		//если парсенные значения совпадают - не перестраивать
-		if(nextProps.data.hours != parseFloat(this.state.data.hours)) {
+/*		if(nextProps.data.hours != parseFloat(this.state.data.hours)) {
 			this.setState({
 				data: nextProps.data,
 				initialHours: nextProps.data.hours
 			})
-		}
-		if(nextProps.data.internal_task_id !== this.state.data.internal_task_id) {
-			
+		}*/
+		//если джоба изменилась с новыми пропс в этот день, значит сортировка
+		if( nextProps.data.hours !== parseFloat(this.state.data.hours) ) {
+			console.log('заменить');
+			this.setState({
+				data: nextProps.data,
+				initialHours: nextProps.data.hours
+			})
 		}
 		/*this.setState({
 			data: nextProps.data,
@@ -142,9 +147,9 @@ class CustomInput extends Component {
 			  case scanCodes.enter:
 			  	nextCoords.col = Number(nextCoords.col) + 1;
 			    break;
-			  case scanCodes.tab:
+/*			  case scanCodes.tab:
 			  	nextCoords.col = Number(nextCoords.col) + 1;
-			    break;
+			    break;*/
 			  case scanCodes.topArrow:
 			  	nextCoords.row = Number(nextCoords.row) - 1;
 			    break;
