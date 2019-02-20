@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import Auth from './containers/Auth';
+import Auth from './components/Auth';
 import Content from './components/Content';
 import './App.scss';
 import 'font-awesome/css/font-awesome.min.css';
@@ -12,7 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
-import { handleLogout } from './actions/userActions';
+import { handleLogout, checkUser, getCurrentUser } from './actions/userActions';
 
 library.add(faCogs, faSignOutAlt, faCalendar);  
 
@@ -50,7 +50,15 @@ class App extends Component {
       </Router>
     );
   }
+
+  componentDidMount() {
+    const redirect = history.push.bind(null, "/");
+    this.props.checkUserAction(redirect);
+  }
+
 }
+
+
 
 const mapStateToProps = store => {
   return {
@@ -61,7 +69,9 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleLogoutAction: (redirect) => dispatch(handleLogout(redirect))
+    handleLogoutAction: (redirect) => dispatch(handleLogout(redirect)),
+    checkUserAction: (getCurrentUser, redirect) => dispatch(checkUser(getCurrentUser, redirect)),
+    getCurrentUserAction: (redirect) => dispatch(getCurrentUser(redirect))
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { API } from '../../constants';
 import TableSettingsDialog from './TableSettingsDialog';
 import { ButtonBase } from '@material-ui/core';
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -70,11 +71,11 @@ class TableControll extends Component {
 
 	handleExel() {
 		if (!this.props.tableRows.length) return false;
-		tableToExcel('#planning-table .printable-table','Capacity Planning Tool', 'CPT.xls');
+		tableToExcel('#print-container .printable-table','Capacity Planning Tool', 'CPT.xls');
 	}
 
 	getCoastCenters(resolve) {
-		fetch('http://94.45.133.173:8000/cost-centers/', {
+		fetch(API.COST_CENTERS, {
 			method: 'get',
 			credentials: 'include'
 		})

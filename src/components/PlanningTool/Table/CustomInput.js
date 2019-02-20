@@ -99,7 +99,6 @@ class CustomInput extends Component {
 		}*/
 		//если джоба изменилась с новыми пропс в этот день, значит сортировка
 		if( nextProps.data.hours !== parseFloat(this.state.data.hours) ) {
-			console.log('заменить');
 			this.setState({
 				data: nextProps.data,
 				initialHours: nextProps.data.hours
@@ -112,6 +111,7 @@ class CustomInput extends Component {
 	}
 
 	componentDidMount() {
+		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 		const input = this.input.current;
 		const scanCodes = {
 			'enter': 13,
@@ -133,6 +133,8 @@ class CustomInput extends Component {
 					this.setState({
 						lastCode: '',
 						data: {...this.state.data, hours: this.state.initialHours },
+					}, ()=>{
+						this.props.recalculationTableAction(rowNo, hoursNo, this.state.initialHours, timeline);
 					});
 				});
 				return false;
@@ -147,9 +149,6 @@ class CustomInput extends Component {
 			  case scanCodes.enter:
 			  	nextCoords.col = Number(nextCoords.col) + 1;
 			    break;
-/*			  case scanCodes.tab:
-			  	nextCoords.col = Number(nextCoords.col) + 1;
-			    break;*/
 			  case scanCodes.topArrow:
 			  	nextCoords.row = Number(nextCoords.row) - 1;
 			    break;

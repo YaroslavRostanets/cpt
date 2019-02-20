@@ -19,6 +19,8 @@ export const TableLegend = (props) => {
   			case 'over capacity':
   				overCapacity.push(item);
   				break;
+  			default:
+  				break;
 			}
 		});
 
@@ -62,9 +64,14 @@ export const TableLegend = (props) => {
 						</tbody>
 					</table>
 				</div>
-				<ColorsTable capacity={working} />
-				<ColorsTable capacity={overTime} />
-				<ColorsTable capacity={overCapacity} />
+				<div className="required-days std-block">
+					<div className="title">Colors for standarts</div>
+					<div className="flex">
+						<ColorsTable title="Standard" capacity={working} />
+						<ColorsTable title="Over Time" capacity={overTime} />
+						<ColorsTable title="Over Capacity" capacity={overCapacity} />
+					</div>
+				</div>
 		</div>
 	)
 }

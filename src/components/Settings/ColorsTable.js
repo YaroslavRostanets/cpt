@@ -58,6 +58,8 @@ class ColorsTable extends Component {
                 						return 'Sat';
                 					case 'sun':
                 						return 'Sun';
+                					default:
+                						return null;
                 				}
             				})()}
 						</td>
@@ -103,7 +105,6 @@ class ColorsTable extends Component {
 		)
 	}
 	componentWillReceiveProps(nextProps){
-		console.log('nextProps: ', nextProps)
 		this.setState({
 			capacity: nextProps.capacity
 		})

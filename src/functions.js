@@ -14,8 +14,28 @@ export const tableToExcel = (function() {
 		}
 
 		return function(table, name, fileName) {
+			if ( !document.getElementById("print-container") ) {
+				let content = document.getElementById("content-tool");
+				let printContainer = document.createElement("div");
+				printContainer.setAttribute("id", "print-container");
+				content.appendChild( printContainer );
+			}
+
+			let printedTable = document.querySelector("#planning-table table").outerHTML;
+			document.getElementById("print-container").innerHTML = printedTable;
+
+			let inputs = document.querySelectorAll("#print-container input");
+				inputs.forEach((item, index)=>{
+					item.parentNode.innerText = item.value;
+					item.remove();
+				});
+
+			
+
 			if (!table.nodeType) table = document.querySelector(table)
-				var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+				table.setAttribute('align', 'right');
+				table.style.textAlign = 'right';
+				var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML.replace(/\./g,',')}
 			var resuri = uri + base64(format(template, ctx))
 			downloadURI(resuri, fileName);
 		}
@@ -36,6 +56,7 @@ export function printTable () {
 		let value = document.createElement("span");
 		value.innerText = item.value;
 		item.parentNode.insertBefore(value, item);
+		item.remove();
 	});
 
 		window.print();

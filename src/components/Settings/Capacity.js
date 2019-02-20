@@ -26,7 +26,6 @@ class Capacity extends Component {
 			this.forSave.push(oneRow);
 		}
 
-		console.log('Result: ', this.forSave);
 	}
 
 	saveHandler() {
@@ -85,7 +84,6 @@ class Capacity extends Component {
 		this.overCapacity = [];
 		this.forSave = [];
 		nextProps.capacity.forEach((item)=>{
-			console.log('item: ', item);
 			switch(item.working_type) {
   				case 'working':
   					this.working.push(item);
@@ -95,6 +93,8 @@ class Capacity extends Component {
   					break;
   				case 'over capacity':
   					this.overCapacity.push(item);
+  					break;
+  				default: 
   					break;
 			}
 		});

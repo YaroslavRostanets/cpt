@@ -1,7 +1,10 @@
+import { API } from '../constants';
+
 export const GET_PLANNING_HOURS_REQUEST = 'GET_PLANNING_HOURS_REQUEST';
 export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
 export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
+export const SAVE_TABLE_FAIL = 'SAVE_TABLE_FAIL';
 export const RECALCULATION_TABLE = 'RECALCULATION_TABLE';
 
 export const SORT_ROWS = 'SORT_ROWS';
@@ -11,26 +14,24 @@ export const SORT_ROWS_INDEX = 'SORT_ROWS_INDEX';
 export function saveTableCell (obj, timeline) {
 
     return dispatch => {
-        
-        console.log('obj: ', obj);
 
-        fetch("http://94.45.133.173:8000/planning-hours/edit/",{
+        fetch(API.PLANNING_HOURS_EDIT,{
             method: 'post',
             credentials: 'include',
             body : JSON.stringify(obj)
         })
         .then(res => res.json())
         .then((data) => {
-/*            const correct = getOutFromObj([...data.result]);  
-            const extendetDataArray = addMissingProperties(correct, timeline);*/
             
             dispatch({
                 type: SAVE_TABLE_CELL
-                //payload: extendetDataArray
             })
         },
         (error) => {
-          
+            console.error(error);
+            dispatch({
+                type: SAVE_TABLE_FAIL
+            })
         }
       )
 
@@ -49,7 +50,7 @@ export function getPlanningHours (date, selected, timeline) {
             payload: {date, selected} 
     	});
 
-		fetch(`http://94.45.133.173:8000/planning-hours/`, 
+		fetch(API.PLANNING_HOURS, 
 			{
 				method: 'post',
                 credentials: 'include',
@@ -73,9 +74,9 @@ export function getPlanningHours (date, selected, timeline) {
 
         })
       	.catch(error => {
+            console.error(error);
             dispatch({
-                type: GET_PLANNING_HOURS_FAIL,
-                payload: {}
+                type: GET_PLANNING_HOURS_FAIL
             })
         }
             
@@ -109,7 +110,7 @@ export function sortedByField (fieldName, index) {
 }
 
 
-function addMissingProperties (rowsArray, timeline) {
+export function addMissingProperties (rowsArray, timeline) {
 
     const extendetRowsArray = rowsArray.map((row)=>{
 

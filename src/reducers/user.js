@@ -2,15 +2,13 @@ import { LOGIN_REQUEST,
 		 LOGIN_SUCCESS,
 		 LOGIN_FAIL,
      GET_CURRENT_USER_SUCCESS,
-     USER_LOGOUT
+     USER_LOGOUT,
+     USER_IS_LOGGED
 } from '../actions/userActions';
 
 const initialState = {
-    user: {
-      username: '',
-      is_admin: true
-    },
-    isAuth: true,
+    user: {},
+    isAuth: false,
   	fetching: false,
     error: ''
 }
@@ -20,13 +18,15 @@ export function userReducer(state = initialState, action) {
     	case LOGIN_REQUEST:
       		return { ...state, fetching: true }
       	case LOGIN_SUCCESS:
-      		return { ...state ,fetching: false }
+      		return { ...state, fetching: false, isAuth: true }
       	case LOGIN_FAIL:
       		return { ...state ,fetching: false, error: action.payload }
         case GET_CURRENT_USER_SUCCESS:
-          return { ...state, fetching: false, user: action.payload, isAuth: true}
+          return { ...state, fetching: false, user: action.payload }
         case USER_LOGOUT:
           return { ...state, fetching: false, user: {}, isAuth: false}
+        case USER_IS_LOGGED:
+          return { ...state, isAuth: true }
     default:
       return state
   }

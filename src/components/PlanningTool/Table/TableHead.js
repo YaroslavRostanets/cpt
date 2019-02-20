@@ -181,7 +181,7 @@ class TableHead extends Component {
 								<th 
 									key={index} 
 									className="day"
-									bgcolor={color ? color : '#DFDFDF'}
+									bgcolor={color !== '-' ? color : '#FFFFFF'}
 									style={{'backgroundColor': color, borderLeft: index === 0 ? '3px solid rgb(208, 208, 208)' : null}}
 									>
 										<div>{getWeekDay(item.date)}</div>

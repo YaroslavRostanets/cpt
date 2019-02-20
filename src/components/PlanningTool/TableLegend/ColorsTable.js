@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class ColorsTable extends Component {
 
 	render() {
-		const { capacity } = this.props;
+		const { capacity, title } = this.props;
 
 		const getCapacityRow = (capacity, days) => {
 		let capacityRow = capacity.find((item)=>( item.days === days ));
@@ -20,6 +20,8 @@ class ColorsTable extends Component {
                 						return 'Sat';
                 					case 'sun':
                 						return 'Sun';
+                					default:
+                						return null;
                 				}
             				})()}
 						</td>
@@ -41,7 +43,7 @@ class ColorsTable extends Component {
 
 		return(
 			<div className="standarts-colors std-block">
-					<div className="title">Colors for standarts</div>
+					<div className="title">{title}</div>
 					<div className="tables">
 						<table>
 							<tbody>

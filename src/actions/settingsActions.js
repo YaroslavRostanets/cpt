@@ -1,3 +1,5 @@
+import { API } from '../constants';
+
 export const GET_TIMELINE_REQUEST = 'GET_TIMELINE_REQUEST';
 export const GET_TIMELINE_SUCCESS = 'GET_TIMELINE_SUCCESS'; 
 
@@ -20,8 +22,7 @@ export function getTimeline () {
             type: GET_TIMELINE_REQUEST
         })
 
-        setTimeout(()=>{
-	       	fetch("http://94.45.133.173:8000/timeline/",{
+	       	fetch(API.TIMELINE,{
 	            method: 'get'
 	        })
 	        .then(result => result.json())
@@ -35,7 +36,6 @@ export function getTimeline () {
 	        	console.error(error)
 	        }
 	      )
-        }, 200);
 
     }
     
@@ -49,8 +49,7 @@ export function setTimeline (timeline, stateTimeline) {
             payload: timeline
         })
         
-        setTimeout(()=>{
-	       	fetch("http://94.45.133.173:8000/timeline/",{
+	       	fetch(API.TIMELINE,{
 	            method: 'post',
 	            body: JSON.stringify(timeline)
 	        })
@@ -65,7 +64,7 @@ export function setTimeline (timeline, stateTimeline) {
 	          	console.error(error);
 	        }
 	      )
-        }, 1000);
+
     }
 }
 
@@ -73,7 +72,7 @@ export function removeTimeline (id) {
 		return dispatch => {
         	console.log(id);
 
-	     	fetch("http://94.45.133.173:8000/timeline/delete/",{
+	     	fetch(API.TIMELINE_DELETE,{
 	            method: 'post',
 	            body: JSON.stringify(id)
 	        })
@@ -100,8 +99,7 @@ export function getCapacity() {
             type: GET_CAPACITY_REQUEST
         })
         
-        setTimeout(()=>{
-	       	fetch("http://94.45.133.173:8000/capacity/",{
+	       	fetch(API.CAPACITY,{
 	            method: 'get'
 	        })
 	        .then(result => result.json())
@@ -116,7 +114,7 @@ export function getCapacity() {
 	          	console.error(error);
 	        }
 	      )
-        }, 200);
+
     }
 }
 
@@ -127,8 +125,7 @@ export function setCapacity(capacity) {
 	            type: SET_CAPACITY_REQUEST
 	        })
         
-        setTimeout(()=>{
-	       	fetch("http://94.45.133.173:8000/capacity/",{
+	       	fetch(API.CAPACITY,{
 	            method: 'post',
 	            body: JSON.stringify({
 	            	data: capacity
@@ -146,6 +143,6 @@ export function setCapacity(capacity) {
 	          	console.error(error);
 	        }
 	      )
-        }, 0);
+
     }
 }
