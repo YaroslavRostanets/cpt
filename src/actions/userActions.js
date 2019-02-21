@@ -73,6 +73,7 @@ export function checkUser(getCurrentUser, redirect) {
   })
   .then(res => res.json())
   .then((result) => {
+  		console.log('checkUser: ', result.result);
       if(result.result === true) {
         dispatch({
           type: USER_IS_LOGGED

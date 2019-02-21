@@ -52,6 +52,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log('DID MOUNT');
     const redirect = history.push.bind(null, "/");
     this.props.checkUserAction(redirect);
   }

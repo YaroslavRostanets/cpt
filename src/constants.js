@@ -1,6 +1,6 @@
 
 export const availableColors = ['-', '#FDC996', '#A1DBA7', '#EB9FA5'];
-	   const ORIGIN = window.location.origin === 'http://localhost:3000' ? 'http://94.45.133.173:8000' : window.location.origin;
+	   const ORIGIN = window.location.origin === 'http://localhost:3000' ? 'http://94.45.133.173:8000' : 'http://94.45.133.173:8000';
 export const API = {
 	COST_CENTERS: ORIGIN + '/cost-centers/',
 	TIMELINE: ORIGIN + '/timeline/',

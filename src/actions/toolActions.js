@@ -39,9 +39,7 @@ export function saveTableCell (obj, timeline) {
 }
 
 export function getPlanningHours (date, selected, timeline) {
-	console.log('getting_planning_hours...');
-	console.log('date ', date.getTimezoneOffset() );
-	console.log('selected', selected);
+    
     const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
 
 	return dispatch => {
@@ -63,9 +61,11 @@ export function getPlanningHours (date, selected, timeline) {
     	)
         .then(response => response.json())
         .then(data => {
-            
-            const correct = getOutFromObj([...data.result]);  
-            const extendetDataArray = addMissingProperties(correct, timeline);
+            const result = data.result;
+            console.log('result: ', result);
+            /*const correct = getOutFromObj([...data.result]);  */
+            const extendetDataArray = addMissingProperties(data.result, timeline, date);
+
 
         	dispatch({
           		type: GET_PLANNING_HOURS_SUCCESS,
@@ -110,13 +110,23 @@ export function sortedByField (fieldName, index) {
 }
 
 
-export function addMissingProperties (rowsArray, timeline) {
+export function addMissingProperties (rowsArray, timeline, selectedDate) {
 
     const extendetRowsArray = rowsArray.map((row)=>{
 
             row.Days_Available = getDaysAvailable(row.Date_Due, row.Date_In);
             row.Allocated_Hours = getAllocatedHours(row.planning_hours);
             row.Required_Days = getRequiredDays(row.Allocated_Hours, timeline);
+
+            if(selectedDate) {
+                    row.planningHours =  getTwoWeeks(selectedDate, row);
+                    row.planningHours.forEach( (item, index) => {
+                    const findPH = row.planning_hours.find( (ph) => ph.date === item.date );
+                    row.planningHours[index] = findPH ? findPH : item;
+                });
+
+                row.planning_hours = row.planningHours;
+            }
         
         return row;
     });
@@ -152,6 +162,47 @@ export function addMissingProperties (rowsArray, timeline) {
             return Math.round(sum * 100) / 100;
     }
 
+    function getTwoWeeks(dateNow, job) {
+        const planningHours = [];
+        const dayInMiliSec = 86400000;
+        const date = new Date(dateNow);
+        var currentDate = new Date(dateNow);
+        const endOfWeekIt = date.getDay() === 0 ? 1 : 7 - (new Date(dateNow).getDay()) + 1;
+
+        for (let i = 0; i < endOfWeekIt + 7; i++) {
+            currentDate = date.getTime() + i * dayInMiliSec;
+            planningHours.push({
+                date: getUTCDate(currentDate),
+                hours: 0,
+                internal_task_id: job.id,
+                is_weekly: false
+            });
+        }
+        planningHours.push({
+            date: getUTCDate(currentDate + dayInMiliSec),
+            hours: 0,
+            internal_task_id: job.id,
+            is_weekly: true
+        })
+        planningHours.push({
+            date: getUTCDate(currentDate + dayInMiliSec * 8),
+            hours: 0,
+            internal_task_id: job.id,
+            is_weekly: true
+        })
+
+        return planningHours;
+    }
+
+    function getUTCDate(dateJS) {
+        const date = new Date(dateJS);
+              date.setHours(0,0,0,0);
+        const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
+        const unixUTCDate = ( (date.getTime() + timezoneOffset) / 1000);
+
+        return unixUTCDate;
+    }
+
 
 
 
@@ -171,5 +222,9 @@ function getOutFromObj(rowsArray) {
             return item;
     });
 
+
+
     return correct;
 }
+
+
