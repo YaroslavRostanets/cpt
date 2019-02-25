@@ -4,7 +4,7 @@ const initialState = {
     hiddenCols: {
     	'cost_center_label': false,
     	'jobno': false,
-    	'costorem': false,
+    	'customer': false,
     	'description': false,
     	'Date_In': false,
     	'Date_Due': false,

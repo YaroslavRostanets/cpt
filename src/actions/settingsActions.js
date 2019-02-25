@@ -23,7 +23,8 @@ export function getTimeline () {
         })
 
 	       	fetch(API.TIMELINE,{
-	            method: 'get'
+	            method: 'get',
+	            credentials: 'include',
 	        })
 	        .then(result => result.json())
 	        .then((data) => {
@@ -42,6 +43,7 @@ export function getTimeline () {
 }
 
 export function setTimeline (timeline, stateTimeline) {
+	console.log('timeline: ', timeline);
 
 	return dispatch => {
 		dispatch({
@@ -51,10 +53,12 @@ export function setTimeline (timeline, stateTimeline) {
         
 	       	fetch(API.TIMELINE,{
 	            method: 'post',
+	            credentials: 'include',
 	            body: JSON.stringify(timeline)
 	        })
 	        .then(result => result.json())
 	        .then((data) => {
+	        	console.log('timeline_data:', data);
 	            dispatch({
 	                type: SET_TIMELINE_SUCCESS,
 	                payload: data.result
@@ -74,6 +78,7 @@ export function removeTimeline (id) {
 
 	     	fetch(API.TIMELINE_DELETE,{
 	            method: 'post',
+	            credentials: 'include',
 	            body: JSON.stringify(id)
 	        })
 	        .then(result => result.json())
@@ -100,7 +105,8 @@ export function getCapacity() {
         })
         
 	       	fetch(API.CAPACITY,{
-	            method: 'get'
+	            method: 'get',
+	            credentials: 'include'
 	        })
 	        .then(result => result.json())
 	        .then((data) => {
@@ -127,6 +133,7 @@ export function setCapacity(capacity) {
         
 	       	fetch(API.CAPACITY,{
 	            method: 'post',
+	            credentials: 'include',
 	            body: JSON.stringify({
 	            	data: capacity
 	            })

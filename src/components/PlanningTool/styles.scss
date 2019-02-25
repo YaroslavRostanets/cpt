@@ -13,6 +13,8 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 8px;
+		position: relative;
+		z-index: 30;
 	}
 	.left-part {
 		display: flex;
@@ -153,6 +155,7 @@
 		position: relative !important;
 		padding-left: 5px !important;
     	padding-right: 0px !important;
+    	min-width: 100px;
 	}
 	.dropdown-heading {
 		height: 20px !important;

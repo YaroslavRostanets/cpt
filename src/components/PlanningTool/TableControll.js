@@ -6,7 +6,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import enGB from 'date-fns/locale/en-GB';
 import MultiSelect from '@khanacademy/react-multi-select';
-import { tableToExcel, printTable } from '../../functions';
+import { tableToExcel, printTable, excelExport } from '../../functions';
 
 registerLocale('en-GB', enGB);
 
@@ -71,7 +71,8 @@ class TableControll extends Component {
 
 	handleExel() {
 		if (!this.props.tableRows.length) return false;
-		tableToExcel('#print-container .printable-table','Capacity Planning Tool', 'CPT.xls');
+		//tableToExcel('#print-container .printable-table','Capacity Planning Tool', 'cpt.xls');
+		excelExport();
 	}
 
 	getCoastCenters(resolve) {
@@ -146,7 +147,6 @@ class TableControll extends Component {
 					closeDialog={this.handleDialogClose} 
 					hiddenCols={hiddenCols}
 					colDisplayChange={colDisplayChange}
-
 					/>
 			</div>
 		)

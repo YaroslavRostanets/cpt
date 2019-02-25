@@ -39,7 +39,7 @@ class Capacity extends Component {
 		return(
 			<div className="standarts-colors std-block">
 				<div className="title">
-					Colors for standarts
+					Capacity Definition
 				</div>
 				{ capacityFetching ? 
 					<CircularProgress  className="loader" size={40} /> 

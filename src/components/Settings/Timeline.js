@@ -47,9 +47,6 @@ class Timeline extends Component {
 	}
 
 	handlerChange (index, fieldName, event) {
-		console.log('index: ', index);
-		console.log('fieldName: ', fieldName);
-		console.log('timeline: ', this.state.timeline);
 		const value = event.target.value.replace(/\D/,'');
 		const newTimeline = [...this.state.timeline];
 			newTimeline[index][fieldName] = Number(value);
@@ -63,7 +60,6 @@ class Timeline extends Component {
 	}
 
 	handlerRemove (index) {
-		console.log('index_remove: ', index);
 		if (this.state.timeline[index].id) {
 			this.props.removeTimeline({'timeline_id': this.state.timeline[index].id});
 		} else {
@@ -84,7 +80,7 @@ class Timeline extends Component {
 		return(
 			<div className="required-days std-block">
 				<div className="title">
-					Required  Days
+					Timeline Guidelines
 				</div>
 				{ timelineFetching ? <CircularProgress  className="loader" size={40} /> : 
 
@@ -92,10 +88,8 @@ class Timeline extends Component {
 					<table>
 						<tbody>
 							<tr>
-								<th>Hrs.</th>
-								<th></th>
-								<th>Days</th>
-								<th></th>
+								<th colSpan="2">Hour Range</th>
+								<th colSpan="2">Days Required</th>
 							</tr>
 							{ timeline.map((item, index)=>{
 								return (

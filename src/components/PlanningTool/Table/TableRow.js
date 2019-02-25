@@ -34,13 +34,13 @@ class TableRow extends Component {
 				<td style={{display: hiddenCols['description'] ? 'none' : 'table-cell'}}>
 					{row.description}
 				</td>
-				<td style={{display: hiddenCols['Date_In'] ? 'none' : 'table-cell'}}>
+				<td className="date-cell" style={{display: hiddenCols['Date_In'] ? 'none' : 'table-cell'}}>
 					{ dateFormat(row.Date_In) }
 				</td>
-				<td style={{display: hiddenCols['Date_Due'] ? 'none' : 'table-cell'}}>
+				<td className="date-cell" style={{display: hiddenCols['Date_Due'] ? 'none' : 'table-cell'}}>
 					{ dateFormat(row.Date_Due) }
 				</td>
-				<td style={{display: hiddenCols['Partial_Due'] ? 'none' : 'table-cell'}}>
+				<td className="date-cell" style={{display: hiddenCols['Partial_Due'] ? 'none' : 'table-cell'}}>
 					{ row.Partial_Due ? dateFormat( row.Partial_Due ) : null }
 				</td>
 				<td style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
@@ -63,7 +63,7 @@ class TableRow extends Component {
 						/*------------------------------------*/
 						return (
 							<td key={index}
-							datax = {index}
+							className="day"
 							style={{borderLeft: index === 0 ? '3px solid rgb(208, 208, 208)' : null}} >
 								<CustomInput 
 									value={ item.hours } 

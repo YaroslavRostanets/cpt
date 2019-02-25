@@ -27,7 +27,7 @@ export const TableLegend = (props) => {
 	return (
 		<div className="js-table-legend">
 			<div className="required-days std-block">
-				<div className="title">Required  Days</div>
+				<div className="title">Timeline Guidelines</div>
 					<table>
 						<tbody>
 							<tr>
@@ -65,7 +65,7 @@ export const TableLegend = (props) => {
 					</table>
 				</div>
 				<div className="required-days std-block">
-					<div className="title">Colors for standarts</div>
+					<div className="title">Capacity Definition</div>
 					<div className="flex">
 						<ColorsTable title="Standard" capacity={working} />
 						<ColorsTable title="Over Time" capacity={overTime} />

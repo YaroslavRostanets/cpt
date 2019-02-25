@@ -48,6 +48,12 @@ class TableSettingsDialog extends Component {
 		        					colDisplayChange={colDisplayChange}
 		        					 />
 		        				<CheckboxGroup 
+		        					label="Customer"
+		        					checked={hiddenCols['customer']}
+		        					prop="customer"
+		        					colDisplayChange={colDisplayChange}
+		        					 />
+		        				<CheckboxGroup 
 		        					label="Description" 
 		        					checked={hiddenCols['description']}
 		        					prop="description"

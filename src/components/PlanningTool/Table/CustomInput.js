@@ -41,6 +41,7 @@ class CustomInput extends Component {
 
 	handleBlur(e) {
 		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
+		const timezoneOffset = (filterOptions.date.getTimezoneOffset() * 60 * 1000 * -1 );
 		console.log('lastCode', this.state.lastCode);
 		if(!this.state.lastCode) {
 			console.log('save');
@@ -51,15 +52,15 @@ class CustomInput extends Component {
 
 			let saveCell = {
 				'cost_centers': filterOptions.selected,
-				'date': Math.round(new Date(filterOptions.date).getTime() / 500),
+				'date': Math.floor( (filterOptions.date.getTime() + timezoneOffset) / 1000),
 				'data': dataCopy
 						}
 
-			if( this.state.data.hours !== this.state.initialHours ) {
+			if( this.state.data.hours !== this.state.initialHours ) {			
 				console.log('save: ', saveCell);
 				this.setState({
 					initialHours: this.state.data.hours
-				})
+				});
 				this.props.saveTableCellAction(saveCell, this.props.timeline);
 				}
 

@@ -32,7 +32,8 @@ class PlanningTool extends Component {
 				capacity, 
 				sortedByField, 
 				sortedByIndex,
-				sortAscending } = this.props;
+				sortAscending,
+				user } = this.props;
 		return(
 			<div id="content-tool">
 				<TableControll 
@@ -58,6 +59,7 @@ class PlanningTool extends Component {
 					getTimelineAction={getTimelineAction}
 					capacity={capacity}
 					getCapacityAction={getCapacityAction}
+					user={user}
 					/>
 				<TableLegend
 					timeline={timeline}
@@ -84,7 +86,8 @@ const mapStateToProps = store => {
     	sortAscending: store.tool.sortAscending,
     	hiddenCols: store.ui.hiddenCols,
     	timeline: store.settings.timeline,
-    	capacity: store.settings.capacity
+    	capacity: store.settings.capacity,
+    	user: store.user.user
   	}
 }
 

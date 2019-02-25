@@ -47,7 +47,7 @@ export function getCurrentUser(redirect) {
   })
   .then(res => res.json())
   .then((result) => {
-
+      console.log('resp: ', result.data);
       dispatch({
         type: GET_CURRENT_USER_SUCCESS,
         payload: result.data

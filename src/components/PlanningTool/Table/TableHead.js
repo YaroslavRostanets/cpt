@@ -61,7 +61,7 @@ class TableHead extends Component {
 		}
 
 		return(
-			<tr>
+			<tr className="table-head">
 				<TableHeadCell 
 					title="Cost Center" 
 					fieldName="cost_center_label"

@@ -132,6 +132,8 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
     });
 
     function getRequiredDays(allocatedHours, timeline) {
+            if (allocatedHours === 0) return 0;
+            
             let item = timeline.find((item)=>{
                 return (allocatedHours >= item.hours_start && allocatedHours <= item.hours_end)
             });

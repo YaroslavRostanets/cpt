@@ -42,6 +42,8 @@
     		text-align: center !important;
             color: #000000 !important;
             transition: none !important;
+            display: table-cell !important;
+            font-size: 8px !important;
     		& > div {
     			white-space: nowrap;
     		}
@@ -51,6 +53,7 @@
     		font-size: 8px !important;
     		padding-left: 2px !important;
     		padding-right: 2px !important;
+            display: table-cell !important;
     	}
     	&:before, &:after {
     		display: none;
@@ -125,5 +128,7 @@
 			margin-right: 25px;
 		}
 	}
-    
+    .tablet-left-table {
+        display: none !important;
+    }
 }
