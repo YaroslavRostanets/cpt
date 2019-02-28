@@ -99,7 +99,8 @@ class CustomInput extends Component {
 			})
 		}*/
 		//если джоба изменилась с новыми пропс в этот день, значит сортировка
-		if( nextProps.data.hours !== parseFloat(this.state.data.hours) ) {
+		if( nextProps.data.hours !== parseFloat(this.state.data.hours) ||
+			nextProps.data.internal_task_id !== this.state.data.internal_task_id ) {
 			this.setState({
 				data: nextProps.data,
 				initialHours: nextProps.data.hours

@@ -36,12 +36,11 @@
 		font-weight: 600;
 		position: sticky;
 		top: 0;
+		text-align: left;
 		padding-top: 11px;
 		padding-left: 2px;
 		padding-right: 2px;
 		padding-bottom: 17px;
-		line-height: 12px;
-		text-align: left;
 		&.day {
 			text-align: center;
 			padding-top: 5px;
@@ -153,10 +152,6 @@
 		font-weight: 600;
 		position: sticky;
 		top: 0;
-		padding-top: 11px;
-		padding-left: 2px;
-		padding-right: 2px;
-		padding-bottom: 17px;
 		line-height: 12px;
 		text-align: left;
 		&.day {
@@ -228,13 +223,14 @@
 	.tablet-left-table {
 		display: table;
 		z-index: 2;
+		flex-grow: 1;
 		td {
 			height: 68px;
 			max-height: 68px;
 		}
 		th {
-			height: 58px;
-			max-height: 58px;
+			height: 64px;
+			max-height: 64px;
 		}
 	}
 	.printable-table {
@@ -253,6 +249,35 @@
 			&.day {
 				display: table-cell !important;
 			}
+		}
+	}
+}
+
+@supports (-ms-ime-align:auto) {
+	@media (max-width: 1375px) {
+		#planning-table table {
+			width: auto;
+			th {
+				position: relative;
+				padding: 0 0 0 0;
+				& > div {
+					padding-top: 11px;
+					padding-left: 2px;
+					padding-right: 2px;
+					padding-bottom: 17px;
+				}
+				&.day > div {
+					padding-top: 1px;
+				}
+			}
+		}
+		#planning-table .tablet-left-table {
+		    max-width: 700px;
+		    th {
+		    	& > div {
+		    		height: 64px;
+		    	}
+		    }
 		}
 	}
 }

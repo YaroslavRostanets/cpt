@@ -72,15 +72,13 @@ export function checkUser(getCurrentUser, redirect) {
     credentials: 'include'
   })
   .then(res => res.json())
-  .then((result) => {
-  		console.log('checkUser: ', result.result);
+  .then((result) => {    
       if(result.result === true) {
         dispatch({
           type: USER_IS_LOGGED
         })
         getCurrentUser(redirect);
       }
-      
     }
     )
 

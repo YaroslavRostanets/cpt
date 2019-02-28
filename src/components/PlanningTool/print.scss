@@ -1,8 +1,9 @@
 @media print {
     * {
+        -webkit-transition: none !important;
         transition: none !important;
     }
-	body {
+  	body {
 		-webkit-print-color-adjust: exact;
 		color-adjust: exact;
 		background: #FFFFFF !important;

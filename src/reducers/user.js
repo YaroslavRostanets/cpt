@@ -7,11 +7,8 @@ import { LOGIN_REQUEST,
 } from '../actions/userActions';
 
 const initialState = {
-    user: {
-      username: 'test',
-      is_admin: false
-    },
-    isAuth: true,
+    user: {},
+    isAuth: false,
   	fetching: false,
     error: ''
 }

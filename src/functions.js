@@ -110,7 +110,14 @@ export function printTable () {
 		item.parentNode.insertBefore(value, item);
 		item.remove();
 	});
+
+	let cells = document.querySelectorAll("#print-container th");
+	cells.forEach((item, index)=>{
+		let html = item.outerHTML.replace(/<th/g, '<td');
+			html = html.replace(/th>/g, 'td>');
+		item.outerHTML = html;
+	});
 		setTimeout(function(){
 			window.print();
-		}, 900);
+		}, 100);
 }

@@ -164,18 +164,20 @@ class TableHead extends Component {
 							const color = getColumnColor(sumByDay, item);
 							return (item.is_weekly ?
 								<th key={index} className="day" >
-									<div>W/E</div>
-									<div>{getDate(item.date)} {getMonth(item.date)}</div>
-									<div>{sumByDay.toFixed(2)}</div>
-									<ButtonBase 
-										onClick={this.sortHandler.bind(this,'planning_hours', index)}
-										className="sort-btn">
-										{ sortedByIndex === index && sortAscending === true ?
-												<i className="fa fa-angle-up" aria-hidden="true"></i>
-											: 
-												<i className="fa fa-angle-down" aria-hidden="true"></i>
-										}
-									</ButtonBase>
+									<div>
+										<div>W/E</div>
+										<div>{getDate(item.date)} {getMonth(item.date)}</div>
+										<div>{sumByDay.toFixed(2)}</div>
+										<ButtonBase 
+											onClick={this.sortHandler.bind(this,'planning_hours', index)}
+											className="sort-btn">
+											{ sortedByIndex === index && sortAscending === true ?
+													<i className="fa fa-angle-up" aria-hidden="true"></i>
+												: 
+													<i className="fa fa-angle-down" aria-hidden="true"></i>
+											}
+										</ButtonBase>
+									</div>
 								</th>
 								 : 
 								<th 
@@ -184,6 +186,7 @@ class TableHead extends Component {
 									bgcolor={color !== '-' ? color : '#FFFFFF'}
 									style={{'backgroundColor': color, borderLeft: index === 0 ? '3px solid rgb(208, 208, 208)' : null}}
 									>
+									<div>
 										<div>{getWeekDay(item.date)}</div>
 										<div>{getDate(item.date)} {getMonth(item.date)}</div>
 										<div>{sumByDay.toFixed(2)}</div>
@@ -196,6 +199,7 @@ class TableHead extends Component {
 												<i className="fa fa-angle-down" aria-hidden="true"></i>
 											}
 										</ButtonBase>
+									</div>
 								</th>
 							)
 					}) }

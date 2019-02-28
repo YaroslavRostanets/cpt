@@ -14,16 +14,18 @@ class TableHeadCell extends Component {
 
 		return (
 			<th style={{display: hiddenCols[fieldName] ? 'none' : 'table-cell' }}>
-				{title}
-				<ButtonBase 
-					onClick={this.sortHandler.bind(this, fieldName, undefined)} 
-					className="sort-btn">
-					{ sortedByField === fieldName && sortAscending === true ?
-						<i className="fa fa-angle-up" aria-hidden="true"></i>
-						: 
-						<i className="fa fa-angle-down" aria-hidden="true"></i>
-					}
-				</ButtonBase>
+				<div>
+					{title}
+					<ButtonBase 
+						onClick={this.sortHandler.bind(this, fieldName, undefined)} 
+						className="sort-btn">
+						{ sortedByField === fieldName && sortAscending === true ?
+							<i className="fa fa-angle-up" aria-hidden="true"></i>
+							: 
+							<i className="fa fa-angle-down" aria-hidden="true"></i>
+						}
+					</ButtonBase>
+				</div>
 			</th>
 		)
 	}

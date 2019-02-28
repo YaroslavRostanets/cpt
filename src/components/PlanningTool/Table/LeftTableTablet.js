@@ -116,6 +116,9 @@ class LeftTableTablet extends Component {
 							<tr key={index}>
 								<td style={{display: hiddenCols['cost_center_label'] ? 'none' : 'table-cell'}}>
 									{row.cost_center_label}
+									<div>
+										{row.id}
+									</div>
 								</td>
 								<td style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell'}}>
 									{row.jobno}
@@ -139,7 +142,7 @@ class LeftTableTablet extends Component {
 									{ row.Days_Available }
 								</td>
 								<td style={{display: hiddenCols['Hrs_planed'] ? 'none' : 'table-cell'}}>
-									{row.hoursPlanned}
+									{ row.Hrs_planned.toFixed(2) }
 								</td>
 								<td style={{display: hiddenCols['Required_Days'] ? 'none' : 'table-cell' }}>
 									{ row.Required_Days }
