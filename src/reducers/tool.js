@@ -75,7 +75,14 @@ function sort(array, fieldName, index) {
     const m = String(index !== undefined ? nullToEmptyStr(a[fieldName][index]['hours']) : nullToEmptyStr(a[fieldName]) );
     const n = String(index !== undefined ? nullToEmptyStr(b[fieldName][index]['hours']) : nullToEmptyStr(b[fieldName]));
 
-    return n.localeCompare(m, undefined,{ numeric: true });
+    const compare = n.localeCompare(m, undefined,{ numeric: true });
+    if (compare === 0) {
+      return a['id'].localeCompare(b['id'], undefined,{ numeric: true });
+      //if the values ​​match, compare id
+    } else {
+      return compare;
+    }
+    
   });
 
   function nullToEmptyStr(value) {
