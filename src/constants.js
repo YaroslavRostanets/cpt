@@ -8,6 +8,7 @@ export const API = {
 	CAPACITY: ORIGIN + '/capacity/',
 	PLANNING_HOURS: ORIGIN + '/planning-hours/',
 	PLANNING_HOURS_EDIT: ORIGIN + '/planning-hours/edit/',
+	PLANNING_HOURS_DELETE: ORIGIN + '/planning-hours/delete/',
 	LOGIN: ORIGIN + '/login/',
 	GET_CURRENT_USER: ORIGIN + '/get-current-user',
 	LOGOUT: ORIGIN + '/logout/',

@@ -5,6 +5,8 @@ export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
 export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
 export const SAVE_TABLE_FAIL = 'SAVE_TABLE_FAIL';
+export const DELETE_TABLE_CELL = 'DELETE_TABLE_CELL';
+export const DELETE_TABLE_FAIL = 'DELETE_TABLE_FAIL';
 export const RECALCULATION_TABLE = 'RECALCULATION_TABLE';
 
 export const SORT_ROWS = 'SORT_ROWS';
@@ -35,6 +37,35 @@ export function saveTableCell (obj, timeline) {
         }
       )
 
+    }
+}
+
+export function deleteTableCell (id) {
+    console.log({
+                'id': id
+            });
+    return dispatch => {
+        fetch(API.PLANNING_HOURS_DELETE,{
+            method: 'post',
+            credentials: 'include',
+            body : JSON.stringify({
+                'id': id
+            })
+        })
+        .then(res => res.json())
+        .then((data) => {
+            console.log('deleteData: ', data);
+            dispatch({
+                type: DELETE_TABLE_CELL
+            })
+        },
+        (error) => {
+            console.error(error);
+            dispatch({
+                type: DELETE_TABLE_FAIL
+            })
+        }
+      )
     }
 }
 

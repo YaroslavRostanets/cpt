@@ -43,6 +43,11 @@ class CustomInput extends Component {
 		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 		const timezoneOffset = (filterOptions.date.getTimezoneOffset() * 60 * 1000 * -1 );
 		console.log('lastCode', this.state.lastCode);
+		console.log(this.state.data.hours);
+		if (this.state.data.hours === '0' || this.state.data.hours === 0) {
+			this.props.deleteTableCellAction(this.state.data.id);
+			return false;
+		}
 		if(!this.state.lastCode) {
 			console.log('save');
 			let dataCopy = {...this.state.data, hours: this.state.data.hours ? this.state.data.hours : 0};
@@ -56,12 +61,13 @@ class CustomInput extends Component {
 				'data': dataCopy
 						}
 
-			if( this.state.data.hours !== this.state.initialHours ) {			
+			if( this.state.data.hours !== this.state.initialHours ) {
+				console.log('TEST_2');			
 				console.log('save: ', saveCell);
 				this.setState({
 					initialHours: this.state.data.hours
 				});
-				this.props.saveTableCellAction(saveCell, this.props.timeline);
+					this.props.saveTableCellAction(saveCell, this.props.timeline);
 				}
 
 		} else {

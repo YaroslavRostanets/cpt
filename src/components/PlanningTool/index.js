@@ -5,6 +5,7 @@ import Table from './Table';
 import { TableLegend } from './TableLegend/index.js';
 import { getPlanningHours, 
 		saveTableCell,
+		deleteTableCell,
 		recalculationTable, 
 		sortedByField } from '../../actions/toolActions';
 import { colDisplayChange } from '../../actions/uiActions';
@@ -18,7 +19,8 @@ class PlanningTool extends Component {
 		const { 
 			getPlanningHoursAction, 
 			colDisplayChangeAction,
-			saveTableCellAction, 
+			saveTableCellAction,
+			deleteTableCellAction,
 			getTimelineAction,
 			getCapacityAction,
 			sortedByFieldAction,
@@ -54,6 +56,7 @@ class PlanningTool extends Component {
 					sortAscending={sortAscending}
 					sortedByFieldAction={sortedByFieldAction}
 					saveTableCellAction={saveTableCellAction}
+					deleteTableCellAction={deleteTableCellAction}
 					recalculationTableAction={recalculationTableAction}
 					timeline={timeline}
 					getTimelineAction={getTimelineAction}
@@ -96,6 +99,7 @@ const mapDispatchToProps = dispatch => {
     	getPlanningHoursAction: (date, selected, timeline) => dispatch(getPlanningHours(date, selected, timeline)),
     	recalculationTableAction: (rowNumber, planningHoursNumber, hours, timeline) => dispatch(recalculationTable(rowNumber, planningHoursNumber, hours, timeline)),
     	saveTableCellAction: (savedObject, timeline) => dispatch(saveTableCell(savedObject, timeline)),
+    	deleteTableCellAction: (id) => dispatch(deleteTableCell(id)),
     	colDisplayChangeAction: col => dispatch(colDisplayChange(col)),
     	getTimelineAction: () => dispatch(getTimeline()),
     	getCapacityAction: () => dispatch(getCapacity()),

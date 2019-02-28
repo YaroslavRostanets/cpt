@@ -20,7 +20,10 @@ class Table extends Component {
 				sortedByIndex,
 				sortAscending,
 				user } = this.props;
-		const { saveTableCellAction, sortedByFieldAction, recalculationTableAction } = this.props;
+		const { saveTableCellAction,
+			deleteTableCellAction,
+			sortedByFieldAction, 
+			recalculationTableAction } = this.props;
 
 		return(
 			<Scrollbars id="planning-table">
@@ -68,6 +71,7 @@ class Table extends Component {
 										hiddenCols={hiddenCols} 
 										filterOptions={filterOptions}
 										saveTableCellAction={saveTableCellAction}
+										deleteTableCellAction={deleteTableCellAction}
 										recalculationTableAction={recalculationTableAction}
 										timeline={timeline}
 										/>

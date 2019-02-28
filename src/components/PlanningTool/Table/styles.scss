@@ -2,6 +2,11 @@
 	width: 100%;
 	height: 100%;
 	height: calc( 100% - 60px ) !important;
+	& > div {
+		&:nth-child(2) { //horizontal scrollbar
+			z-index: 2;
+		}
+	}
 	.empty {
 		background-color: #F3F2F5;
 		height: 100%;
@@ -225,8 +230,8 @@
 		z-index: 2;
 		flex-grow: 1;
 		td {
-			height: 68px;
-			max-height: 68px;
+			height: 81px;
+			max-height: 81px;
 		}
 		th {
 			height: 64px;
@@ -243,8 +248,8 @@
 			}
 		}
 		td {
-			height: 68px;
-			max-height: 68px;
+			height: 81px;
+			max-height: 81px;
 			display: none !important;
 			&.day {
 				display: table-cell !important;
