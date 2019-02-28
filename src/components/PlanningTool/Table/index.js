@@ -3,6 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import LeftTableTablet from './LeftTableTablet';
 import TableHead from './TableHead';
 import TableRow from './TableRow';
+import { Empty } from './Empty';
 import { CircularProgress } from '@material-ui/core';
 import './styles.scss';
 
@@ -30,10 +31,11 @@ class Table extends Component {
 					</div>
 					: 
 					null }
-					{ !user.is_admin && !filterOptions ?
-						<div className="empty">
-							To display the data, select the date and cost center
-						</div>
+					{ !user.is_admin && filterOptions.selected === '' ?
+						<Empty text="To display the data, select the date and cost center"/>
+					 : null }
+					 { !tableRows.length && filterOptions.selected.length ?
+						<Empty text="No data available"/>
 					 : null }
 					{/*------------- only for tablet ----------------*/}
 					{tableRows.length ?

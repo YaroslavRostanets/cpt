@@ -15,9 +15,9 @@ class TableControll extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-      		date: new Date(),
+      		date: this.props.filterOptions.date,
       		openDialog: false,
-      		selected: [],
+      		selected: this.props.filterOptions.selected,
       		coastCenters: []
     	};
     	this.handleDateChange = this.handleDateChange.bind(this);

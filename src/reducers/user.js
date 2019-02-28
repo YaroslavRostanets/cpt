@@ -9,7 +9,7 @@ import { LOGIN_REQUEST,
 const initialState = {
     user: {
       username: 'test',
-      is_admin: true
+      is_admin: false
     },
     isAuth: true,
   	fetching: false,

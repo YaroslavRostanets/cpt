@@ -13,7 +13,11 @@ const initialState = {
     fetching: false,
     sortedByField: '',
     sortedByIndex: '',
-    sortAscending: false
+    sortAscending: false,
+    filter: {
+      date: new Date(),
+      selected: ''
+    }
 };
 
 export function toolReducer(state = initialState, action) {
