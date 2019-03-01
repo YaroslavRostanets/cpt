@@ -22,9 +22,9 @@ export function saveTableCell (obj, timeline) {
             credentials: 'include',
             body : JSON.stringify(obj)
         })
-        .then(res => res.json())
+        .then(res => res)
         .then((data) => {
-            
+            console.log('data: ', data);
             dispatch({
                 type: SAVE_TABLE_CELL
             })

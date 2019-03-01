@@ -15,7 +15,7 @@ class CustomInput extends Component {
 	}
 
 	handleChange(e) {
-		console.log('handler');
+		console.log('init: ', this.state.initialHours);
 		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 
 		var value = e.currentTarget.value.replace(/[^\d\.]/g, "");
@@ -31,23 +31,22 @@ class CustomInput extends Component {
 			this.setState({
 				data: {...this.state.data, hours: value }
 			}, () => {
-				console.log('value: ', value);
 				const parseValue = (value === '') ? 0 : parseFloat(value);
-				console.log('parseValue: ', parseValue);
 				this.props.recalculationTableAction(rowNo, hoursNo, parseValue, timeline);
 
 			});
 	}
 
 	handleBlur(e) {
+		console.log('initial: ', this.state.initialHours);
 		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 		const timezoneOffset = (filterOptions.date.getTimezoneOffset() * 60 * 1000 * -1 );
 		console.log('lastCode', this.state.lastCode);
 		console.log(this.state.data.hours);
-		if (this.state.data.hours === '0' || this.state.data.hours === 0) {
+		/*if (this.state.data.hours === '0' || this.state.data.hours === 0) {
 			this.props.deleteTableCellAction(this.state.data.id);
 			return false;
-		}
+		}*/
 		if(!this.state.lastCode) {
 			console.log('save');
 			let dataCopy = {...this.state.data, hours: this.state.data.hours ? this.state.data.hours : 0};
@@ -61,17 +60,27 @@ class CustomInput extends Component {
 				'data': dataCopy
 						}
 
-			if( this.state.data.hours !== this.state.initialHours ) {
-				console.log('TEST_2');			
-				console.log('save: ', saveCell);
+			if ( this.state.data.hours !== this.state.initialHours ) {
+				
 				this.setState({
 					initialHours: this.state.data.hours
 				});
-					this.props.saveTableCellAction(saveCell, this.props.timeline);
+				console.log('DATA_', this.state.data.hours);
+					if (this.state.data.hours === '0' 
+						|| this.state.data.hours === 0 
+						|| this.state.data.hours === '') {
+						console.log('_REMOVE_');
+						this.props.deleteTableCellAction(this.state.data.id);
+					} else {
+						console.log('_SAVE_');
+						console.log(saveCell);
+						this.props.saveTableCellAction(saveCell, this.props.timeline);
+					}
 				}
 
 		} else {
 			console.log('not save');
+			console.log('initialHours: ', this.state.initialHours);
 		}
 		this.setState({
 			data: {...this.state.data, hours: parseFloat(this.state.data.hours) }
@@ -96,26 +105,15 @@ class CustomInput extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		//console.log('nextProps: ', nextProps);
 		//если парсенные значения совпадают - не перестраивать
-/*		if(nextProps.data.hours != parseFloat(this.state.data.hours)) {
-			this.setState({
-				data: nextProps.data,
-				initialHours: nextProps.data.hours
-			})
-		}*/
 		//если джоба изменилась с новыми пропс в этот день, значит сортировка
-		if( nextProps.data.hours !== parseFloat(this.state.data.hours) ||
+		if( nextProps.data.id !== this.state.data.id ||
 			nextProps.data.internal_task_id !== this.state.data.internal_task_id ) {
 			this.setState({
 				data: nextProps.data,
 				initialHours: nextProps.data.hours
 			})
 		}
-		/*this.setState({
-			data: nextProps.data,
-			initialHours: nextProps.data.hours
-		})*/
 	}
 
 	componentDidMount() {
@@ -132,7 +130,7 @@ class CustomInput extends Component {
 		}
 		
 		input.addEventListener("keydown", (e)=>{
-
+			console.log('keydown: ', e);
 			if (e.keyCode === scanCodes.esc) {
 				this.setState({
 					lastCode: e.keyCode
