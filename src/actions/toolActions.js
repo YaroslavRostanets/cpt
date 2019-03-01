@@ -22,9 +22,8 @@ export function saveTableCell (obj, timeline) {
             credentials: 'include',
             body : JSON.stringify(obj)
         })
-        .then(res => res)
+        .then(res => res.json())
         .then((data) => {
-            console.log('data: ', data);
             dispatch({
                 type: SAVE_TABLE_CELL
             })
@@ -92,6 +91,7 @@ export function getPlanningHours (date, selected, timeline) {
     	)
         .then(response => response.json())
         .then(data => {
+            console.log('data: ', data);
             const result = data.result;
             console.log('result: ', result);
             /*const correct = getOutFromObj([...data.result]);  */
@@ -100,7 +100,9 @@ export function getPlanningHours (date, selected, timeline) {
 
         	dispatch({
           		type: GET_PLANNING_HOURS_SUCCESS,
-          		payload: extendetDataArray
+          		payload: extendetDataArray,
+                lastUpdatedAt: data.last_updated_at,
+                lastUpdatedBy: data.last_updated_by
         	})
 
         })

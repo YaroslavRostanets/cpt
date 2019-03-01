@@ -97,16 +97,23 @@ class TableControll extends Component {
 	render() {
 
 		const { openDialog, coastCenters } = this.state;
-		const { hiddenCols } = this.props;
+		const { hiddenCols, lastUpdate } = this.props;
 		const { colDisplayChange } = this.props;
 
 		return(
 			<div className="top">
 				<div className="left-part">
-					<div className="updated">
-						Updated Last: 
-						<b>25/08/2018 by John Smith</b>
-					</div>
+					{ lastUpdate.user ?
+						<div className="updated">
+							Updated Last: 
+							<b>
+							{ new Date().toISOString().substring(0, 10).split('-').reverse().join('/') }
+							<span> by </span> 
+							{ lastUpdate.user }</b>
+						</div> 
+						: 
+						null }
+					
 					<div className="date-picker-wrap">
 						<DatePicker
 							locale="en-GB"

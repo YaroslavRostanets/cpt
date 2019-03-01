@@ -17,6 +17,10 @@ const initialState = {
     filter: {
       date: new Date(),
       selected: ''
+    },
+    lastUpdate: {
+      user: '',
+      date: ''
     }
 };
 
@@ -27,7 +31,16 @@ export function toolReducer(state = initialState, action) {
     	case GET_PLANNING_HOURS_REQUEST:
       	 return { ...state, fetching: true, filter: action.payload }
       	case GET_PLANNING_HOURS_SUCCESS:
-      		return { ...state, tableRows: action.payload, fetching: false, sortedByField: '', sortedByIndex: '' }
+      		return { ...state, 
+            tableRows: action.payload, 
+            fetching: false, 
+            sortedByField: '', 
+            sortedByIndex: '', 
+            lastUpdate: {
+              user: action.lastUpdatedBy,
+              date: action.lastUpdatedAt
+            }
+          }
       	case GET_PLANNING_HOURS_FAIL:
       		return { ...state,fetching: false }
         case SAVE_TABLE_CELL:

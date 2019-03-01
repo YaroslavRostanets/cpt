@@ -27,7 +27,7 @@ class PlanningTool extends Component {
 			recalculationTableAction
 			 } = this.props;
 		const { fetching, 
-				tableRows, 
+				tableRows,
 				hiddenCols, 
 				filterOptions, 
 				timeline, 
@@ -35,7 +35,8 @@ class PlanningTool extends Component {
 				sortedByField, 
 				sortedByIndex,
 				sortAscending,
-				user } = this.props;
+				user,
+				lastUpdate } = this.props;
 		return(
 			<div id="content-tool">
 				<TableControll 
@@ -45,6 +46,7 @@ class PlanningTool extends Component {
 					timeline={timeline}
 					filterOptions={filterOptions}
 					tableRows={tableRows} 
+					lastUpdate={lastUpdate}
 					 />
 				<Table 
 					tableRows={tableRows} 
@@ -82,6 +84,7 @@ class PlanningTool extends Component {
 const mapStateToProps = store => {
   	return {
     	fetching: store.tool.fetching,
+    	lastUpdate: store.tool.lastUpdate,
     	tableRows: store.tool.tableRows,
     	filterOptions: store.tool.filter,
     	sortedByField: store.tool.sortedByField,

@@ -38,15 +38,10 @@ class CustomInput extends Component {
 	}
 
 	handleBlur(e) {
-		console.log('initial: ', this.state.initialHours);
 		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
 		const timezoneOffset = (filterOptions.date.getTimezoneOffset() * 60 * 1000 * -1 );
 		console.log('lastCode', this.state.lastCode);
-		console.log(this.state.data.hours);
-		/*if (this.state.data.hours === '0' || this.state.data.hours === 0) {
-			this.props.deleteTableCellAction(this.state.data.id);
-			return false;
-		}*/
+
 		if(!this.state.lastCode) {
 			console.log('save');
 			let dataCopy = {...this.state.data, hours: this.state.data.hours ? this.state.data.hours : 0};
@@ -69,18 +64,14 @@ class CustomInput extends Component {
 					if (this.state.data.hours === '0' 
 						|| this.state.data.hours === 0 
 						|| this.state.data.hours === '') {
-						console.log('_REMOVE_');
 						this.props.deleteTableCellAction(this.state.data.id);
 					} else {
-						console.log('_SAVE_');
-						console.log(saveCell);
 						this.props.saveTableCellAction(saveCell, this.props.timeline);
 					}
 				}
 
 		} else {
 			console.log('not save');
-			console.log('initialHours: ', this.state.initialHours);
 		}
 		this.setState({
 			data: {...this.state.data, hours: parseFloat(this.state.data.hours) }
@@ -126,7 +117,8 @@ class CustomInput extends Component {
 			'topArrow': 38,
 			'downArrow': 40,
 			'leftArrow': 37,
-			'rightArrow': 39
+			'rightArrow': 39,
+			'delete': 46
 		}
 		
 		input.addEventListener("keydown", (e)=>{
@@ -144,6 +136,13 @@ class CustomInput extends Component {
 					});
 				});
 				return false;
+			}
+			if (e.keyCode === scanCodes.delete) {
+				this.setState({
+					data: {...this.state.data, hours: 0 }
+				}, ()=>{
+					this.props.recalculationTableAction(rowNo, hoursNo, 0, timeline);
+				});
 			}
 			const row = input.getAttribute('datarow');
 			const col = input.getAttribute('datacol');

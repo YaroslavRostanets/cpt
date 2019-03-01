@@ -10,6 +10,7 @@ class TableHead extends Component {
 
 	render() {
 		const { rows, row, hiddenCols, capacity, sortedByField, sortedByIndex, sortAscending } = this.props;
+		console.log('CAPACITY: ', capacity);
 		const { planning_hours } = row;
 		const { sortedByFieldAction } = this.props;
 		
@@ -53,8 +54,12 @@ class TableHead extends Component {
 			    		break;
 			}
 
+
+
 			let resultCap = capacity.find((cap)=>{
-				return (cap.days === dayOfWeek && sumByDay >= cap.hours_start && sumByDay <= cap.hours_end)
+				return (cap.days === dayOfWeek 
+					&& sumByDay >= cap.hours_start 
+					&& sumByDay <= cap.hours_end && cap.hours_end !== 0);
 			});
 
 			return resultCap ? resultCap.color_code : null;
@@ -206,6 +211,9 @@ class TableHead extends Component {
 				</tr>
 		)
 	}
+
 }
+
+
 
 export default TableHead

@@ -116,9 +116,6 @@ class LeftTableTablet extends Component {
 							<tr key={index}>
 								<td style={{display: hiddenCols['cost_center_label'] ? 'none' : 'table-cell'}}>
 									{row.cost_center_label}
-									<div>
-										{row.id}
-									</div>
 								</td>
 								<td style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell'}}>
 									{row.jobno}
