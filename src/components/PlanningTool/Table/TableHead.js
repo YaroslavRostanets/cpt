@@ -135,7 +135,7 @@ class TableHead extends Component {
 
 				<TableHeadCell 
 					title="Hrs. Planed" 
-					fieldName="Hrs_planed"
+					fieldName="Hrs_planned"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}
 					sortedByFieldAction={sortedByFieldAction}

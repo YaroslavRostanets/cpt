@@ -10,7 +10,7 @@ const initialState = {
     	'Date_Due': false,
     	'Partial_Due': false,
     	'Days_Available': false,
-    	'Hrs_planed': false,
+    	'Hrs_planned': false,
     	'Required_Days': false,
     	'Allocated_Hours': false
     }

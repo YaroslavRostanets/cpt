@@ -92,8 +92,8 @@ class TableSettingsDialog extends Component {
 		        				 />
 		        				<CheckboxGroup 
 		        					label="Hrs. Planned"
-									checked={hiddenCols['Hrs_planed']}
-									prop="Hrs_planed"
+									checked={hiddenCols['Hrs_planned']}
+									prop="Hrs_planned"
 									colDisplayChange={colDisplayChange}
 		        					 />
 		        			</div>

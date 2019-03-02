@@ -46,7 +46,7 @@ class TableRow extends Component {
 				<td style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
 					{ row.Days_Available }
 				</td>
-				<td style={{display: hiddenCols['Hrs_planed'] ? 'none' : 'table-cell'}}>
+				<td style={{display: hiddenCols['Hrs_planned'] ? 'none' : 'table-cell'}}>
 					{ row.Hrs_planned.toFixed(2) }
 				</td>
 				<td style={{display: hiddenCols['Required_Days'] ? 'none' : 'table-cell' }}>

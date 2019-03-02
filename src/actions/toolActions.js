@@ -150,6 +150,7 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
             row.Days_Available = getDaysAvailable(row.Date_Due, row.Date_In);
             row.Allocated_Hours = getAllocatedHours(row.planning_hours);
             row.Required_Days = getRequiredDays(row.Allocated_Hours, timeline);
+            row.Hrs_planned = Math.round(row.Hrs_planned * 100) / 100;
 
             if(selectedDate) {
                     row.planningHours =  getTwoWeeks(selectedDate, row);
