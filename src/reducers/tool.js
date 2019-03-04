@@ -92,7 +92,16 @@ function sort(array, fieldName, index) {
     const m = String(index !== undefined ? nullToEmptyStr(a[fieldName][index]['hours']) : nullToEmptyStr(a[fieldName]) );
     const n = String(index !== undefined ? nullToEmptyStr(b[fieldName][index]['hours']) : nullToEmptyStr(b[fieldName]));
 
-    const compare = n.localeCompare(m, undefined,{ numeric: true });
+    var compare;
+
+    if( !isNaN(m) && !isNaN(n) ) {
+      compare = Number(n) - Number(m);
+      // if compare is NUMBER type
+    } else {
+      // if compare is STRING type
+      compare = n.localeCompare(m, undefined,{ numeric: true });
+    }
+    
     if (compare === 0) {
       return a['id'].localeCompare(b['id'], undefined,{ numeric: true });
       //if the values ​​match, compare id

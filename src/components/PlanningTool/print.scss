@@ -55,6 +55,10 @@
     		padding-left: 2px !important;
     		padding-right: 2px !important;
             display: table-cell !important;
+            height: auto !important;
+            min-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
     	}
     	&:before, &:after {
     		display: none;
