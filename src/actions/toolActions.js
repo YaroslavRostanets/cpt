@@ -40,9 +40,7 @@ export function saveTableCell (obj, timeline) {
 }
 
 export function deleteTableCell (id) {
-    console.log({
-                'id': id
-            });
+
     return dispatch => {
         fetch(API.PLANNING_HOURS_DELETE,{
             method: 'post',
@@ -53,7 +51,6 @@ export function deleteTableCell (id) {
         })
         .then(res => res.json())
         .then((data) => {
-            console.log('deleteData: ', data);
             dispatch({
                 type: DELETE_TABLE_CELL
             })
@@ -91,12 +88,7 @@ export function getPlanningHours (date, selected, timeline) {
     	)
         .then(response => response.json())
         .then(data => {
-            console.log('data: ', data);
-            const result = data.result;
-            console.log('result: ', result);
-            /*const correct = getOutFromObj([...data.result]);  */
             const extendetDataArray = addMissingProperties(data.result, timeline, date);
-
 
         	dispatch({
           		type: GET_PLANNING_HOURS_SUCCESS,
@@ -246,21 +238,5 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
 
 }
 
-function getOutFromObj(rowsArray) {
-
-    const correct = rowsArray.map((item)=>{
-            //console.log('getOut: ', item);
-            item.planning_hours.forEach((ph, index)=>{
-                let propName = Object.keys(ph).pop();
-                    item.planning_hours[index] = ph[propName];
-            });
-
-            return item;
-    });
-
-
-
-    return correct;
-}
 
 

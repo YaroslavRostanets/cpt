@@ -15,12 +15,10 @@ class CustomInput extends Component {
 	}
 
 	handleChange(e) {
-		console.log('init: ', this.state.initialHours);
-		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
+		const { rowNo, hoursNo, timeline } = this.props;
 
 		var value = e.currentTarget.value.replace(/[^\d\.]/g, "");
 			value = value.length === 1 && isNaN(value.substr(-1)) === true ? '0' : value;
-		console.log(value);
 
 		var valueArr = value.split('.', 2);
 			if (valueArr[1]) {
@@ -38,12 +36,10 @@ class CustomInput extends Component {
 	}
 
 	handleBlur(e) {
-		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
+		const { filterOptions } = this.props;
 		const timezoneOffset = (filterOptions.date.getTimezoneOffset() * 60 * 1000 * -1 );
-		console.log('lastCode', this.state.lastCode);
 
 		if(!this.state.lastCode) {
-			console.log('save');
 			let dataCopy = {...this.state.data, hours: this.state.data.hours ? this.state.data.hours : 0};
 								if (dataCopy.id === 0) {
 									delete dataCopy.id
@@ -60,7 +56,6 @@ class CustomInput extends Component {
 				this.setState({
 					initialHours: this.state.data.hours
 				});
-				console.log('DATA_', this.state.data.hours);
 					if (this.state.data.hours === '0' 
 						|| this.state.data.hours === 0 
 						|| this.state.data.hours === '') {
@@ -70,9 +65,7 @@ class CustomInput extends Component {
 					}
 				}
 
-		} else {
-			console.log('not save');
-		}
+		} 
 		this.setState({
 			data: {...this.state.data, hours: parseFloat(this.state.data.hours) }
 		})
@@ -108,7 +101,7 @@ class CustomInput extends Component {
 	}
 
 	componentDidMount() {
-		const { filterOptions, rowNo, hoursNo, timeline } = this.props;
+		const { rowNo, hoursNo, timeline } = this.props;
 		const input = this.input.current;
 		const scanCodes = {
 			'enter': 13,
@@ -122,7 +115,6 @@ class CustomInput extends Component {
 		}
 		
 		input.addEventListener("keydown", (e)=>{
-			console.log('keydown: ', e);
 			if (e.keyCode === scanCodes.esc) {
 				this.setState({
 					lastCode: e.keyCode

@@ -4,7 +4,6 @@ import { ButtonBase } from '@material-ui/core';
 class TableHeadCell extends Component {
 
 	sortHandler(fieldName, index) {
-		console.log('sortedBy: ', fieldName, index);
 		this.props.sortedByFieldAction(fieldName, index);
 	}
 

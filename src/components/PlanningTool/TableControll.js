@@ -6,7 +6,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import enGB from 'date-fns/locale/en-GB';
 import MultiSelect from '@khanacademy/react-multi-select';
-import { tableToExcel, printTable, excelExport } from '../../functions';
+import { printTable, excelExport } from '../../functions';
 
 registerLocale('en-GB', enGB);
 
@@ -30,7 +30,6 @@ class TableControll extends Component {
 	}
 
 	handleDateChange(date) {
-		console.log('dateC: ', date.setHours(0,0,0,0));
 		const { timeline } = this.props;
 		this.setState({
 		    date: date
