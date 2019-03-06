@@ -19,13 +19,13 @@ export const excelExport = function() {
 					item.remove();
 				});
 
-				var cells = document.querySelectorAll("#print-container .printable-table .date-cell");
-				cells.forEach((td)=>{
+				//var cells = document.querySelectorAll("#print-container .printable-table .date-cell");
+				/*cells.forEach((td)=>{
 					var arr = td.innerText.split('/');
 					if (arr.length === 3) {
 						td.innerText = [arr[1], arr[0], arr[2]].join('/');
 					}
-				});
+				});*/
 
 
 		var wb = XLSX.utils.table_to_book(document.querySelector("#print-container .printable-table"), 
@@ -38,7 +38,7 @@ export const excelExport = function() {
 				cellStyles: true,
 				cellText: true,
 				raw: true,
-				dateNF:"DD-MM-YY"
+				dateNF:"MM-DD-YY"
 			});
 
 		function s2ab(s) {

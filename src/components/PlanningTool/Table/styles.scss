@@ -221,6 +221,9 @@
 }
 @media (max-width: 1375px) {
 	#planning-table {
+		table {
+			width: auto;
+		}
 		& > div {
 			display: flex;
 		}

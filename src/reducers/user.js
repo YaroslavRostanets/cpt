@@ -24,7 +24,7 @@ export function userReducer(state = initialState, action) {
         case GET_CURRENT_USER_SUCCESS:
           return { ...state, fetching: false, user: action.payload }
         case USER_LOGOUT:
-          return { ...state, fetching: false, user: {}, isAuth: false}
+          return { ...state, fetching: false, user: {}, isAuth: false, error: ''}
         case USER_IS_LOGGED:
           return { ...state, isAuth: true }
     default:

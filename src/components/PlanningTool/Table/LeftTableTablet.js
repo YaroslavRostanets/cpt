@@ -15,7 +15,7 @@ class LeftTableTablet extends Component {
 				//January is 0!
 			let yy = String(newDate.getFullYear()).substring(2);
 			
-			return `${dd}/${mm}/${yy}`;
+			return `${mm}/${dd}/${yy}`;
 		}
 
 		return (

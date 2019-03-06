@@ -18,7 +18,7 @@ class CustomInput extends Component {
 		const { rowNo, hoursNo, timeline } = this.props;
 
 		var value = e.currentTarget.value.replace(/[^\d\.]/g, "");
-			value = value.length === 1 && isNaN(value.substr(-1)) === true ? '0' : value;
+			value = value.length === 1 && isNaN(value.substr(-1)) === true ? '0.' : value;
 
 		var valueArr = value.split('.', 2);
 			if (valueArr[1]) {
@@ -38,6 +38,9 @@ class CustomInput extends Component {
 	handleBlur(e) {
 		const { filterOptions } = this.props;
 		const timezoneOffset = (filterOptions.date.getTimezoneOffset() * 60 * 1000 * -1 );
+		var nowUTCDateUnix = new Date(filterOptions.date);
+			nowUTCDateUnix.setHours(0,0,0,0);
+			nowUTCDateUnix = Math.floor( (nowUTCDateUnix.getTime() + timezoneOffset) / 1000);
 
 		if(!this.state.lastCode) {
 			let dataCopy = {...this.state.data, hours: this.state.data.hours ? this.state.data.hours : 0};
@@ -47,7 +50,7 @@ class CustomInput extends Component {
 
 			let saveCell = {
 				'cost_centers': filterOptions.selected,
-				'date': Math.floor( (filterOptions.date.getTime() + timezoneOffset) / 1000),
+				'date': nowUTCDateUnix,
 				'data': dataCopy
 						}
 
@@ -56,7 +59,8 @@ class CustomInput extends Component {
 				this.setState({
 					initialHours: this.state.data.hours
 				});
-					if (this.state.data.hours === '0' 
+					if (this.state.data.hours === '0'
+						|| this.state.data.hours === '0.'
 						|| this.state.data.hours === 0 
 						|| this.state.data.hours === '') {
 						this.props.deleteTableCellAction(this.state.data.id);

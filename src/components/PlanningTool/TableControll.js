@@ -99,6 +99,12 @@ class TableControll extends Component {
 		const { hiddenCols, lastUpdate } = this.props;
 		const { colDisplayChange } = this.props;
 
+		const dateFormat = (dateInUTC) => {
+			let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+			let arr = new Date(dateInUTC * 1000 + timezoneOffset).toISOString().substring(0, 10).split('-');
+			return [arr[1], arr[2], arr[0]].join('/')
+		}
+
 		return(
 			<div className="top">
 				<div className="left-part">
@@ -106,7 +112,7 @@ class TableControll extends Component {
 						<div className="updated">
 							Updated Last: 
 							<b>
-							{ new Date().toISOString().substring(0, 10).split('-').reverse().join('/') }
+							{ dateFormat(lastUpdate.date) }
 							<span> by </span> 
 							{ lastUpdate.user }</b>
 						</div> 
@@ -118,7 +124,7 @@ class TableControll extends Component {
 							locale="en-GB"
 							selected={this.state.date}
         					onChange={this.handleDateChange}
-        					dateFormat="dd/MM/YY"
+        					dateFormat="MM/dd/YY"
         					ref={(r) => {
     							this.component = r;
   							}}
