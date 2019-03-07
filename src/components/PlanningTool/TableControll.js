@@ -44,7 +44,7 @@ class TableControll extends Component {
   	handleCoastCentersChange(selected) {
   		const { timeline } = this.props;
   		this.setState({selected: selected},()=>{
-  			if(this.state.selected.length) {
+  			if(this.state.selected) {
 				let { date, selected } = this.state;
   				this.props.getPlanningHoursAction(date, selected, timeline);
   			}
@@ -100,8 +100,7 @@ class TableControll extends Component {
 		const { colDisplayChange } = this.props;
 
 		const dateFormat = (dateInUTC) => {
-			let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
-			let arr = new Date(dateInUTC * 1000 + timezoneOffset).toISOString().substring(0, 10).split('-');
+			let arr = new Date(dateInUTC * 1000).toISOString().substring(0, 10).split('-');
 			return [arr[1], arr[2], arr[0]].join('/')
 		}
 

@@ -2,6 +2,7 @@ import { addMissingProperties } from '../actions/toolActions';
 import { GET_PLANNING_HOURS_REQUEST, 
 		 GET_PLANNING_HOURS_SUCCESS,
 		 GET_PLANNING_HOURS_FAIL,
+     CLEAR_ARRAY,
      SAVE_TABLE_CELL,
      RECALCULATION_TABLE,
      SORT_ROWS,
@@ -43,6 +44,8 @@ export function toolReducer(state = initialState, action) {
           }
       	case GET_PLANNING_HOURS_FAIL:
       		return { ...state,fetching: false }
+        case CLEAR_ARRAY:
+          return { ...state, tableRows: [] }
         case SAVE_TABLE_CELL:
           return { ...state }
 
@@ -94,12 +97,15 @@ function sort(array, fieldName, index) {
 
     var compare;
 
-    if( !isNaN(m) && !isNaN(n) ) {
+    if( !isNaN(m) && !isNaN(n) && m !== '' && n !== '' ) {
       compare = Number(n) - Number(m);
       // if compare is NUMBER type
     } else {
       // if compare is STRING type
       compare = n.localeCompare(m, undefined,{ numeric: true });
+      console.log('n: ', n);
+      console.log('m: ', m);
+      console.log('compare: ', compare);
     }
     
     if (compare === 0) {

@@ -94,6 +94,10 @@
 		text-align: center;
 		vertical-align: top;
 		padding: 7px 1px 3px 1px;
+		&.has-error {
+			background: #DD5145;
+			color: #FFFFFF;
+		}
 		input[type="text"] {
 			display: block;
 			width: 100%;
@@ -157,6 +161,7 @@
 		font-weight: 600;
 		position: sticky;
 		top: 0;
+		z-index: 2;
 		line-height: 12px;
 		text-align: left;
 		&.day {
@@ -218,6 +223,33 @@
 			margin-top: -3px;
 		}
 	}
+	.tooltip-wrap {
+		position: relative;
+		cursor: pointer;
+		&:hover {
+			.tooltip {
+				display: block;
+			}
+		}
+	}
+	.tooltip {
+		display: none;
+		z-index: 1;
+		border: 1px solid #CFCFCF;
+		position: absolute;
+		width: 120px;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: #FFFFFF;
+		color: #7d7c7c;
+		text-align: center;
+		border-radius: 4px;
+		padding: 2px 3px;
+		-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
+		-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
+		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
+	}
 }
 @media (max-width: 1375px) {
 	#planning-table {
@@ -232,9 +264,12 @@
 		display: table;
 		z-index: 2;
 		flex-grow: 1;
+		max-width: 700px;
 		td {
-			height: 81px;
-			max-height: 81px;
+			height: 53px;
+			max-height: 53px;
+			padding-bottom: 0;
+			padding-top: 3px;
 		}
 		th {
 			height: 64px;
@@ -251,8 +286,8 @@
 			}
 		}
 		td {
-			height: 81px;
-			max-height: 81px;
+			height: 53px;
+			max-height: 53px;
 			display: none !important;
 			&.day {
 				display: table-cell !important;

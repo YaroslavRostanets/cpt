@@ -99,6 +99,7 @@ export function handleLogout(redirect) {
       type: USER_LOGOUT
     })
       redirect();
+      window.location.reload();
     })
 
   }

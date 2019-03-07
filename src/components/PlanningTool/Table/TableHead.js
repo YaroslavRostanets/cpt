@@ -10,7 +10,6 @@ class TableHead extends Component {
 
 	render() {
 		const { rows, row, hiddenCols, capacity, sortedByField, sortedByIndex, sortAscending } = this.props;
-		console.log('CAPACITY: ', capacity);
 		const { planning_hours } = row;
 		const { sortedByFieldAction } = this.props;
 		
@@ -108,7 +107,7 @@ class TableHead extends Component {
 					sortAscending={sortAscending}
 					 />
 				<TableHeadCell 
-					title="Date_Due" 
+					title="Date Due" 
 					fieldName="Date_Due"
 					hiddenCols={hiddenCols}
 					sortedByField={sortedByField}

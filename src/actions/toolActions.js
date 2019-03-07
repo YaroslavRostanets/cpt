@@ -3,6 +3,7 @@ import { API } from '../constants';
 export const GET_PLANNING_HOURS_REQUEST = 'GET_PLANNING_HOURS_REQUEST';
 export const GET_PLANNING_HOURS_SUCCESS = 'GET_PLANNING_HOURS_SUCCESS';
 export const GET_PLANNING_HOURS_FAIL = 'GET_PLANNING_HOURS_FAIL';
+export const CLEAR_ARRAY = 'CLEAR_ARRAY';
 export const SAVE_TABLE_CELL = 'SAVE_TABLE_CELL';
 export const SAVE_TABLE_FAIL = 'SAVE_TABLE_FAIL';
 export const DELETE_TABLE_CELL = 'DELETE_TABLE_CELL';
@@ -69,7 +70,16 @@ export function getPlanningHours (date, selected, timeline) {
     
     const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
 
+    if(!selected.length) {
+        return dispatch => {
+            dispatch({
+                type: CLEAR_ARRAY
+            });
+        }
+    }
+
 	return dispatch => {
+
 		dispatch({
       		type: GET_PLANNING_HOURS_REQUEST,
             payload: {date, selected} 
@@ -164,7 +174,7 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
                 return (allocatedHours >= item.hours_start && allocatedHours <= item.hours_end)
             });
 
-            return item ? item.days_value : null;
+            return item ? item.days_value : '';
     }
 
     function getDaysAvailable(dateDue, dateIn) {

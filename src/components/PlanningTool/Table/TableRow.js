@@ -43,7 +43,8 @@ class TableRow extends Component {
 				<td className="date-cell" style={{display: hiddenCols['Partial_Due'] ? 'none' : 'table-cell'}}>
 					{ row.Partial_Due ? dateFormat( row.Partial_Due ) : null }
 				</td>
-				<td style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
+				<td className={row.Days_Available < 0 ? 'has-error' : null}
+					style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
 					{ row.Days_Available }
 				</td>
 				<td style={{display: hiddenCols['Hrs_planned'] ? 'none' : 'table-cell'}}>

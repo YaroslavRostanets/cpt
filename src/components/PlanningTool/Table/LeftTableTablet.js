@@ -18,6 +18,21 @@ class LeftTableTablet extends Component {
 			return `${mm}/${dd}/${yy}`;
 		}
 
+		const tooltip = (text, maxlength) => {
+			if (text.trim().length > maxlength) {
+				return (
+					<div className="tooltip-wrap">
+						{ text.substring(0, maxlength).trim() + '...' }
+						<div className="tooltip">
+							{text}
+						</div>
+					</div>
+				);
+			} else {
+				return text;
+			}
+		}
+
 		return (
 			<table className="tablet-left-table">
 				<tbody>
@@ -63,7 +78,7 @@ class LeftTableTablet extends Component {
 							sortAscending={sortAscending}
 							 />
 						<TableHeadCell 
-							title="Date_Due" 
+							title="Date Due" 
 							fieldName="Date_Due"
 							hiddenCols={hiddenCols}
 							sortedByField={sortedByField}
@@ -115,16 +130,16 @@ class LeftTableTablet extends Component {
 						return (
 							<tr key={index}>
 								<td style={{display: hiddenCols['cost_center_label'] ? 'none' : 'table-cell'}}>
-									{row.cost_center_label}
+									{ tooltip(row.cost_center_label, 25) }
 								</td>
 								<td style={{display: hiddenCols['jobno'] ? 'none' : 'table-cell'}}>
 									{row.jobno}
 								</td>
 								<td style={{display: hiddenCols['customer'] ? 'none' : 'table-cell'}}>
-									{row.customer}
+									{ tooltip(row.customer, 22) }
 								</td>
 								<td style={{display: hiddenCols['description'] ? 'none' : 'table-cell'}}>
-									{row.description}
+									{ tooltip(row.description, 25) }
 								</td>
 								<td style={{display: hiddenCols['Date_In'] ? 'none' : 'table-cell'}}>
 									{ dateFormat(row.Date_In) }
@@ -135,7 +150,8 @@ class LeftTableTablet extends Component {
 								<td style={{display: hiddenCols['Partial_Due'] ? 'none' : 'table-cell'}}>
 									{ row.Partial_Due ? dateFormat( row.Partial_Due ) : null }
 								</td>
-								<td style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
+								<td className={row.Days_Available < 0 ? 'has-error' : null}
+									style={{display: hiddenCols['Days_Available'] ? 'none' : 'table-cell'}}>
 									{ row.Days_Available }
 								</td>
 								<td style={{display: hiddenCols['Hrs_planned'] ? 'none' : 'table-cell'}}>
