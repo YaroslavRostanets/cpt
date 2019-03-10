@@ -6,6 +6,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_IS_LOGGED = 'USER_IS_LOGGED';
+export const USER_IS_NOT_LOGGED = 'USER_IS_NOT_LOGGED';
 
 export function handleLogin(user, getCurrentUser, redirect) {
 
@@ -50,7 +51,7 @@ export function getCurrentUser(redirect) {
       dispatch({
         type: GET_CURRENT_USER_SUCCESS,
         payload: result.data
-      })
+      });
       redirect();
     },
       (error) => {
@@ -75,8 +76,12 @@ export function checkUser(getCurrentUser, redirect) {
       if(result.result === true) {
         dispatch({
           type: USER_IS_LOGGED
-        })
+        });
         getCurrentUser(redirect);
+      } else {
+        dispatch({
+          type: USER_IS_NOT_LOGGED
+        });
       }
     }
     )
@@ -97,7 +102,7 @@ export function handleLogout(redirect) {
 
     dispatch({
       type: USER_LOGOUT
-    })
+    });
       redirect();
       window.location.reload();
     })

@@ -16,10 +16,10 @@ class Auth extends Component {
 	}
 
 	render() {
-		const { fetching, error } = this.props;
+		const { fetching, error, pageReady } = this.props;
 
 		return(
-              	<div id="auth">
+              	<div id="auth" style={{display: pageReady ? 'flex' : 'none'}}>
 		          	<div className="auth-window">
 						<div className="title">
 							Autorization to Capacity Planning Tool
@@ -67,8 +67,9 @@ class Auth extends Component {
 
 const mapStateToProps = store => {
   return {
-    fetching: store.user.fetching,
-    error: store.user.error
+	  fetching: store.user.fetching,
+	  error: store.user.error,
+	  pageReady: store.user.pageReady
   }
 }
 

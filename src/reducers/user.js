@@ -3,14 +3,16 @@ import { LOGIN_REQUEST,
 		 LOGIN_FAIL,
      GET_CURRENT_USER_SUCCESS,
      USER_LOGOUT,
-     USER_IS_LOGGED
+     USER_IS_LOGGED,
+    USER_IS_NOT_LOGGED
 } from '../actions/userActions';
 
 const initialState = {
     user: {},
     isAuth: false,
   	fetching: false,
-    error: ''
+    error: '',
+    pageReady: false
 }
 
 export function userReducer(state = initialState, action) {
@@ -22,11 +24,13 @@ export function userReducer(state = initialState, action) {
       	case LOGIN_FAIL:
       		return { ...state ,fetching: false, error: action.payload }
         case GET_CURRENT_USER_SUCCESS:
-          return { ...state, fetching: false, user: action.payload }
+            return { ...state, fetching: false, user: action.payload }
         case USER_LOGOUT:
-          return { ...state, fetching: false, user: {}, isAuth: false, error: ''}
+            return { ...state, fetching: false, user: {}, isAuth: false, error: ''}
         case USER_IS_LOGGED:
-          return { ...state, isAuth: true }
+            return { ...state, isAuth: true, pageReady: true }
+        case USER_IS_NOT_LOGGED:
+            return { ...state, isAuth: false, pageReady: true }
     default:
       return state
   }
