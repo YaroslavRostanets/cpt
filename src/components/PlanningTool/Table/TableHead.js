@@ -13,15 +13,15 @@ class TableHead extends Component {
 		const { planning_hours } = row;
 		const { sortedByFieldAction } = this.props;
 		
-		const getDate = (timestamp) => ( new Date(timestamp * 1000).getDate() );
-		const getWeekDay = (timestamp) => {
-			let index = new Date(timestamp * 1000).getDay();
+		const getDate = (dateString) => ( new Date(dateString).getDate() );
+		const getWeekDay = (dateString) => {
+			let index = new Date(dateString).getDay();
 			let days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 			return days[index];
 		};
-		const getMonth = (timestamp) => {
-			var index = new Date(timestamp * 1000).getMonth();
+		const getMonth = (dateString) => {
+			var index = new Date(dateString).getMonth();
 			let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 			return months[index];

@@ -110,7 +110,6 @@ export function getCapacity() {
 	        })
 	        .then(result => result.json())
 	        .then((data) => {
-	        	console.log('capacity: ', data);
 	            dispatch({
 	                type: GET_CAPACITY_SUCCESS,
 	                payload: data.result

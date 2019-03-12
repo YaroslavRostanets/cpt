@@ -68,7 +68,7 @@ export function deleteTableCell (id) {
 
 export function getPlanningHours (date, selected, timeline) {
     
-    const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
+    //const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
 
     if(!selected.length) {
         return dispatch => {
@@ -91,7 +91,7 @@ export function getPlanningHours (date, selected, timeline) {
                 credentials: 'include',
 				body: JSON.stringify({
 		      		cost_centers: selected,
-		      		date: Math.round( (date.getTime() + timezoneOffset) / 1000) 
+		      		date: date
                     //getting timestamp in unix format in seconds UTC
     			})
     		}
@@ -160,7 +160,6 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
                     const findPH = row.planning_hours.find( (ph) => ph.date === item.date );
                     row.planningHours[index] = findPH ? findPH : item;
                 });
-
                 row.planning_hours = row.planningHours;
             }
         
@@ -210,20 +209,20 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
         for (let i = 0; i < endOfWeekIt + 7; i++) {
             currentDate = date.getTime() + i * dayInMiliSec;
             planningHours.push({
-                date: getUTCDate(currentDate),
+                date: getStringDate(currentDate),
                 hours: 0,
                 internal_task_id: job.id,
                 is_weekly: false
             });
         }
         planningHours.push({
-            date: getUTCDate(currentDate + dayInMiliSec),
+            date: getStringDate(currentDate + dayInMiliSec),
             hours: 0,
             internal_task_id: job.id,
             is_weekly: true
         })
         planningHours.push({
-            date: getUTCDate(currentDate + dayInMiliSec * 8),
+            date: getStringDate(currentDate + dayInMiliSec * 8),
             hours: 0,
             internal_task_id: job.id,
             is_weekly: true
@@ -232,13 +231,23 @@ export function addMissingProperties (rowsArray, timeline, selectedDate) {
         return planningHours;
     }
 
-    function getUTCDate(dateJS) {
+/*    function getUTCDate(dateJS) {
         const date = new Date(dateJS);
               date.setHours(0,0,0,0);
         const timezoneOffset = (date.getTimezoneOffset() * 60 * 1000 * -1 );
         const unixUTCDate = ( (date.getTime() + timezoneOffset) / 1000);
 
         return unixUTCDate;
+    }*/
+
+    function getStringDate(dateJS) {
+        const date = new Date(dateJS);
+              date.setHours(0,0,0,0);
+        let year = date.getFullYear();
+        let month = (1 + date.getMonth()).toString().padStart(2, '0');
+        let day = date.getDate().toString().padStart(2, '0');
+
+        return month + '/' + day + '/' + year;
     }
 
 

@@ -36,7 +36,9 @@ class TableControll extends Component {
 		}, ()=>{
 			if(this.state.selected.length){
 				let { date, selected } = this.state;
-				this.props.getPlanningHoursAction(date, selected, timeline);
+                let dateString = (1 + date.getMonth()).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0') + '/' + date.getFullYear();
+
+				this.props.getPlanningHoursAction(dateString, selected, timeline);
 			}
 		});
   	}
@@ -46,7 +48,9 @@ class TableControll extends Component {
   		this.setState({selected: selected},()=>{
   			if(this.state.selected) {
 				let { date, selected } = this.state;
-  				this.props.getPlanningHoursAction(date, selected, timeline);
+                let dateString = (1 + date.getMonth()).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0') + '/' + date.getFullYear();
+
+  				this.props.getPlanningHoursAction(dateString, selected, timeline);
   			}
   		});
   	}
@@ -100,8 +104,8 @@ class TableControll extends Component {
 		const { colDisplayChange } = this.props;
 
 		const dateFormat = (dateInUTC) => {
-			let arr = new Date(dateInUTC * 1000).toISOString().substring(0, 10).split('-');
-			return [arr[1], arr[2], arr[0]].join('/')
+			let date = new Date(dateInUTC * 1000);
+			return (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
 		}
 
 		return(
